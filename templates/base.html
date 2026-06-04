@@ -1,0 +1,159 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'images/p7.png' %}" type="image/png" />
+    <title>{% block title %}Nexra{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/global-base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global-navbar.css' %}" />
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body
+    class="has-shared-navbar"
+    data-page="{% block body_page %}index{% endblock %}"
+  >
+    <nav class="navbar shared-navbar" data-shared-navbar>
+      <div class="navbar-shell">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'images/Logo.png' %}" alt="Nexra Logo" />
+          <span class="brand-name">Nexra</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          aria-expanded="false"
+          data-navbar-toggle
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <div class="navbar-menu" data-navbar-menu>
+          <ul class="navbar-nav navbar-center-nav">
+            <li class="nav-item">
+              <a class="nav-link nav-home-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-cart-link" href="#">Cart</a>
+            </li>
+            <li class="nav-item dropdown">
+              <button
+                class="nav-link dropdown-toggle"
+                type="button"
+                data-dropdown-toggle
+              >
+                Categories
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'food' %}">Food</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'tech' %}">Tech</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'fashion' %}"
+                    >Fashion</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'beauty' %}">Beauty</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'kids' %}">Kids</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'accessories' %}"
+                    >Accessories</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-actions">
+            <li class="nav-item nav-action">
+              <a href="{% url 'login' %}" class="btn-login">Login</a>
+            </li>
+            <li class="nav-item nav-action">
+              <a href="{% url 'signup' %}" class="btn-get-started"
+                >Get started</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section footer-logo">
+            <div class="footer-brand">
+              <img src="{% static 'images/Logo.png' %}" alt="Logo" />
+              <span class="brand-title">Nexra</span>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4 class="footer-title">About Us</h4>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-link">News</a></li>
+              <li><a href="#" class="footer-link">Official Store</a></li>
+              <li><a href="#" class="footer-link">Company</a></li>
+              <li><a href="#" class="footer-link">Careers</a></li>
+            </ul>
+          </div>
+          <div class="footer-section footer-social">
+            <h4 class="footer-title">Follow Us</h4>
+            <div class="social-links">
+              <a class="social-link facebook" href="#"
+                ><i class="bx bxl-facebook"></i
+              ></a>
+              <a class="social-link instagram" href="#"
+                ><i class="bx bxl-instagram"></i
+              ></a>
+              <a class="social-link twitter" href="#"
+                ><i class="bx bxl-twitter"></i
+              ></a>
+              <a class="social-link youtube" href="#"
+                ><i class="bx bxl-youtube"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="footer-links-bottom">
+            <a href="#" class="footer-link-bottom">Terms & Conditions</a>
+            <a href="#" class="footer-link-bottom">Privacy Policy</a>
+          </div>
+          <p class="footer-copyright">© 2026 Nexra. All Rights Reserved</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/global-state.js' %}"></script>
+    <script src="{% static 'js/global-navbar.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

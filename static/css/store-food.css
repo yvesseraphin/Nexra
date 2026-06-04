@@ -1,0 +1,620 @@
+/* =========================================================
+   store-food.css — Food storefront page styles
+   Ported from frontend/food-style.css · Font: Outfit
+========================================================= */
+
+:root {
+  --primary-orange: #ff9500;
+  --primary-green: #2ecc71;
+  --text-dark: #253D4E;
+  --text-gray: #7E7E7E;
+  --bg-light: #f5f1ed;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+  color: var(--text-dark);
+}
+
+/* ========================================
+   HERO SECTION
+======================================== */
+
+.hero-section {
+  background-color: var(--bg-light);
+  position: relative;
+  padding: 100px 0 120px;
+  overflow: hidden;
+}
+
+.min-vh-75 { min-height: 75vh; }
+
+.hero-content { animation: fadeInLeft 1s ease-out; }
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: #000;
+}
+
+.hero-title .quote {
+  color: var(--primary-orange);
+  font-size: 5.5rem;
+  line-height: 0.8;
+  display: inline-block;
+  animation: scaleIn 0.6s ease-out 0.3s both;
+}
+
+.hero-title .highlight {
+  color: var(--primary-orange);
+  position: relative;
+  animation: slideIn 0.8s ease-out 0.5s both;
+}
+
+.hero-description {
+  font-size: 1.05rem;
+  color: #4D4D4D;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  max-width: 520px;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.category-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  white-space: nowrap;
+  font-family: 'Outfit', sans-serif;
+}
+
+.category-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+.category-btn.active {
+  color: var(--primary-orange);
+  font-weight: 700;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInRight 1s ease-out;
+}
+
+.hero-orange {
+  max-width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(255, 149, 0, 0.15));
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Decorative Elements */
+.decorative-leaf {
+  position: absolute;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.leaf-top-left {
+  top: 20px;
+  left: 5%;
+  width: 80px;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.decorative-orange-slice {
+  position: absolute;
+  top: 30px;
+  right: 20%;
+  width: 90px;
+  opacity: 0.6;
+  z-index: 1;
+  animation: rotate 20s linear infinite;
+}
+
+.leaf-bottom-left {
+  bottom: 10%;
+  left: 3%;
+  width: 110px;
+  animation: float 5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.leaf-bottom-center {
+  position: absolute;
+  bottom: 15%;
+  left: 45%;
+  width: 95px;
+  opacity: 0.65;
+  z-index: 1;
+  animation: float 4.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+/* ========================================
+   FEATURED CARDS SECTION
+======================================== */
+
+.featured-section {
+  padding: 60px 0;
+  background-color: #FFFFFF;
+}
+
+.featured-cards-container {
+  display: flex;
+  margin: 0 auto;
+  padding: 0 50px;
+  max-width: 1320px;
+  justify-content: center;
+  gap: 30px;
+}
+
+.featured-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.featured-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.breakfast   { width: 497px;    height: 314px; }
+.fresh-onions { width: 512.66px; height: 300.38px; }
+
+.card-bg-image {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.card-text-content {
+  position: relative;
+  z-index: 10;
+  max-width: 55%;
+}
+
+.card-text {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+.shop-btn {
+  border-radius: 5px;
+  border: none;
+  background-color: #000000;
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+}
+
+.shop-btn:hover {
+  background-color: #333333;
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   POPULAR PRODUCTS SECTION
+================================ */
+
+.popular-products-section {
+  padding: 90px 0;
+  background-color: #fff;
+}
+
+.section-title {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.section-divider {
+  display: block;
+  width: 40px;
+  height: 3px;
+  background-color: var(--primary-orange);
+  margin: 10px auto 40px;
+  border-radius: 2px;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  height: 100%;
+  transition: all 0.35s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+.product-image {
+  width: 342px;
+  height: 246px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  color: var(--text-gray);
+}
+
+.product-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 8px 0 18px;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-price {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.add-btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+}
+
+.add-btn i { margin-right: 5px; }
+
+.add-btn:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
+
+/* ========================================
+   DAILY BEST SELLS SECTION
+======================================== */
+
+.daily-best-section {
+  padding: 60px 0;
+  background-color: #FFFFFF;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 30px;
+}
+
+.daily-banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.banner-bg-image {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.banner-bg-image.hidden { display: none; }
+
+.daily-banner::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+  z-index: 2;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 10;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  max-width: 500px;
+}
+
+.banner-title {
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #FFFFFF;
+  margin-bottom: 30px;
+  animation: fadeInLeft 1s ease-out;
+}
+
+.btn-shop-now-white {
+  background-color: #FFFFFF;
+  color: var(--text-dark);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 32px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255,255,255,0.3);
+  width: fit-content;
+  font-family: 'Outfit', sans-serif;
+}
+
+.btn-shop-now-white:hover {
+  background-color: var(--primary-green);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.banner-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255,255,255,0.9);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-arrow:hover { background-color: #ffffff; transform: translateY(-50%) scale(1.1); }
+.arrow-left  { left: 20px; }
+.arrow-right { right: 20px; }
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.indicator.active { background-color: #FFFFFF; }
+
+/* ========================================
+   DEALS OF THE DAY
+======================================== */
+
+.deals-day {
+  display: flex;
+  gap: 20px;
+  padding: 40px 60px;
+  background: #f9f9f9;
+  flex-wrap: wrap;
+}
+
+.images-deals {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  flex: 1;
+  min-width: 280px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease;
+}
+
+.images-deals:hover { transform: translateY(-4px); }
+
+.deals-day-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.deals-day-text-content p { font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
+
+/* ========================================
+   SUBSCRIPTION SECTION
+======================================== */
+
+.subscription-sect {
+  padding: 80px 0;
+  background-color: var(--bg-light);
+}
+
+.subscribe-content {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.subscribe-text { flex: 1; }
+
+.subscribe-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.subscribe-description {
+  font-size: 1rem;
+  color: var(--text-gray);
+  margin-bottom: 30px;
+}
+
+.subscribe-btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+}
+
+.subscribe-btn:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+.subscribe-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.subscribe-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+}
+
+/* ========================================
+   ANIMATIONS
+======================================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 992px) {
+  .hero-title { font-size: 3.5rem; }
+  .hero-title .quote { font-size: 4.5rem; }
+  .breakfast, .fresh-onions { height: 280px; padding: 30px; }
+}
+
+@media (max-width: 768px) {
+  .hero-section { padding: 60px 0 80px; }
+  .hero-title { font-size: 2.8rem; }
+  .hero-title .quote { font-size: 3.5rem; }
+  .featured-cards-container { flex-direction: column; align-items: center; padding: 0 20px; }
+  .breakfast, .fresh-onions { width: 100%; max-width: 100%; height: 250px; }
+  .subscribe-content { flex-direction: column; }
+  .deals-day { padding: 30px 20px; }
+  .decorative-leaf, .decorative-orange-slice { display: none; }
+}
+
+@media (max-width: 576px) {
+  .hero-title { font-size: 2.2rem; }
+  .hero-title .quote { font-size: 3rem; }
+  .product-image { width: 100%; height: 200px; }
+}

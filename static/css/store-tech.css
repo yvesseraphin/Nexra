@@ -1,0 +1,216 @@
+/* =========================================================
+   store-tech.css — Tech storefront page styles
+   Ported from frontend/tech.css · Font: Outfit
+========================================================= */
+
+:root {
+  --primary-color: #2d2d2d;
+  --accent-color: #d4a574;
+  --bg-light: #f8f9fa;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--primary-color);
+}
+
+/* ================= HERO ================= */
+.hero {
+  padding: 80px 0;
+  background-image: url('/static/images/s1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 550px;
+}
+
+.hero-text {
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.highlight {
+  color: #f5a623;
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  margin: 1.5rem 0;
+  animation: fadeInUp 1.2s ease;
+}
+
+.btn-shop {
+  background: orange;
+  color: white;
+  padding: 1rem 3rem;
+  border-radius: 30px;
+  font-weight: 600;
+  animation: fadeInUp 1.4s ease;
+}
+
+.btn-shop:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.9);
+}
+
+/* ================= CATEGORIES ================= */
+.categories {
+  padding: 4rem 0;
+}
+
+.category-item {
+  text-align: center;
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
+  transition: transform 0.3s ease;
+}
+
+.category-item:hover {
+  transform: translateY(-10px);
+}
+
+.category-circle {
+  width: 200px;
+  height: 80px;
+  border-radius: 60px;
+  overflow: hidden;
+  margin: 0 auto 0.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.category-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= PRODUCTS ================= */
+.product-section {
+  padding: 3rem 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.product-card {
+  height: 100%;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+}
+
+.product-image {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  padding: 20px;
+}
+
+.product-card .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.add-btn {
+  margin-top: auto;
+  background: #000;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-btn:hover {
+  background: #333;
+}
+
+/* ================= PROMO BANNER ================= */
+.promo-banner {
+  background-image: url('/static/images/s15.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 4rem 0;
+  margin: 4rem 0;
+  text-align: right;
+  height: 400px;
+}
+
+.promo-banner h2 {
+  font-size: 3rem;
+  animation: pulse 2s infinite;
+}
+
+/* ================= CTA ================= */
+.cta-section {
+  background: rgb(246, 242, 238);
+  padding: 5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.cta-image {
+  width: 500px;
+  height: 300px;
+}
+
+.email-input {
+  border-radius: 50px;
+}
+
+.btn-secondary {
+  background: black;
+  border-radius: 20px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 991px) {
+  .hero { text-align: left; }
+  .hero-images { justify-content: center; margin-top: 40px; }
+  .hero-images img { width: 85%; margin-right: 0; }
+  .cta-section { flex-direction: column; }
+  .cta-image { width: 400px; margin-top: 20px; height: auto; }
+}
+
+@media (max-width: 576px) {
+  .hero-title { font-size: 2rem; }
+  .hero-images { flex-direction: column; }
+  .product-image { height: 250px; }
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes floatAnimation {
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.05); }
+}

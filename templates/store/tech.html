@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tech — Nexra{% endblock %}
+{% block body_page %}tech{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store-tech.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="hero-text display-5">
+            Upgrade Your <br>
+            <span class="highlight">Workflow</span>
+          </h1>
+          <p class="hero-description">
+            High-Performance Tools<br>
+            Designed To Help you Do More &amp;<br>
+            Faster.
+          </p>
+          <a href="#shop" class="btn btn-shop">SHOP NOW</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Categories -->
+  <section class="categories" id="shop">
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-md-2 category-item">
+          <a href="{% url 'food' %}" class="category-link">
+            <div class="category-circle">
+              <img src="{% static 'images/s2.png' %}" alt="Dell">
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <a href="{% url 'tech' %}" class="category-link">
+            <div class="category-circle">
+              <img src="{% static 'images/s3.png' %}" alt="JBL">
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <a href="{% url 'fashion' %}" class="category-link">
+            <div class="category-circle">
+              <img src="{% static 'images/s4.png' %}" alt="Apple">
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <a href="{% url 'kids' %}" class="category-link">
+            <div class="category-circle">
+              <img src="{% static 'images/s5.png' %}" alt="Samsung">
+            </div>
+          </a>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <a href="{% url 'accessories' %}" class="category-link">
+            <div class="category-circle">
+              <img src="{% static 'images/s6.png' %}" alt="LG">
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trending Products -->
+  <section class="product-section">
+    <div class="container">
+      <h2 class="section-title">Trending products</h2>
+      <div class="row g-4" id="tech-trending-grid">
+
+        {% with products=store_data.pages.tech.sections.trendingProducts.items %}
+        {% for item in products %}
+        <div class="col-md-4 col-lg-3">
+          <div class="card product-card h-100">
+            <img src="/static/{{ item.image }}" class="product-image card-img-top" alt="{{ item.alt }}">
+            <div class="card-body">
+              <h5>{{ item.title }}</h5>
+              <p class="product-price">{{ item.price }}</p>
+              <button class="add-btn"
+                      data-product-title="{{ item.title }}"
+                      data-product-price="{{ item.price }}">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% empty %}
+        <!-- Static fallback -->
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s7.png' %}" class="product-image card-img-top" alt="LG SMART TV">
+            <div class="card-body">
+              <h5>LG SMART TV</h5>
+              <p class="product-price">660 000 RWF</p>
+              <button class="add-btn" data-product-title="LG SMART TV" data-product-price="660 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s8.png' %}" class="product-image card-img-top" alt="Flash Drive">
+            <div class="card-body">
+              <h5>FLASH DRIVE</h5>
+              <p class="product-price">10 000 RWF</p>
+              <button class="add-btn" data-product-title="Flash Drive" data-product-price="10 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s9.png' %}" class="product-image card-img-top" alt="Samsung Fridge">
+            <div class="card-body">
+              <h5>SAMSUNG FRIDGE</h5>
+              <p class="product-price">500 000 RWF</p>
+              <button class="add-btn" data-product-title="Samsung Fridge" data-product-price="500 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s10.png' %}" class="product-image card-img-top" alt="iPhone 17 Pro Max">
+            <div class="card-body">
+              <h5>IPHONE 17 PRO MAX</h5>
+              <p class="product-price">1 000 000 RWF</p>
+              <button class="add-btn" data-product-title="iPhone 17 Pro Max" data-product-price="1 000 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s11.png' %}" class="product-image card-img-top" alt="Dell Inspiron">
+            <div class="card-body">
+              <h5>DELL INSPIRON</h5>
+              <p class="product-price">250 000 RWF</p>
+              <button class="add-btn" data-product-title="Dell Inspiron" data-product-price="250 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s12.png' %}" class="product-image card-img-top" alt="LG Smart Pods">
+            <div class="card-body">
+              <h5>LG SMART PODS</h5>
+              <p class="product-price">15 000 RWF</p>
+              <button class="add-btn" data-product-title="LG Smart Pods" data-product-price="15 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s13.png' %}" class="product-image card-img-top" alt="Camera">
+            <div class="card-body">
+              <h5>CAMERA</h5>
+              <p class="product-price">200 000 RWF</p>
+              <button class="add-btn" data-product-title="Camera" data-product-price="200 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/s14.png' %}" class="product-image card-img-top" alt="Bluetooth Speaker">
+            <div class="card-body">
+              <h5>BLUETOOTH SPEAKER</h5>
+              <p class="product-price">250 000 RWF</p>
+              <button class="add-btn" data-product-title="Bluetooth Speaker" data-product-price="250 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endwith %}
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Promo Banner -->
+  <section class="promo-banner">
+    <div class="container text-center">
+      <h2>Up To 25% Discount<br>Check It Out</h2>
+    </div>
+  </section>
+
+  <!-- Best Sellers -->
+  <section class="product-section">
+    <div class="container">
+      <h2 class="section-title">Best Seller in our collection</h2>
+      <div class="row g-4" id="tech-best-sellers-grid">
+
+        <div class="col-md-4 col-lg-3">
+          <div class="card product-card">
+            <img src="{% static 'images/s16.png' %}" class="product-image card-img-top" alt="Apple Smart Watch">
+            <div class="card-body">
+              <h5>APPLE SMART WATCH</h5>
+              <p class="product-price">100 000 RWF</p>
+              <button class="add-btn" data-product-title="Apple Smart Watch" data-product-price="100 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-3">
+          <div class="card product-card">
+            <img src="{% static 'images/s17.png' %}" class="product-image card-img-top" alt="Robot Fan">
+            <div class="card-body">
+              <h5>ROBOT FAN</h5>
+              <p class="product-price">20 000 RWF</p>
+              <button class="add-btn" data-product-title="Robot Fan" data-product-price="20 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-3">
+          <div class="card product-card">
+            <img src="{% static 'images/s18.png' %}" class="product-image card-img-top" alt="HP ProBook 450">
+            <div class="card-body">
+              <h5>HP PROBOOK 450</h5>
+              <p class="product-price">1 500 000 RWF</p>
+              <button class="add-btn" data-product-title="HP ProBook 450" data-product-price="1 500 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-3">
+          <div class="card product-card">
+            <img src="{% static 'images/s19.png' %}" class="product-image card-img-top" alt="GB Headsets">
+            <div class="card-body">
+              <h5>GB HEADSETS</h5>
+              <p class="product-price">20 000 RWF</p>
+              <button class="add-btn" data-product-title="GB Headsets" data-product-price="20 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h4>Stop home &amp; get your daily<br>needs from our shop</h4>
+      <p>Start Your Daily Shopping with Nexra</p>
+      <div class="subscribe-form">
+        <form>
+          <input type="email" class="form-control email-input" placeholder="Enter your email">
+          <button class="btn btn-secondary subscribe-btn mt-3">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div>
+      <img src="{% static 'images/s20.png' %}" class="cta-image float-end" alt="Tech CTA">
+    </div>
+  </section>
+
+{% endblock %}
