@@ -9,7 +9,8 @@ urlpatterns = [
     # Since cart is another app, route it to cart.urls
     path('cart/', include('cart.urls')),
     
-    # Auth API endpoints (requested by the client script without leading accounts/ prefix)
-    path('api/auth/login', accounts_views.api_login, name='api_login'),
-    path('api/auth/signup', accounts_views.api_signup, name='api_signup'),
+    # Auth API endpoints
+    path('api/auth/login/', accounts_views.api_login, name='api_login'),
+    path('api/auth/signup/', accounts_views.api_signup, name='api_signup'),
+    path('api/profile/', accounts_views.api_profile, name='api_profile'),
 ]

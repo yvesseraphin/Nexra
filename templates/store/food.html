@@ -1,0 +1,361 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Food — Nexra{% endblock %}
+{% block body_page %}food{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store-food.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <!-- Decorative Elements -->
+    <img src="{% static 'images/__before.png' %}" alt="" class="decorative-leaf leaf-top-left">
+    <img src="{% static 'images/_before.png' %}" alt="" class="decorative-orange-slice">
+    <img src="{% static 'images/__after.png' %}" alt="" class="decorative-leaf leaf-bottom-left">
+    <img src="{% static 'images/Adobe Express - file.png' %}" alt="" class="decorative-leaf leaf-bottom-center">
+    
+    <div class="container position-relative">
+      <div class="row align-items-center min-vh-75">
+        <div class="col-lg-6 col-md-12">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              <span class="quote">"</span>Taste the world's finest <span class="highlight">ingredients.</span>
+            </h1>
+            <p class="hero-description">
+              We source exclusively from small-batch artisans and sustainable farms to bring Michelin-star quality directly to your home kitchen.
+            </p>
+            <div class="category-buttons">
+              <button class="category-btn active">Shopping</button>
+              <button class="category-btn">Recipes</button>
+              <button class="category-btn">Kitchen</button>
+              <button class="category-btn">News</button>
+              <button class="category-btn">Food</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="hero-image-wrapper">
+            <img src="{% static 'images/banner-13.png.png' %}" alt="Fresh Orange" class="hero-orange">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Cards Section -->
+  <section class="featured-section">
+    <div class="featured-cards-container">
+      <div class="featured-card breakfast">
+        <img src="{% static 'images/banner-2.png.png' %}" alt="breakfast" class="card-bg-image">
+        <div class="card-text-content">
+          <p class="card-text">Make your Breakfast Healthy and Easy</p>
+          <button class="shop-btn">Shop Now</button>
+        </div>
+      </div>
+      <div class="featured-card fresh-onions">
+        <img src="{% static 'images/banner-1.png.png' %}" alt="fresh onions" class="card-bg-image">
+        <div class="card-text-content">
+          <p class="card-text">Everyday Fresh & Clean with Our Products</p>
+          <button class="shop-btn">Shop Now</button>
+        </div>
+      </div>    
+    </div>
+  </section>
+
+  <!-- Popular Products Section -->
+  <section class="product-section">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Popular Products</h2>
+      <div class="row g-4" id="food-popular-grid">
+        
+        <!-- Lemon -->
+        <div class="col-md-4 col-sm-6">
+          <div class="card product-card">
+            <img src="{% static 'images/div.product-img-action-wrap.png' %}" class="product-image" alt="Lemon">
+            <div class="card-body">
+              <h5>Fresh organic wild farm lemon</h5>
+              <p class="product-description">Snack • 500gm pack</p>
+              <p class="product-price">5 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Fresh organic wild farm lemon 500gm pack"
+                      data-product-price="5 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hazelnut -->
+        <div class="col-md-4 col-sm-6">
+          <div class="card product-card">
+            <img src="{% static 'images/div.product-img-action-wrap (1).png' %}" class="product-image" alt="Hazelnut">
+            <div class="card-body">
+              <h5>Best snacks with hazel nut</h5>
+              <p class="product-description">Hodo Foods • 200gm pack</p>
+              <p class="product-price">52 085 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Best snacks with hazel nut pack 200gm"
+                      data-product-price="52 085 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Watermelon -->
+        <div class="col-md-4 col-sm-6">
+          <div class="card product-card">
+            <img src="{% static 'images/→ product-3-1.jpg.png' %}" class="product-image" alt="Watermelon">
+            <div class="card-body">
+              <h5>Organic fresh venila farm watermelon</h5>
+              <p class="product-description">Snack • 5kg</p>
+              <p class="product-price">48 085 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Organic fresh venila farm watermelon 5kg"
+                      data-product-price="48 085 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Muffin -->
+        <div class="col-md-4 col-sm-6">
+          <div class="card product-card">
+            <img src="{% static 'images/→ product-6-1.jpg.png' %}" class="product-image" alt="Muffin">
+            <div class="card-body">
+              <h5>Chobani Complete Vanilla Greek Yogurt</h5>
+              <p class="product-description">Hodo Foods</p>
+              <p class="product-price">1 200 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Chobani Complete Vanilla Greek Yogurt"
+                      data-product-price="1 200 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blackberry -->
+        <div class="col-md-4 col-sm-6">
+          <div class="card product-card">
+            <img src="{% static 'images/→ product-7-1.jpg.png' %}" class="product-image" alt="Blackberry">
+            <div class="card-body">
+              <h5>BlackBerries</h5>
+              <p class="product-description">Fruit</p>
+              <p class="product-price">8 085 RWF</p>
+              <button class="add-btn"
+                      data-product-title="BlackBerries"
+                      data-product-price="8 085 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BlackBurger -->
+        <div class="col-md-4 col-sm-6">
+          <div class="card product-card">
+            <img src="{% static 'images/→ product-8-1.jpg.png' %}" class="product-image" alt="BlackBurger">
+            <div class="card-body">
+              <h5>Black Burgers</h5>
+              <p class="product-description">Snack</p>
+              <p class="product-price">35 085 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Black Burgers"
+                      data-product-price="35 085 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Best Sells Section -->
+  <section class="daily-best-section">
+    <div class="container">
+      <h2 class="section-title">Daily Best Sells</h2>
+      
+      <div class="daily-banner">
+        <img src="{% static 'images/Gemini_Generated_Image_w5ir5qw5ir5qw5ir (1).png' %}" alt="Food Banner" class="banner-bg-image" data-index="0">
+        <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=1200&h=500&fit=crop" alt="Fresh Vegetables" class="banner-bg-image hidden" data-index="1">
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&h=500&fit=crop" alt="Organic Fruits" class="banner-bg-image hidden" data-index="2">
+        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&h=500&fit=crop" alt="Healthy Salad" class="banner-bg-image hidden" data-index="3">
+        
+        <div class="banner-content">
+          <h3 class="banner-title">Bring nature into your home</h3>
+          <button class="btn-shop-now-white">Shop Now</button>
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <button class="banner-arrow arrow-left" aria-label="Previous">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="banner-arrow arrow-right" aria-label="Next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+          <span class="indicator active" data-slide="0"></span>
+          <span class="indicator" data-slide="1"></span>
+          <span class="indicator" data-slide="2"></span>
+          <span class="indicator" data-slide="3"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deals of the Day -->
+  <section class="product-section">
+    <div class="container">
+      <div class="row g-4" id="food-deals-grid">
+        
+        <!-- Quinoa -->
+        <div class="col-md-4">
+          <div class="card product-card p-3">
+            <div class="row align-items-center">
+              <div class="col-4">
+                <img src="{% static 'images/banner-5.png.png' %}" class="img-fluid rounded" alt="Quinoa">
+              </div>
+              <div class="col-8">
+                <h6 class="mb-1">Seeds of Change Organic Quinoa, Brown, &amp; Red Rice</h6>
+                <p class="product-price mb-2 text-primary">2 000 RWF</p>
+                <button class="add-btn py-1 px-3"
+                        data-product-title="Seeds of Change Organic Quinoa, Brown, &amp; Red Rice"
+                        data-product-price="2 000 RWF">
+                  <i class="fas fa-shopping-cart"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perdue -->
+        <div class="col-md-4">
+          <div class="card product-card p-3">
+            <div class="row align-items-center">
+              <div class="col-4">
+                <img src="{% static 'images/banner-6.png.png' %}" class="img-fluid rounded" alt="perdue">
+              </div>
+              <div class="col-8">
+                <h6 class="mb-1">Perdue Simply Smart Organics Gluten Free</h6>
+                <p class="product-price mb-2 text-primary">7 000 RWF</p>
+                <button class="add-btn py-1 px-3"
+                        data-product-title="Perdue Simply Smart Organics Gluten Free"
+                        data-product-price="7 000 RWF">
+                  <i class="fas fa-shopping-cart"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lemonade -->
+        <div class="col-md-4">
+          <div class="card product-card p-3">
+            <div class="row align-items-center">
+              <div class="col-4">
+                <img src="{% static 'images/banner-8.png.png' %}" class="img-fluid rounded" alt="Lemonade">
+              </div>
+              <div class="col-8">
+                <h6 class="mb-1">Simply Lemonade with Raspberry Juice</h6>
+                <p class="product-price mb-2 text-primary">85 000 RWF</p>
+                <button class="add-btn py-1 px-3"
+                        data-product-title="Simply Lemonade with Raspberry Juice"
+                        data-product-price="85 000 RWF">
+                  <i class="fas fa-shopping-cart"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h4 class="cta-title">Stay home &amp; get your daily needs from our shop</h4>
+          <p class="cta-subtitle">Start Your Daily Shopping with Nexra</p>
+          <div class="subscribe-form">
+            <form>
+              <input type="email" class="form-control email-input" placeholder="Enter your email">
+              <button class="btn btn-secondary subscribe-btn">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center text-lg-end mt-4 mt-lg-0">
+          <img src="{% static 'images/banner-9.png.png' %}" class="cta-image img-fluid" alt="Delivery Person with Vegetables">
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Daily Best Sells Carousel
+  const images = document.querySelectorAll('.daily-banner .banner-bg-image');
+  const prevBtn = document.querySelector('.daily-banner .arrow-left');
+  const nextBtn = document.querySelector('.daily-banner .arrow-right');
+  const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+  
+  let currentIndex = 0;
+  const totalImages = images.length;
+
+  function showImage(index) {
+    images.forEach(img => img.classList.add('hidden'));
+    images[index].classList.remove('hidden');
+    indicators.forEach(ind => ind.classList.remove('active'));
+    indicators[index].classList.add('active');
+  }
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalImages;
+    showImage(currentIndex);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+    showImage(currentIndex);
+  });
+
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      currentIndex = index;
+      showImage(currentIndex);
+    });
+  });
+
+  // Auto-play every 5 seconds
+  let autoPlay = setInterval(() => {
+    currentIndex = (currentIndex + 1) % totalImages;
+    showImage(currentIndex);
+  }, 5000);
+
+  // Pause on hover
+  document.querySelector('.daily-banner').addEventListener('mouseenter', () => {
+    clearInterval(autoPlay);
+  });
+
+  document.querySelector('.daily-banner').addEventListener('mouseleave', () => {
+    autoPlay = setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalImages;
+      showImage(currentIndex);
+    }, 5000);
+  });
+</script>
+{% endblock %}

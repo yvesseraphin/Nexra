@@ -69,17 +69,13 @@
 
   function buildApiUrl(path) {
     const normalizedPath = String(path || "");
-    const { protocol, hostname, port } = window.location;
-    const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
+    const { protocol } = window.location;
 
     if (protocol === "file:") {
-      return `http://localhost:3000${normalizedPath}`;
+      return `http://localhost:8000${normalizedPath}`;
     }
 
-    if (isLocalHost && port && port !== "3000") {
-      return `http://localhost:3000${normalizedPath}`;
-    }
-
+    // Same origin — let Django handle it
     return normalizedPath;
   }
 
@@ -88,7 +84,7 @@
   }
 
   function normalizePath(rawPath) {
-    const fallback = "index.html";
+    const fallback = "/";
     const value = String(rawPath || "").trim();
 
     if (!value) {
@@ -99,12 +95,12 @@
       return fallback;
     }
 
-    if (value === "/") {
+    if (value === "/" || value === "index.html") {
       return fallback;
     }
 
     const cleaned = value.replace(/^\//, "");
-    return cleaned || fallback;
+    return cleaned ? `/${cleaned}` : fallback;
   }
 
   function getCurrentPath() {
@@ -924,7 +920,6 @@
     }
 
     setPostAuthRedirect(redirectTarget);
-    // Redirect to login page in Django
     window.location.href = `/accounts/login/?redirect=${encodeURIComponent(normalizePath(redirectTarget))}`;
     return false;
   }

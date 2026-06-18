@@ -89,48 +89,56 @@ STORE_DATA = {
               "image": "images/s7.png",
               "alt": "LG SMART TV",
               "title": "LG SMART TV",
+              "description": "Smart TV",
               "price": "660 000RWF"
             },
             {
               "image": "images/s8.png",
               "alt": "FLASH DRIVE",
               "title": "FLASH DRIVE",
+              "description": "Storage",
               "price": "10 000RWF"
             },
             {
               "image": "images/s9.png",
               "alt": "SAMSUNG FRIDGE",
               "title": "SAMSUNG FRIDGE",
+              "description": "Home Appliance",
               "price": "500 000RWF"
             },
             {
               "image": "images/s10.png",
               "alt": "IPHONE 17 PRO MAX",
               "title": "IPHONE 17 PRO MAX",
+              "description": "Smartphone",
               "price": "1 000 000RWF"
             },
             {
               "image": "images/s11.png",
               "alt": "DELL INSPIRON",
               "title": "DELL INSPIRON",
+              "description": "Laptop",
               "price": "250 000RWF"
             },
             {
               "image": "images/s12.png",
               "alt": "LG SMART PODS",
               "title": "LG SMART PODS",
+              "description": "Audio",
               "price": "15 000RWF"
             },
             {
               "image": "images/s13.png",
               "alt": "CAMERA",
               "title": "CAMERA",
+              "description": "Photography",
               "price": "200 000RWF"
             },
             {
               "image": "images/s14.png",
               "alt": "BLUETOOTH SPEAKER",
               "title": "BLUETOOTH SPEAKER",
+              "description": "Audio",
               "price": "250 000RWF"
             }
           ]
@@ -141,24 +149,28 @@ STORE_DATA = {
               "image": "images/s16.png",
               "alt": "APPLE SMART WATCH",
               "title": "APPLE SMART WATCH",
+              "description": "Wearable",
               "price": "100 000RWF"
             },
             {
               "image": "images/s17.png",
               "alt": "ROBOT FAN",
               "title": "ROBOT FAN",
+              "description": "Home Appliance",
               "price": "20 000RWF"
             },
             {
               "image": "images/s18.png",
               "alt": "HP PROBOOK 450",
               "title": "HP PROBOOK 450",
+              "description": "Laptop",
               "price": "1 500 000RWF"
             },
             {
               "image": "images/s19.png",
               "alt": "GB HEADSETS",
               "title": "GB HEADSETS",
+              "description": "Audio",
               "price": "20 000RWF"
             }
           ]
@@ -575,6 +587,8 @@ STORE_DATA = {
             {
               "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop",
               "alt": "Beige Fashion",
+              "title": "Beige Knitwear",
+              "description": "New Winter Collection",
               "price": "11,780 RWF",
               "badgeClass": "badge-new",
               "badgeLabel": "New"
@@ -582,6 +596,8 @@ STORE_DATA = {
             {
               "image": "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400&h=500&fit=crop",
               "alt": "Woman with Hat",
+              "title": "Classic Fedora Hat",
+              "description": "Accessories",
               "price": "7,806 RWF",
               "badgeClass": "badge-sale",
               "badgeLabel": "Sale"
@@ -589,6 +605,8 @@ STORE_DATA = {
             {
               "image": "https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=400&h=500&fit=crop",
               "alt": "Striped Shirt",
+              "title": "Striped Summer Shirt",
+              "description": "Casual Clothing",
               "price": "1,956 RWF",
               "badgeClass": "badge-hot",
               "badgeLabel": "Hot"
@@ -596,6 +614,8 @@ STORE_DATA = {
             {
               "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop",
               "alt": "Man in Coat",
+              "title": "Double-Breasted Coat",
+              "description": "Men's Outerwear",
               "price": "7,220 RWF",
               "badgeClass": "badge-hot",
               "badgeLabel": "Hot"
@@ -607,36 +627,42 @@ STORE_DATA = {
             {
               "image": "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=800&h=600&fit=crop",
               "alt": "White tops",
+              "title": "White Cotton Top",
               "description": "White tops always bring a good mood.",
               "price": "15,000 RWF"
             },
             {
               "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop",
               "alt": "Beautiful heels",
+              "title": "Sleek Black Heels",
               "description": "Get yourself party-ready with beautiful heels!",
               "price": "28,000 RWF"
             },
             {
               "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop",
               "alt": "Simple bag",
+              "title": "Elegant Leather Handbag",
               "description": "A simple bag for a simple outing!",
               "price": "15,000 RWF"
             },
             {
               "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&h=600&fit=crop",
               "alt": "Pink hoodie",
+              "title": "Classic Pink Hoodie",
               "description": "Who said pink hoodies can't look good?",
               "price": "13,000 RWF"
             },
             {
               "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&h=600&fit=crop",
               "alt": "Fashion freedom",
+              "title": "Denim Jacket",
               "description": "Good fashion also means freedom.",
               "price": "22,000 RWF"
             },
             {
               "image": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=600&fit=crop",
               "alt": "Warm hoodie",
+              "title": "Warm Grey Hoodie",
               "description": "Stay warm. Look cool.",
               "price": "20,000 RWF"
             }

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile — Nexra{% endblock %}
+{% block body_page %}profile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/account-profile.css' %}" />
+{% endblock %}
+
+{% block content %}
+<main class="profile-page">
+    <section class="account-layout">
+        <aside class="account-sidebar" aria-label="Account navigation">
+            <p class="account-breadcrumb">Shopping / Account</p>
+            <h1>My account</h1>
+
+            <div class="account-nav">
+                <button type="button" class="account-nav-link is-active" data-account-tab="details">
+                    <span>My details</span>
+                </button>
+                <button type="button" class="account-nav-link" data-account-tab="cart">
+                    <span>My cart</span>
+                    <span class="account-nav-badge" id="account-cart-count">0</span>
+                </button>
+                <button type="button" class="account-nav-link" data-account-tab="orders">
+                    <span>My orders</span>
+                    <span class="account-nav-badge" id="account-order-count">0</span>
+                </button>
+                <button type="button" class="account-nav-link" data-account-tab="payments">
+                    <span>Payment methods</span>
+                    <span class="account-nav-badge" id="account-payment-count">0</span>
+                </button>
+                <button type="button" class="account-nav-link" data-account-tab="address">
+                    <span>My address book</span>
+                </button>
+            </div>
+
+            <button type="button" class="logout-btn" id="logout-button">Log out</button>
+        </aside>
+
+        <section class="account-content">
+            <section class="account-panel" data-account-panel="details">
+                <div class="section-head">
+                    <p class="section-kicker">Account Profile</p>
+                    <h2>My details</h2>
+                </div>
+
+                <form class="details-form" id="profile-details-form">
+                    <div class="profile-summary-row">
+                        <div class="profile-avatar-lg" id="profile-avatar">
+                            <img id="profile-avatar-image" alt="Profile photo" hidden>
+                            <span id="profile-avatar-fallback"></span>
+                        </div>
+
+                        <div class="profile-summary-copy">
+                            <h3 id="profile-name"></h3>
+                            <p id="profile-detail"></p>
+                        </div>
+
+                        <div class="profile-summary-actions">
+                            <input type="file" id="profile-photo-input" accept="image/*" hidden>
+                            <button type="button" class="outline-pill" id="profile-photo-button">Upload new photo</button>
+                            <button type="button" class="text-link-btn" id="profile-photo-remove">Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="details-grid">
+                        <label class="field-control">
+                            <span>First name</span>
+                            <input type="text" id="profile-first-name" name="firstName" autocomplete="given-name">
+                        </label>
+
+                        <label class="field-control">
+                            <span>Last name</span>
+                            <input type="text" id="profile-last-name" name="lastName" autocomplete="family-name">
+                        </label>
+
+                        <label class="field-control">
+                            <span>Gender</span>
+                            <div class="custom-select" id="profile-gender-dropdown" data-field="gender">
+                                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="custom-select-value" data-placeholder="Select">Select</span>
+                                    <i class="bx bx-chevron-down custom-select-caret" aria-hidden="true"></i>
+                                </button>
+                                <ul class="custom-select-menu" role="listbox" aria-label="Gender">
+                                    <li class="custom-select-item" role="option" data-value="Female">
+                                        <i class="bx bx-female custom-select-item-icon" aria-hidden="true"></i>
+                                        <span>Female</span>
+                                    </li>
+                                    <li class="custom-select-item" role="option" data-value="Male">
+                                        <i class="bx bx-male custom-select-item-icon" aria-hidden="true"></i>
+                                        <span>Male</span>
+                                    </li>
+                                    <li class="custom-select-item" role="option" data-value="Non-binary">
+                                        <i class="bx bx-intersect custom-select-item-icon" aria-hidden="true"></i>
+                                        <span>Non-binary</span>
+                                    </li>
+                                    <li class="custom-select-item" role="option" data-value="Prefer not to say">
+                                        <i class="bx bx-low-vision custom-select-item-icon" aria-hidden="true"></i>
+                                        <span>Prefer not to say</span>
+                                    </li>
+                                </ul>
+                                <input type="hidden" id="profile-gender" name="gender">
+                            </div>
+                        </label>
+
+                        <label class="field-control">
+                            <span>Phone number</span>
+                            <input type="tel" id="profile-phone" name="phone" autocomplete="tel">
+                        </label>
+
+                        <label class="field-control">
+                            <span>Email address</span>
+                            <input type="email" id="profile-email" name="email" autocomplete="email">
+                        </label>
+
+                        <label class="field-control">
+                            <span>Password</span>
+                            <input type="password" id="profile-password" value="password" readonly>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="primary-pill">Save my details</button>
+                    <p class="form-status" id="profile-form-status" aria-live="polite"></p>
+                </form>
+            </section>
+
+            <section class="account-panel" data-account-panel="cart" hidden>
+                <div class="section-head">
+                    <p class="section-kicker">Saved For Checkout</p>
+                    <h2>My cart</h2>
+                </div>
+                <div id="profile-cart"></div>
+            </section>
+
+            <section class="account-panel" data-account-panel="orders" hidden>
+                <div class="section-head">
+                    <p class="section-kicker">Purchase History</p>
+                    <h2>My orders</h2>
+                </div>
+                <div id="profile-orders"></div>
+            </section>
+
+            <section class="account-panel" data-account-panel="payments" hidden>
+                <div class="section-head">
+                    <p class="section-kicker">Checkout Wallet</p>
+                    <h2>Payment methods</h2>
+                </div>
+                <div id="profile-payments"></div>
+            </section>
+
+            <section class="account-panel" data-account-panel="address" hidden>
+                <div class="section-head">
+                    <p class="section-kicker">Delivery Details</p>
+                    <h2>Address book</h2>
+                </div>
+
+                <div class="account-placeholder">
+                    <h3>No saved addresses yet</h3>
+                    <p>Your delivery locations will appear here once address saving is added.</p>
+                </div>
+            </section>
+        </section>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/account-profile.js' %}"></script>
+{% endblock %}

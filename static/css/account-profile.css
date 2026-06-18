@@ -1,0 +1,774 @@
+/* ============================================================
+   Account / Profile Page
+   Layout & design from reference, inputs match login page,
+   gender select styled like the navbar dropdown.
+   ============================================================ */
+
+:root {
+    --profile-bg: #ffffff;
+    --profile-surface: #ffffff;
+    --profile-text: #121212;
+    --profile-muted: #6b6b6b;
+    --profile-muted-strong: #3f3f3f;
+    --profile-border: rgba(18, 18, 18, 0.12);
+    --profile-border-strong: rgba(18, 18, 18, 0.2);
+    --profile-soft: #f5f5f5;
+    --profile-avatar: #111111;
+    --profile-success: #2d7255;
+    --profile-error: #b04848;
+}
+
+/* ── Page shell ─────────────────────────────────────────── */
+.profile-page {
+    min-height: 100vh;
+    padding: clamp(2rem, 4vw, 3.4rem) 0 3.5rem;
+    background: var(--profile-bg);
+    color: var(--profile-text);
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ── Two-column layout ──────────────────────────────────── */
+.account-layout {
+    width: min(1320px, calc(100% - 2.5rem));
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    column-gap: clamp(3.5rem, 7vw, 7rem);
+    row-gap: 2rem;
+}
+
+/* ── Sidebar headings ───────────────────────────────────── */
+.account-sidebar h1,
+.section-head h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+}
+
+.account-breadcrumb,
+.section-kicker {
+    margin: 0 0 1rem;
+    color: var(--profile-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* ── Sidebar nav ────────────────────────────────────────── */
+.account-nav {
+    display: grid;
+    gap: 0.32rem;
+    margin-top: 1.9rem;
+}
+
+.account-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--profile-muted-strong);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.account-nav-link:hover {
+    color: var(--profile-text);
+    transform: translateX(2px);
+}
+
+.account-nav-link.is-active {
+    color: var(--profile-text);
+}
+
+.account-nav-badge {
+    min-width: 1.8rem;
+    height: 1.8rem;
+    padding: 0 0.42rem;
+    border-radius: 999px;
+    border: 1px solid rgba(18, 18, 18, 0.08);
+    background: var(--profile-soft);
+    color: var(--profile-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+/* ── Shared button base ─────────────────────────────────── */
+.logout-btn,
+.outline-pill,
+.primary-pill,
+.text-link-btn {
+    font-family: 'Outfit', sans-serif;
+}
+
+.logout-btn,
+.outline-pill,
+.primary-pill {
+    min-height: 3.15rem;
+    padding: 0.85rem 1.45rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease,
+                color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Logout + outline share the same border style */
+.logout-btn,
+.outline-pill {
+    border: 1.25px solid var(--profile-border-strong);
+    background: var(--profile-surface);
+    color: var(--profile-text);
+}
+
+.logout-btn {
+    width: min(100%, 174px);
+    margin-top: 2.3rem;
+    font-weight: 600;
+}
+
+/* Primary — black pill, same feel as .btn-signup on login page */
+.primary-pill {
+    border: 0;
+    background: var(--profile-text);
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.logout-btn:hover,
+.outline-pill:hover,
+.primary-pill:hover,
+.text-link-btn:hover {
+    transform: translateY(-1px);
+}
+
+.logout-btn:disabled,
+.outline-pill:disabled,
+.primary-pill:disabled,
+.text-link-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ── Content area ───────────────────────────────────────── */
+.account-content {
+    width: min(100%, 760px);
+}
+
+.account-panel {
+    display: block;
+}
+
+/* ── Profile summary row ────────────────────────────────── */
+.profile-summary-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem 1.25rem;
+    padding: 1.35rem 0 1.7rem;
+    border-bottom: 1px solid rgba(18, 18, 18, 0.09);
+}
+
+.profile-avatar-lg {
+    width: 84px;
+    height: 84px;
+    border-radius: 999px;
+    background: #111111;
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.profile-avatar-lg.has-image {
+    background: #f5f5f5;
+}
+
+.profile-avatar-lg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-summary-copy {
+    min-width: 0;
+}
+
+.profile-summary-copy h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.profile-summary-copy p {
+    margin: 0.35rem 0 0;
+    color: var(--profile-muted);
+    line-height: 1.55;
+}
+
+.profile-summary-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.outline-pill {
+    font-weight: 600;
+}
+
+.text-link-btn {
+    border: 0;
+    background: transparent;
+    color: var(--profile-text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* ── Details form ───────────────────────────────────────── */
+.details-form {
+    padding-top: 1.35rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.2rem;
+}
+
+.field-control {
+    display: grid;
+    gap: 0.48rem;
+}
+
+.field-control span {
+    color: var(--profile-muted-strong);
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+/* ── Inputs — same shape as login page ──────────────────── */
+/*  Login page: border 1px #E0E0E0, border-radius 8px,
+    padding 16px, font Outfit 500, color #253D4E            */
+.field-control input {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #253D4E;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.field-control input:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 1px #000000;
+}
+
+.field-control input[readonly] {
+    background: #f5f5f5;
+    color: #7E7E7E;
+    cursor: not-allowed;
+    border-color: #E0E0E0;
+    box-shadow: none;
+}
+
+.field-control input:-webkit-autofill,
+.field-control input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #253D4E !important;
+}
+
+/* ── Gender select — custom dropdown like navbar ────────── */
+.custom-select {
+    position: relative;
+}
+
+.custom-select-trigger {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #7E7E7E;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background: #ffffff;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+}
+
+.custom-select-trigger:focus,
+.custom-select.is-open .custom-select-trigger {
+    border-color: #000000;
+    box-shadow: 0 0 0 1px #000000;
+}
+
+.custom-select.has-value .custom-select-trigger {
+    color: #253D4E;
+}
+
+.custom-select-caret {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    color: #7E7E7E;
+}
+
+.custom-select.is-open .custom-select-caret {
+    transform: rotate(180deg);
+}
+
+/* Dropdown menu — navbar dropdown style */
+.custom-select-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.75rem 0;
+    list-style: none;
+    background: #ffffff;
+    border: 1px solid rgba(37, 61, 78, 0.08);
+    border-radius: 1rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    z-index: 200;
+}
+
+.custom-select.is-open .custom-select-menu {
+    display: block;
+}
+
+/* Options — same as navbar dropdown items */
+.custom-select-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1.1rem;
+    color: #253d4e;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.custom-select-item:hover,
+.custom-select-item.is-selected {
+    background-color: rgba(17, 24, 39, 0.05);
+    color: #111827;
+}
+
+.custom-select-item-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.95rem;
+    height: 1.95rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: rgba(17, 24, 39, 0.06);
+    color: #111827;
+    font-size: 1.05rem;
+}
+
+/* ── Save button ────────────────────────────────────────── */
+.primary-pill {
+    margin-top: 1.7rem;
+    min-width: 220px;
+}
+
+/* ── Form status ────────────────────────────────────────── */
+.form-status {
+    min-height: 1.4rem;
+    margin: 0.9rem 0 0;
+    color: var(--profile-muted);
+    font-size: 0.94rem;
+    font-weight: 600;
+}
+
+.form-status.is-success {
+    color: var(--profile-success);
+}
+
+.form-status.is-error {
+    color: var(--profile-error);
+}
+
+/* ── Cart / orders item lists ───────────────────────────── */
+.profile-list,
+.orders-list {
+    display: grid;
+}
+
+.profile-item,
+.order-card {
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(18, 18, 18, 0.09);
+    background: transparent;
+}
+
+.profile-item:first-child,
+.order-card:first-child {
+    padding-top: 0.2rem;
+}
+
+.profile-item {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+}
+
+.profile-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 24px;
+    object-fit: cover;
+    background: var(--profile-soft);
+}
+
+.profile-item-copy h3,
+.order-card h3 {
+    margin: 0;
+}
+
+.profile-item-copy h3 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.profile-item-copy p,
+.order-card p,
+.order-item-row {
+    color: var(--profile-muted);
+}
+
+.profile-item-copy p,
+.order-card p {
+    margin: 0.35rem 0 0;
+    line-height: 1.55;
+}
+
+.profile-item-total {
+    font-size: 0.96rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ── Order cards ────────────────────────────────────────── */
+.order-card h3 {
+    font-size: 1.12rem;
+    font-weight: 700;
+}
+
+.order-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.order-meta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: var(--profile-soft);
+    color: var(--profile-text);
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.order-items {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.9rem;
+    padding-top: 0.85rem;
+    border-top: 1px dashed rgba(18, 18, 18, 0.12);
+}
+
+.order-item-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.94rem;
+}
+
+/* ── Empty / placeholder panels ────────────────────────── */
+.empty-panel,
+.account-placeholder {
+    padding: 1rem 0 0;
+}
+
+.empty-panel {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.empty-panel i {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 999px;
+    background: var(--profile-text);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.empty-panel h3,
+.account-placeholder h3 {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+}
+
+.empty-panel p,
+.account-placeholder p {
+    margin: 0.45rem 0 0;
+    color: var(--profile-muted);
+    line-height: 1.6;
+}
+
+/* ── Payment methods ────────────────────────────────────── */
+.payments-stack {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 0.4rem;
+}
+
+.payment-methods-list,
+.payment-activity-list {
+    display: grid;
+    gap: 0.95rem;
+}
+
+.payment-method-card,
+.payment-activity-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(18, 18, 18, 0.09);
+}
+
+.payment-method-card:first-child,
+.payment-activity-item:first-child {
+    padding-top: 0.2rem;
+}
+
+.payment-method-copy {
+    min-width: 0;
+}
+
+.payment-method-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.payment-method-head h3,
+.payment-activity h3,
+.payment-activity-item strong,
+.payment-activity-item span {
+    margin: 0;
+}
+
+.payment-method-head h3,
+.payment-activity-item strong {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.payment-method-copy p,
+.payment-method-copy span,
+.payment-activity-item p {
+    margin: 0.35rem 0 0;
+    color: var(--profile-muted);
+    line-height: 1.55;
+}
+
+.payment-method-copy span {
+    display: inline-block;
+}
+
+.payment-method-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.payment-action-btn.outline-pill {
+    min-height: 2.8rem;
+    padding: 0.65rem 1rem;
+}
+
+.payment-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.8rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--profile-soft);
+    color: var(--profile-text);
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.payment-activity {
+    padding-top: 0.5rem;
+}
+
+.payment-activity h3 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.payment-activity-item {
+    align-items: flex-start;
+}
+
+.payment-activity-item span {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--profile-text);
+    white-space: nowrap;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 960px) {
+    .account-layout {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 2rem;
+    }
+
+    .account-content {
+        width: 100%;
+    }
+
+    .account-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+
+    .account-nav-link {
+        padding: 0.9rem 1rem;
+        border: 1px solid rgba(18, 18, 18, 0.1);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.78);
+    }
+
+    .account-nav-link:hover {
+        transform: translateY(-1px);
+    }
+
+    .account-nav-link.is-active {
+        background: var(--profile-text);
+        color: #ffffff;
+    }
+
+    .account-nav-link.is-active .account-nav-badge {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.16);
+        color: #ffffff;
+    }
+
+    .logout-btn {
+        margin-top: 1.4rem;
+    }
+}
+
+@media (max-width: 680px) {
+    .profile-page {
+        padding-top: 1.35rem;
+    }
+
+    .account-layout {
+        width: min(100%, calc(100% - 1.5rem));
+    }
+
+    .account-sidebar h1,
+    .section-head h2 {
+        font-size: clamp(1.75rem, 9vw, 2.2rem);
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-summary-row,
+    .order-top,
+    .order-item-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-summary-actions {
+        margin-left: 0;
+    }
+
+    .profile-item {
+        grid-template-columns: 80px minmax(0, 1fr);
+    }
+
+    .profile-item-total {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 520px) {
+    .account-nav {
+        grid-template-columns: 1fr;
+    }
+
+    .outline-pill,
+    .primary-pill,
+    .logout-btn {
+        width: 100%;
+    }
+
+    .profile-summary-actions {
+        width: 100%;
+    }
+}

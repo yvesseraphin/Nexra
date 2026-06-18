@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Product — Nexra{% endblock %}
+{% block body_page %}product{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store-product-detail.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="product-page">
+  <div class="product-shell">
+
+    <!-- Feedback bar (error / success) -->
+    <p class="product-feedback" id="product-feedback" hidden aria-live="polite"></p>
+
+    <!-- Main hero grid -->
+    <div class="product-hero" id="product-hero" hidden>
+
+      <!-- ── Left: image ── -->
+      <div class="product-media">
+        <div class="product-main-image-wrap">
+          <img id="product-image" src="" alt="" class="product-main-image">
+        </div>
+        <!-- Thumbnail strip -->
+        <div class="product-thumbs" id="product-thumbs"></div>
+      </div>
+
+      <!-- ── Centre: info ── -->
+      <div class="product-info">
+        <p class="product-eyebrow" id="product-eyebrow" hidden></p>
+        <h1 class="product-title" id="product-title"></h1>
+        <p class="product-price" id="product-price"></p>
+        <p class="product-stock-note" id="product-stock-note"></p>
+        <p class="product-summary" id="product-summary"></p>
+
+        <!-- Quantity selector -->
+        <div class="product-qty-row">
+          <div class="product-option-group" id="product-quantity-options"></div>
+          <span class="product-qty-display">
+            Qty: <strong id="product-selected-quantity">1</strong>
+          </span>
+        </div>
+
+        <!-- Add to cart -->
+        <button type="button" class="btn-add-to-cart" id="product-add-to-cart">
+          <i class="bx bx-cart-add"></i>
+          Add to cart
+        </button>
+
+        <!-- Description — sits directly below the add to cart button -->
+        <div class="product-description-section" id="product-description-section" hidden>
+          <h2 class="product-description-heading">Description</h2>
+          <p class="product-desc-short" id="product-desc-short"></p>
+          <p class="product-desc-long" id="product-description"></p>
+          <div class="product-highlights" id="product-highlights"></div>
+          <table class="product-specs-table" id="product-specs-table"></table>
+        </div>
+
+        <!-- Delivery / specs grid -->
+        <div class="product-delivery-grid" id="product-delivery-grid"></div>
+      </div>
+
+      <!-- ── Right: related products sidebar ── -->
+      <aside class="product-sidebar">
+        <div class="product-sidebar-divider"></div>
+        <div class="product-related-list" id="product-related-list">
+          <!-- Populated by JS -->
+        </div>
+      </aside>
+
+    </div>
+
+
+
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/store-product.js' %}"></script>
+{% endblock %}

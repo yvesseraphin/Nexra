@@ -1,0 +1,128 @@
+/* ============================================================
+   Global Notification Bar
+   A slim bar that slides down from the very top of the page.
+   Works on every page — both base.html children and standalone
+   pages like login / signup.
+   ============================================================ */
+
+.nexra-notify-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 48px; /* leave room for the close button on the right */
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: height 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #111111;
+  color: #ffffff;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.4;
+  /* allows close button to be absolutely positioned inside */
+  isolation: isolate;
+}
+
+.nexra-notify-bar.is-visible {
+  height: 46px;
+  opacity: 1;
+}
+
+/* Tones -------------------------------------------------------- */
+.nexra-notify-bar.is-error {
+  background: #111111;
+  color: #ffffff;
+}
+
+.nexra-notify-bar.is-success {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* Inner layout ------------------------------------------------- */
+.nexra-notify-bar__body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.nexra-notify-bar__message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Close button ------------------------------------------------- */
+.nexra-notify-bar__close {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.55);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s ease, color 0.18s ease;
+  font-size: 0.8rem;
+}
+
+.nexra-notify-bar__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Push page content down when bar is visible ------------------- */
+body.has-notify-bar .shared-navbar,
+body.has-notify-bar nav.navbar {
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(46px);
+}
+
+/* On auth pages (no shared navbar) push the login layout */
+body.has-notify-bar .login-page {
+  transition: padding-top 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-top: 46px;
+}
+
+/* Mobile tweak */
+@media (max-width: 480px) {
+  .nexra-notify-bar.is-visible {
+    height: 52px;
+  }
+
+  .nexra-notify-bar__message {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  body.has-notify-bar .shared-navbar,
+  body.has-notify-bar nav.navbar {
+    transform: translateY(52px);
+  }
+
+  body.has-notify-bar .login-page {
+    padding-top: 52px;
+  }
+}

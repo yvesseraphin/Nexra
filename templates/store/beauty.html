@@ -38,203 +38,236 @@
   </div>
 
   <!-- Categories -->
-  <section class="categories-section">
-    <h2>Categories</h2>
-    <div class="category-grid">
-      <div class="category-card">
-        <img src="{% static 'images/pexels-828860-2587370.jpg' %}" alt="Creams" class="category-image">
-        <span class="category-label">Creams</span>
-      </div>
-      <div class="category-card">
-        <img src="{% static 'images/Ellipse 2.png' %}" alt="Moisturizers" class="category-image">
-        <span class="category-label">Moisturizers</span>
-      </div>
-      <div class="category-card">
-        <img src="{% static 'images/Ellipse 4.png' %}" alt="Serums" class="category-image">
-        <span class="category-label">Serums</span>
-      </div>
-      <div class="category-card">
-        <img src="{% static 'images/Ellipse 6 (1).png' %}" alt="Tools" class="category-image">
-        <span class="category-label">Tools</span>
-      </div>
-      <div class="category-card">
-        <img src="{% static 'images/Ellipse 6.png' %}" alt="Fragrances" class="category-image">
-        <span class="category-label">Fragrances</span>
+  <section class="categories" id="shop">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Categories</h2>
+      <div class="row justify-content-center">
+        <div class="col-6 col-md-2 category-item">
+          <div class="category-circle">
+            <img src="{% static 'images/pexels-828860-2587370.jpg' %}" alt="Creams">
+          </div>
+          <p>Creams</p>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <div class="category-circle">
+            <img src="{% static 'images/Ellipse 2.png' %}" alt="Moisturizers">
+          </div>
+          <p>Moisturizers</p>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <div class="category-circle">
+            <img src="{% static 'images/Ellipse 4.png' %}" alt="Serums">
+          </div>
+          <p>Serums</p>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <div class="category-circle">
+            <img src="{% static 'images/Ellipse 6 (1).png' %}" alt="Tools">
+          </div>
+          <p>Tools</p>
+        </div>
+        <div class="col-6 col-md-2 category-item">
+          <div class="category-circle">
+            <img src="{% static 'images/Ellipse 6.png' %}" alt="Fragrances">
+          </div>
+          <p>Fragrances</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Trending Products -->
-  <section class="trending-section">
-    <h2>Highly trending products</h2>
-    <div class="products-grid" id="beauty-trending-grid">
+  <section class="product-section">
+    <div class="container">
+      <h2 class="section-title">Highly trending products</h2>
+      <div class="row g-4" id="beauty-trending-grid">
 
-      <div class="product-card">
-        <img src="{% static 'images/top.png' %}" alt="Laxi collection" class="product-image">
-        <div class="product-info">
-          <h3 class="product-title">Laxi collection</h3>
-          <p class="product-description">Collection of skin products</p>
-          <div class="product-footer">
-            <span class="product-price">30 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Laxi collection"
-                    data-product-price="30 000 RWF">Add To Cart</button>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/top.png' %}" class="product-image" alt="Laxi collection">
+            <div class="card-body">
+              <h5>Laxi collection</h5>
+              <p class="product-description">Collection of skin products</p>
+              <p class="product-price">30 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Laxi collection"
+                      data-product-price="30 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="product-card">
-        <img src="{% static 'images/Component 1.png' %}" alt="Biodance Products" class="product-image">
-        <div class="product-info">
-          <h3 class="product-title">Biodance Products</h3>
-          <p class="product-description">Facial masks</p>
-          <div class="product-footer">
-            <span class="product-price">10 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Biodance Products"
-                    data-product-price="10 000 RWF">Add To Cart</button>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Component 1.png' %}" class="product-image" alt="Biodance Products">
+            <div class="card-body">
+              <h5>Biodance Products</h5>
+              <p class="product-description">Facial masks</p>
+              <p class="product-price">10 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Biodance Products"
+                      data-product-price="10 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="product-card">
-        <img src="{% static 'images/Rectangle 35.png' %}" alt="Alya skin care" class="product-image">
-        <div class="product-info">
-          <h3 class="product-title">Alya skin care products</h3>
-          <p class="product-description">Best of the brands</p>
-          <div class="product-footer">
-            <span class="product-price">20 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Alya skin care products"
-                    data-product-price="20 000 RWF">Add To Cart</button>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Rectangle 35.png' %}" class="product-image" alt="Alya skin care">
+            <div class="card-body">
+              <h5>Alya skin care products</h5>
+              <p class="product-description">Best of the brands</p>
+              <p class="product-price">20 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Alya skin care products"
+                      data-product-price="20 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="product-card">
-        <img src="{% static 'images/Rectangle 21.png' %}" alt="Kylie Skin" class="product-image">
-        <div class="product-info">
-          <h3 class="product-title">Kylie Skin</h3>
-          <p class="product-description">Sunscreen</p>
-          <div class="product-footer">
-            <span class="product-price">30 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Kylie Skin"
-                    data-product-price="30 000 RWF">Add To Cart</button>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Rectangle 21.png' %}" class="product-image" alt="Kylie Skin">
+            <div class="card-body">
+              <h5>Kylie Skin</h5>
+              <p class="product-description">Sunscreen</p>
+              <p class="product-price">30 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Kylie Skin"
+                      data-product-price="30 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="product-card">
-        <img src="{% static 'images/Rectangle 22.png' %}" alt="Collagen pad" class="product-image">
-        <div class="product-info">
-          <h3 class="product-title">Collagen pad</h3>
-          <p class="product-description">Day and Night</p>
-          <div class="product-footer">
-            <span class="product-price">50 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Collagen pad"
-                    data-product-price="50 000 RWF">Add To Cart</button>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Rectangle 22.png' %}" class="product-image" alt="Collagen pad">
+            <div class="card-body">
+              <h5>Collagen pad</h5>
+              <p class="product-description">Day and Night</p>
+              <p class="product-price">50 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Collagen pad"
+                      data-product-price="50 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="product-card">
-        <img src="{% static 'images/Rectangle 24.png' %}" alt="Breylee Rose" class="product-image">
-        <div class="product-info">
-          <h3 class="product-title">Breylee Rose</h3>
-          <p class="product-description">Eye Mask</p>
-          <div class="product-footer">
-            <span class="product-price">100 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Breylee Rose"
-                    data-product-price="100 000 RWF">Add To Cart</button>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Rectangle 24.png' %}" class="product-image" alt="Breylee Rose">
+            <div class="card-body">
+              <h5>Breylee Rose</h5>
+              <p class="product-description">Eye Mask</p>
+              <p class="product-price">100 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Breylee Rose"
+                      data-product-price="100 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </section>
 
   <!-- Promo Banner -->
-  <div class="banner">
-    <div class="product-left">
-      <img src="{% static 'images/cerum.png' %}" alt="Lip Gloss" class="lip-gloss-img">
-    </div>
-    <div class="content">
-      <h1>Get 50% Off</h1>
-      <p>for all new product purchases</p>
-      <p class="min-purchase">min. purchase RWF 30,000</p>
-      <a href="#" class="shop-btn">SHOP NOW</a>
-    </div>
-    <div class="product-right">
-      <img src="{% static 'images/Rectangle 8.png' %}" alt="Serum" class="serum-img">
-    </div>
-  </div>
-
-  <!-- Collections -->
-  <section class="collections-section">
-    <h2>Explore the best collections</h2>
-    <div class="collections-grid" id="beauty-collections-grid">
-
-      <div class="collection-card">
-        <img src="{% static 'images/Rectangle 31.png' %}" alt="Cherry Blossom" class="collection-image">
-        <div class="collection-info">
-          <h3 class="collection-title">Cherry Blossom</h3>
-          <p class="collection-subtitle">The light of autumn</p>
-          <div class="product-footer">
-            <span class="product-price">30 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Cherry Blossom"
-                    data-product-price="30 000 RWF">Add To Cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="collection-card">
-        <img src="{% static 'images/Rectangle 35.png' %}" alt="Moistures" class="collection-image">
-        <div class="collection-info">
-          <h3 class="collection-title">Moistures</h3>
-          <p class="collection-subtitle">Luxury</p>
-          <div class="product-footer">
-            <span class="product-price">50 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Moistures"
-                    data-product-price="50 000 RWF">Add To Cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="collection-card">
-        <img src="{% static 'images/Rectangle 30 (1).png' %}" alt="Jarsking Collection" class="collection-image">
-        <div class="collection-info">
-          <h3 class="collection-title">Jarsking Collection</h3>
-          <p class="collection-subtitle">Serums &amp; Moisturizers</p>
-          <div class="product-footer">
-            <span class="product-price">100 000 RWF</span>
-            <button class="add-to-cart-btn"
-                    data-product-title="Jarsking Collection"
-                    data-product-price="100 000 RWF">Add To Cart</button>
-          </div>
-        </div>
-      </div>
-
+  <section class="promo-banner">
+    <div class="container text-center">
+      <img src="{% static 'images/cerum.png' %}" alt="Lip Gloss" class="promo-image float-start">
+      <img src="{% static 'images/Rectangle 8.png' %}" alt="Serum" class="promo-image float-end">
+      <h2>Get 50% Off</h2>
+      <p class="lead">for all new product purchases<br>min. purchase RWF 30,000</p>
+      <a href="#" class="btn btn-light btn-lg mt-3">Shop Now</a>
     </div>
   </section>
 
-  <!-- Newsletter -->
-  <section class="newsletter-section">
-    <div class="newsletter-content">
-      <div class="newsletter-text">
-        <h2>Stay home &amp; get your daily needs from our shop</h2>
-        <p>Start Your Daily Shopping with Nexra</p>
-        <div class="newsletter-form">
-          <input type="email" class="newsletter-input" placeholder="Your email address">
-          <button class="subscribe-btn">Subscribe</button>
+  <!-- Collections -->
+  <section class="product-section">
+    <div class="container">
+      <h2 class="section-title">Explore the best collections</h2>
+      <div class="row g-4" id="beauty-collections-grid">
+
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Rectangle 31.png' %}" class="product-image" alt="Cherry Blossom">
+            <div class="card-body">
+              <h5>Cherry Blossom</h5>
+              <p class="product-description">The light of autumn</p>
+              <p class="product-price">30 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Cherry Blossom"
+                      data-product-price="30 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
         </div>
+
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Rectangle 35.png' %}" class="product-image" alt="Moistures">
+            <div class="card-body">
+              <h5>Moistures</h5>
+              <p class="product-description">Luxury</p>
+              <p class="product-price">50 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Moistures"
+                      data-product-price="50 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img src="{% static 'images/Rectangle 30 (1).png' %}" class="product-image" alt="Jarsking Collection">
+            <div class="card-body">
+              <h5>Jarsking Collection</h5>
+              <p class="product-description">Serums &amp; Moisturizers</p>
+              <p class="product-price">100 000 RWF</p>
+              <button class="add-btn"
+                      data-product-title="Jarsking Collection"
+                      data-product-price="100 000 RWF">
+                <i class="fas fa-shopping-cart"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="newsletter-image">
-        <img src="{% static 'images/Rectangle 37.png' %}" alt="Beauty Model">
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h4 class="cta-title">Stop home &amp; get your daily<br>needs from our shop</h4>
+          <p class="cta-subtitle">Start Your Daily Shopping with Nexra</p>
+          <div class="subscribe-form">
+            <form>
+              <input type="email" class="form-control email-input" placeholder="Enter your email">
+              <button class="btn btn-secondary subscribe-btn">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center text-lg-end mt-4 mt-lg-0">
+          <img src="{% static 'images/Rectangle 37.png' %}" class="cta-image img-fluid" alt="Beauty Model">
+        </div>
       </div>
     </div>
   </section>

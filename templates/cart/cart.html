@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Cart — Nexra{% endblock %}
+{% block body_page %}cart{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart-main.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="cart-page">
+  <div class="cart-shell">
+
+    <!-- Page heading -->
+    <div class="cart-heading">
+      <h1>Your Cart</h1>
+      <span class="cart-count-badge" id="cart-count-badge">(0)</span>
+    </div>
+
+    <div class="cart-layout">
+
+      <!-- Left: items -->
+      <div class="cart-items-col">
+
+        <!-- Empty state -->
+        <div class="cart-empty" id="cart-empty">
+          <div class="cart-empty-icon">
+            <i class="bx bx-shopping-bag"></i>
+          </div>
+          <p class="cart-empty-label">Cart is Empty</p>
+        </div>
+
+        <!-- Items list (hidden when empty) -->
+        <div class="cart-items-list" id="cart-items-list" hidden>
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Checkout button (hidden when empty) -->
+        <div class="cart-actions" id="cart-actions" hidden>
+          <div class="cart-total-row">
+            <span>TOTAL</span>
+            <span class="cart-total-value" id="cart-total-value">0 RWF</span>
+          </div>
+          <button type="button" class="btn-checkout" id="btn-checkout">Checkout</button>
+        </div>
+
+      </div>
+
+      <!-- Right: summary -->
+      <aside class="cart-summary-col">
+        <div class="cart-summary-card">
+
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">0.0 RWF</span>
+          </div>
+          <div class="summary-line">
+            <span>Discount</span>
+            <span id="summary-discount">0.0 RWF</span>
+          </div>
+          <div class="summary-line">
+            <span>Shipping Costs</span>
+            <span id="summary-shipping">0.0 RWF</span>
+          </div>
+
+          <div class="coupon-row">
+            <input type="text" class="coupon-input" id="coupon-input" placeholder="Coupon code">
+            <button type="button" class="btn-coupon" id="btn-coupon">Apply Coupon</button>
+          </div>
+
+          <div class="secure-payments">
+            <p class="secure-label">SECURE PAYMENTS PROVIDED BY</p>
+            <div class="payment-logos">
+              <!-- Mastercard -->
+              <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Mastercard">
+                <rect width="38" height="24" rx="4" fill="#f5f5f5"/>
+                <circle cx="15" cy="12" r="7" fill="#EB001B"/>
+                <circle cx="23" cy="12" r="7" fill="#F79E1B"/>
+                <path d="M19 6.8a7 7 0 0 1 0 10.4A7 7 0 0 1 19 6.8z" fill="#FF5F00"/>
+              </svg>
+              <!-- Visa -->
+              <svg width="38" height="24" viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Visa">
+                <rect width="38" height="24" rx="4" fill="#f5f5f5"/>
+                <text x="6" y="17" font-family="Arial" font-size="11" font-weight="bold" fill="#1A1F71">VISA</text>
+              </svg>
+              <!-- Mobile Money placeholder -->
+              <div class="payment-logo-pill">MoMo</div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- Item row template (cloned by JS) -->
+<template id="cart-item-tpl">
+  <div class="cart-item" data-item-id="">
+    <img class="cart-item-img" src="" alt="">
+    <div class="cart-item-body">
+      <div class="cart-item-top">
+        <h3 class="cart-item-title"></h3>
+        <button type="button" class="cart-item-remove" aria-label="Remove item">
+          <i class="bx bx-x"></i>
+        </button>
+      </div>
+      <div class="cart-item-meta">
+        <div class="cart-item-qty-row">
+          <button type="button" class="qty-btn qty-dec" aria-label="Decrease quantity">−</button>
+          <span class="qty-value"></span>
+          <button type="button" class="qty-btn qty-inc" aria-label="Increase quantity">+</button>
+          <span class="cart-item-unit-price"></span>
+        </div>
+        <span class="cart-item-line-total"></span>
+      </div>
+    </div>
+  </div>
+</template>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/cart-main.js' %}"></script>
+{% endblock %}

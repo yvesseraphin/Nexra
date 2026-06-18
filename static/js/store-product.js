@@ -12,10 +12,15 @@
   const stockNote = document.getElementById("product-stock-note");
   const summary = document.getElementById("product-summary");
   const description = document.getElementById("product-description");
+  const descriptionSection = document.getElementById("product-description-section");
+  const descShort = document.getElementById("product-desc-short");
+  const highlightsEl = document.getElementById("product-highlights");
+  const specsTableEl = document.getElementById("product-specs-table");
   const quantityOptions = document.getElementById("product-quantity-options");
   const selectedQuantity = document.getElementById("product-selected-quantity");
   const deliveryGrid = document.getElementById("product-delivery-grid");
   const addButton = document.getElementById("product-add-to-cart");
+  const relatedList = document.getElementById("product-related-list");
   let currentProduct = null;
   let currentQuantity = 1;
 
@@ -37,8 +42,21 @@
     return;
   }
 
-  document.addEventListener("DOMContentLoaded", initProductPage);
+  let _initialized = false;
+
+  function safeInit() {
+    if (_initialized) return;
+    _initialized = true;
+    initProductPage();
+  }
+
+  document.addEventListener("DOMContentLoaded", safeInit);
   addButton.addEventListener("click", handleAddToCart);
+
+  // Script loads at end of body — DOMContentLoaded may have already fired
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    safeInit();
+  }
 
   async function initProductPage() {
     const preview = state?.getProductPreview?.(requestedSlug) || null;
@@ -112,6 +130,8 @@
     renderGallery(gallery);
     renderQuantityOptions();
     renderDeliveryInfo(product);
+    renderRelated(product);
+    renderDescription(product);
 
     hero.hidden = false;
   }
@@ -200,38 +220,8 @@
   }
 
   function renderDeliveryInfo(product) {
-    const specificationItems = (product.specifications || []).slice(0, 2).map((item) => ({
-      icon: "bx bx-check-circle",
-      title: item.label,
-      text: item.value,
-    }));
-    const items = [
-      {
-        icon: "bx bx-package",
-        title: "Free shipping",
-        text: "Delivered in 2-5 business days.",
-      },
-      {
-        icon: "bx bx-rotate-left",
-        title: "Easy returns",
-        text: "Simple follow-up through your order history.",
-      },
-      ...specificationItems,
-    ];
-
-    deliveryGrid.innerHTML = items
-      .map((item) => {
-        return `
-          <article class="product-delivery-item">
-            <i class="${escapeHtml(item.icon)}" aria-hidden="true"></i>
-            <div>
-              <strong>${escapeHtml(item.title)}</strong>
-              <span>${escapeHtml(item.text)}</span>
-            </div>
-          </article>
-        `;
-      })
-      .join("");
+    // Delivery info hidden — not shown on product detail page
+    if (deliveryGrid) deliveryGrid.hidden = true;
   }
 
   function buildGallery(product) {
@@ -285,6 +275,87 @@
       },
       thumbs: galleryImages,
     };
+  }
+
+  async function renderRelated(product) {
+    if (!relatedList) return;
+
+    // Fetch the page's full data to get other items
+    const page = product.page || "index";
+    let candidates = [];
+
+    try {
+      const res = await fetch(`/api/pages/${encodeURIComponent(page)}`, { cache: "no-store" });
+      if (res.ok) {
+        const data = await res.json();
+        const sections = data.sections || {};
+        Object.values(sections).forEach((section) => {
+          if (Array.isArray(section.items)) candidates.push(...section.items);
+          if (Array.isArray(section.groups)) section.groups.forEach((g) => candidates.push(...(g.items || [])));
+          if (Array.isArray(section.columns)) section.columns.forEach((c) => candidates.push(...(c.items || [])));
+        });
+      }
+    } catch (_) {}
+
+    // Exclude current product, pick up to 3
+    const related = candidates
+      .filter((item) => {
+        const t = (item.title || item.alt || "").trim();
+        return t && t !== (product.title || "");
+      })
+      .slice(0, 3);
+
+    if (!related.length) {
+      relatedList.parentElement && (relatedList.parentElement.hidden = true);
+      return;
+    }
+
+    relatedList.innerHTML = related.map((item) => {
+      const imgSrc = item.image || "";
+      const itemTitle = item.title || item.alt || "Product";
+      const itemPrice = item.price || "";
+      const slugVal = `${page}-${(state?.slugify || slugifyFallback)(itemTitle)}`;
+
+      return `
+        <div class="related-card">
+          <img class="related-card-img" src="${escapeHtml(imgSrc)}" alt="${escapeHtml(itemTitle)}" loading="lazy">
+          <div class="related-card-body">
+            <p class="related-card-title">${escapeHtml(itemTitle)}</p>
+            <p class="related-card-price">${escapeHtml(itemPrice)}</p>
+            <button type="button" class="btn-related-more"
+              onclick="(function(){
+                var p={id:'${escapeHtml(slugVal)}',slug:'${escapeHtml(slugVal)}',page:'${escapeHtml(page)}',title:'${escapeHtml(itemTitle)}',price:'${escapeHtml(itemPrice)}',image:'${escapeHtml(imgSrc)}'};
+                if(window.NexraState&&window.NexraState.saveProductPreview)window.NexraState.saveProductPreview(p);
+                window.location.href='/store/product/?slug=${escapeHtml(slugVal)}';
+              })()">
+              More
+            </button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderDescription(product) {
+    if (!descriptionSection) return;
+
+    const shortText = product.description || "";
+    const longText  = product.fullDescription || "";
+
+    if (!shortText && !longText) return;
+
+    if (descShort) descShort.textContent = shortText;
+    if (description) description.textContent = longText;
+
+    // Hide highlights and specs — auto-generated filler content
+    if (highlightsEl) highlightsEl.hidden = true;
+    if (specsTableEl) specsTableEl.hidden = true;
+
+    descriptionSection.hidden = false;
+  }
+
+  function slugifyFallback(value) {
+    return String(value || "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "item";
   }
 
   function buildStockMessage(product) {

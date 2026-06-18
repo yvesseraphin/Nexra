@@ -23,18 +23,14 @@ body {
 
 .hero-section {
   background-color: #E3D0B5;
-  max-width: 1161px;
   min-height: 505px;
-  margin: auto;
-  padding: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 80px 0;
   position: relative;
 }
 
-.hero-section img {
+.hero-image-container img {
   max-width: 380px;
+  width: 100%;
 }
 
 .hero-content {
@@ -42,8 +38,8 @@ body {
 }
 
 .hero-content h2 {
-  font-family: serif;
-  font-size: 48px;
+  font-size: 3rem;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 
@@ -95,6 +91,7 @@ body {
   background: #3b2314;
   color: #fff;
 }
+
 
 /* ========================================
    PRODUCT HIGHLIGHT CARDS (duo)
@@ -585,115 +582,4 @@ body {
   .instagram-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ========================================
-   FOOTER SECTION (accessories-specific override)
-======================================== */
 
-.footer-section {
-  background-color: #FFFFFF;
-  padding-top: 60px;
-  padding-bottom: 30px;
-}
-
-.footer-logo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.footer-logo img {
-  height: 45px;
-  width: 45px;
-  margin-right: 12px;
-  object-fit: contain;
-}
-
-.footer-logo .brand-text {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #000;
-}
-
-.footer-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 20px;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-links li { margin-bottom: 12px; }
-
-.footer-links a {
-  color: #000000;
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.3s ease;
-}
-
-.footer-links a:hover { color: var(--primary-green); }
-
-.social-icons { display: flex; gap: 12px; }
-
-.social-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-}
-
-.social-icon:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  color: #fff;
-}
-
-.social-icon.facebook   { background-color: #1877F2; }
-.social-icon.instagram  { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); }
-.social-icon.twitter    { background-color: #1DA1F2; }
-.social-icon.youtube    { background-color: #FF0000; }
-
-.footer-bottom {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #f0f0f0;
-}
-
-.footer-bottom-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.footer-legal { display: flex; gap: 25px; }
-
-.footer-legal a {
-  color: #888;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
-}
-
-.footer-legal a:hover { color: #333; }
-
-.footer-copyright {
-  color: #888;
-  font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-  .footer-bottom-content { flex-direction: column; text-align: center; }
-}

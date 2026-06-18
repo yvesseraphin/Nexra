@@ -1,0 +1,439 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accessories — Nexra{% endblock %}
+{% block body_page %}accessories{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store-accessories.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 hero-content-wrapper">
+        <div class="hero-content">
+          <h2 id="watch-title">Luminex</h2>
+          <p id="watch-desc">
+            Modern elegance with a classic touch. Luminex combines sleek
+            design and everyday comfort for any occasion.
+          </p>
+          <a href="#" class="discover">Discover</a>
+          <br>
+          <button class="add-to-cart">
+            <i class="fa fa-shopping-cart"></i>
+            Add to cart
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center mt-4 mt-lg-0 hero-image-container">
+        <img src="{% static 'images/image 6.png' %}" alt="Luminex Watch" id="watch-img" class="img-fluid">
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-arrows">
+    <button onclick="prevWatch()">
+      <i class="bx bx-chevron-left"></i>
+    </button>
+    <button class="active" onclick="nextWatch()">
+      <i class="bx bx-chevron-right"></i>
+    </button>
+  </div>
+</section>
+
+<div class="container my-5">
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="product-card d-flex align-items-center justify-content-between p-4 p-lg-5">
+        <div class="content-box">
+          <h2 class="display-6 fw-light">Luxurious <span class="fw-bold">Ring</span></h2>
+          <p class="text-muted mt-3">Elegant design with a refined premium finish.</p>
+          <a href="#" class="discover-link">Discover Now</a>
+        </div>
+        <div class="image-box">
+          <img src="{% static 'images/image 30.png' %}" alt="Luxurious Ring" class="img-fluid animate-float">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="product-card d-flex align-items-center justify-content-between p-4 p-lg-5">
+        <div class="content-box">
+          <h2 class="display-6 fw-light">Comfortable <span class="fw-bold">Watches</span></h2>
+          <p class="text-muted mt-3">Feels the balancing function and beauty in our wooden watches</p>
+          <a href="#" class="discover-link">Discover Now</a>
+        </div>
+        <div class="image-box">
+          <img src="{% static 'images/image 8.png' %}" alt="Wooden Watch" class="img-fluid animate-float">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Monthly Deals Section -->
+<section class="monthly-deals-section">
+  <div class="container">
+    <h2 class="section-title">Monthly Deals</h2>
+    
+    <div class="row g-4" id="accessories-monthly-deals-grid">
+      <!-- Simple Watches -->
+      <div class="col-lg-3 col-md-6">
+        <div class="deal-card">
+          <div class="deal-image-wrapper">
+            <img src="{% static 'images/image 26.png' %}" alt="Simple Watches" class="deal-image">
+            <button class="add-to-cart-overlay">
+              <i class="bx bx-cart"></i> Add to cart
+            </button>
+          </div>
+          <div class="deal-info">
+            <h3 class="deal-title">Simple watches</h3>
+            <p class="deal-desc">Timeless design with elegance</p>
+            <p class="deal-price">18,000 RWF</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Necklaces -->
+      <div class="col-lg-3 col-md-6">
+        <div class="deal-card">
+          <div class="deal-image-wrapper">
+            <img src="{% static 'images/image 28.png' %}" alt="Necklaces" class="deal-image">
+            <button class="add-to-cart-overlay">
+              <i class="bx bx-cart"></i> Add to cart
+            </button>
+          </div>
+          <div class="deal-info">
+            <h3 class="deal-title">Necklaces</h3>
+            <p class="deal-desc">Get a simple but elegant look</p>
+            <p class="deal-price">20,000 RWF</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bracelets -->
+      <div class="col-lg-3 col-md-6">
+        <div class="deal-card">
+          <div class="deal-image-wrapper">
+            <img src="{% static 'images/image 25.png' %}" alt="Bracelets" class="deal-image">
+            <button class="add-to-cart-overlay">
+              <i class="bx bx-cart"></i> Add to cart
+            </button>
+          </div>
+          <div class="deal-info">
+            <h3 class="deal-title">Bracelets</h3>
+            <p class="deal-desc">Timeless design with elegant gems</p>
+            <p class="deal-price">5,000 RWF</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elite Mini -->
+      <div class="col-lg-3 col-md-6">
+        <div class="deal-card">
+          <div class="deal-image-wrapper">
+            <img src="{% static 'images/image 12.png' %}" alt="Elite Mini" class="deal-image">
+            <button class="add-to-cart-overlay">
+              <i class="bx bx-cart"></i> Add to cart
+            </button>
+          </div>
+          <div class="deal-info">
+            <h3 class="deal-title">Elite Mini</h3>
+            <p class="deal-desc">Luxury feels everyday price</p>
+            <p class="deal-price">25,000 RWF</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="recent-products-section container my-5 py-5">
+  <div class="row align-items-center">
+    <div class="col-lg-5 mb-5 mb-lg-0">
+      <div class="recent-header mb-4">
+        <h2 class="recent-title">Recent products</h2>
+      </div>
+      <div class="recent-content animate-fade-in">
+        <span class="brand-tag">BINBOND watch</span>
+        <h3 class="main-heading mt-3">
+          Timeless design meets modern style. Binbond delivers elegance in every detail, perfect for daily wear.
+        </h3>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="recent-image-wrapper">
+        <div class="geometric-bg"></div>
+        <div class="watch-main-img shadow-lg">
+          <img src="{% static 'images/image 29.png' %}" alt="Binbond Luxury Watch" class="img-fluid">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products Grid Section -->
+<section class="products-grid-section">
+  <div class="container">
+    <div class="row" id="accessories-columns-grid">
+      <!-- Necklace Column -->
+      <div class="col-lg-4 col-md-6">
+        <h3 class="category-heading">Necklace</h3>
+        
+        <!-- Product Item 1 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 31.png' %}" alt="Pendant Necklace">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Pendant Necklace</h4>
+            <p class="product-grid-price">20,000 RWF</p>
+          </div>
+        </div>
+
+        <!-- Product Item 2 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 32.png' %}" alt="Choker Necklace">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Choker Necklace</h4>
+            <p class="product-grid-price">Rp 950.000</p>
+          </div>
+        </div>
+
+        <!-- Product Item 3 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 33.png' %}" alt="Lariat Necklace">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Lariat Necklace</h4>
+            <p class="product-grid-price">Rp 1.170.000</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Women's Watch Column -->
+      <div class="col-lg-4 col-md-6">
+        <h3 class="category-heading">Women's Watch</h3>
+        
+        <!-- Product Item 1 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 34.png' %}" alt="Analog Dress Watch">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Analog Dress Watch</h4>
+            <p class="product-grid-price">Rp 960.000</p>
+          </div>
+        </div>
+
+        <!-- Product Item 2 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 36.png' %}" alt="leather watch">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">leather watch</h4>
+            <p class="product-grid-price">Rp 950.000</p>
+          </div>
+        </div>
+
+        <!-- Product Item 3 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 37.png' %}" alt="Minimalist Slim Watch">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Minimalist Slim Watch</h4>
+            <p class="product-grid-price">Rp 1.170.000</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Men's Watch Column -->
+      <div class="col-lg-4 col-md-6">
+        <h3 class="category-heading">Men's Watch</h3>
+        
+        <!-- Product Item 1 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 38.png' %}" alt="Dress Watch">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Dress Watch</h4>
+            <p class="product-grid-price">Rp 1.198.000</p>
+          </div>
+        </div>
+
+        <!-- Product Item 2 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 39.png' %}" alt="Chronograph watch">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Chronograph watch</h4>
+            <p class="product-grid-price">Rp 1.280.000</p>
+          </div>
+        </div>
+
+        <!-- Product Item 3 -->
+        <div class="product-grid-item">
+          <div class="product-grid-image">
+            <img src="{% static 'images/image 41.png' %}" alt="Rado watch">
+          </div>
+          <div class="product-grid-info">
+            <h4 class="product-grid-title">Rado watch</h4>
+            <p class="product-grid-price">Rp 1.170.000</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- See More Button -->
+    <div class="text-center mt-5">
+      <button class="see-more-btn">See More</button>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <!-- Geometric decoration top left -->
+  <div class="testimonial-geometric-decoration">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 100 L80 20 L140 100 L80 180 Z" stroke="#E3D0B5" stroke-width="1.5" fill="none"/>
+      <path d="M40 100 L80 40 L120 100 L80 160 Z" stroke="#E3D0B5" stroke-width="1.5" fill="none"/>
+      <path d="M60 100 L80 60 L100 100 L80 140 Z" stroke="#E3D0B5" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Side - Image -->
+      <div class="col-lg-5">
+        <div class="testimonial-image-wrapper">
+          <div class="testimonial-image-bg"></div>
+          <img src="{% static 'images/image 24.png' %}" alt="Customer Testimonial" class="testimonial-image">
+        </div>
+      </div>
+
+      <!-- Right Side - Content -->
+      <div class="col-lg-7">
+        <div class="testimonial-content">
+          <h2 class="testimonial-heading">Testimonials</h2>
+          <p class="testimonial-text">
+            "I recently purchased a watch from Nexra, and I'm genuinely impressed. The design immediately stood out to me—clean, modern, and very unique compared to what I usually see online. The quality feels solid and it's comfortable enough to wear all day."
+          </p>
+          <div class="testimonial-author">
+            <h4 class="author-name">Gita Savitri</h4>
+            <p class="author-role">Content Creator/Influencer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram Gallery Section -->
+<section class="instagram-gallery-section">
+  <div class="container">
+    <div class="instagram-header">
+      <p class="instagram-label">Follow us on Instagram</p>
+      <h2 class="instagram-handle">@nexra</h2>
+    </div>
+
+    <div class="instagram-grid">
+      <div class="instagram-item">
+        <img src="{% static 'images/Rectangle 38.png' %}" alt="Instagram Post 1">
+        <div class="instagram-overlay">
+          <i class="fab fa-instagram"></i>
+        </div>
+      </div>
+
+      <div class="instagram-item">
+        <img src="{% static 'images/cr7w.webp' %}" alt="Instagram Post 2">
+        <div class="instagram-overlay">
+          <i class="fab fa-instagram"></i>
+        </div>
+      </div>
+
+      <div class="instagram-item">
+        <img src="{% static 'images/Rectangle 40.png' %}" alt="Instagram Post 3">
+        <div class="instagram-overlay">
+          <i class="fab fa-instagram"></i>
+        </div>
+      </div>
+
+      <div class="instagram-item">
+        <img src="{% static 'images/sss3.jpg' %}" alt="Instagram Post 4">
+        <div class="instagram-overlay">
+          <i class="fab fa-instagram"></i>
+        </div>
+      </div>
+
+      <div class="instagram-item">
+        <img src="{% static 'images/Rectangle 42.png' %}" alt="Instagram Post 5">
+        <div class="instagram-overlay">
+          <i class="fab fa-instagram"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/store-dynamic.js' %}"></script>
+<script>
+  // Watch slideshow controller for Hero section
+  const watches = [
+    {
+      name: "Luminex",
+      description: "Modern elegance with a classic touch. Luminex combines sleek design and everyday comfort for any occasion.",
+      image: "{% static 'images/image 6.png' %}"
+    },
+    {
+      name: "Onyx Edition",
+      description: "A bold, midnight aesthetic. The Onyx Edition is designed for durability and a stealthy look.",
+      image: "{% static 'images/image 29.png' %}"
+    },
+    {
+      name: "Classic Gold",
+      description: "Timeless luxury that never goes out of style. Featuring a 24k gold-plated rim.",
+      image: "{% static 'images/image 8.png' %}"
+    }
+  ];
+
+  let currentIndex = 0;
+
+  function updateDisplay(index) {
+    const watch = watches[index];
+    document.getElementById('watch-img').src = watch.image;
+    document.getElementById('watch-title').innerText = watch.name;
+    document.getElementById('watch-desc').innerText = watch.description;
+  }
+
+  function nextWatch() {
+    currentIndex++;
+    if (currentIndex >= watches.length) {
+      currentIndex = 0;
+    }
+    updateDisplay(currentIndex);
+  }
+
+  function prevWatch() {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = watches.length - 1;
+    }
+    updateDisplay(currentIndex);
+  }
+</script>
+{% endblock %}

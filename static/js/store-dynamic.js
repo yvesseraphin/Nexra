@@ -52,8 +52,8 @@
   }
 
   function renderTechPage(sections) {
-    renderStandardProductGrid("tech-trending-grid", sections.trendingProducts?.items || [], false);
-    renderStandardProductGrid("tech-best-sellers-grid", sections.bestSellers?.items || [], false);
+    renderStandardProductGrid("tech-trending-grid", sections.trendingProducts?.items || [], true);
+    renderStandardProductGrid("tech-best-sellers-grid", sections.bestSellers?.items || [], true);
   }
 
   function renderKidsPage(sections) {
@@ -191,17 +191,17 @@
       mostPopularGrid.innerHTML = (sections.mostPopular?.items || [])
         .map((item) => {
           return `
-            <div class="product-card">
-              <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || "Fashion item")}" class="product-image">
-              <div class="product-info">
-                <div class="product-meta">
-                  <div class="product-price">
-                    ${escapeHtml(item.price)}
-                    <button class="favorite-btn">&#9825;</button>
-                  </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="card product-card">
+                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image">
+                <div class="card-body">
+                  <h5>${escapeHtml(item.title || item.alt)}</h5>
+                  <p class="product-description">${escapeHtml(item.description || "Popular Pick")}</p>
+                  <p class="product-price">${escapeHtml(item.price)}</p>
+                  <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add</button>
                 </div>
+                <span class="product-badge ${escapeAttribute(item.badgeClass || "")}">${escapeHtml(item.badgeLabel || "")}</span>
               </div>
-              <span class="product-badge ${escapeAttribute(item.badgeClass || "")}">${escapeHtml(item.badgeLabel || "")}</span>
             </div>
           `;
         })
@@ -212,13 +212,15 @@
       justForYouGrid.innerHTML = (sections.justForYou?.items || [])
         .map((item) => {
           return `
-            <div class="product-card">
-              <div class="product-image-wrapper">
-                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || "Fashion item")}">
-              </div>
-              <div class="product-details">
-                <p class="product-description">${escapeHtml(item.description)}</p>
-                <p class="product-price">${escapeHtml(item.price)}</p>
+            <div class="col-md-4 col-sm-6">
+              <div class="card product-card">
+                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image">
+                <div class="card-body">
+                  <h5>${escapeHtml(item.title || item.alt)}</h5>
+                  <p class="product-description">${escapeHtml(item.description)}</p>
+                  <p class="product-price">${escapeHtml(item.price)}</p>
+                  <button class="add-btn"><i class="fas fa-shopping-cart"></i> Add</button>
+                </div>
               </div>
             </div>
           `;

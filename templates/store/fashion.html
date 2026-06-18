@@ -9,8 +9,6 @@
 {% endblock %}
 
 {% block content %}
-<main>
-  <h1>Fashion</h1>
 
   <!-- Slideshow -->
   <div class="slideshow-container">
@@ -60,7 +58,7 @@
   </div>
 
   <!-- Collections -->
-  <h1>Collections</h1>
+  <h2 class="section-title text-center mb-5">Explore Collections</h2>
 
   <div class="collections-grid" id="fashion-collections-grid">
 
@@ -141,142 +139,163 @@
   <!-- Most Popular -->
   <div class="most-popular-section">
     <h2 class="section-title">Most Popular</h2>
-    <div class="product-grid" id="fashion-most-popular-grid">
+    <div class="row gy-4" id="fashion-most-popular-grid">
 
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop" alt="Beige Fashion" class="product-image">
-        <div class="product-info">
-          <div class="product-meta">
-            <div class="product-price">11,780 RWF <button class="favorite-btn">🧡</button></div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop" alt="Beige Fashion" class="product-image">
+          <div class="card-body">
+            <h5>Beige Knitwear</h5>
+            <p class="product-description">New Winter Collection</p>
+            <p class="product-price">11,780 RWF</p>
+            <button class="add-btn" data-product-title="Beige Knitwear" data-product-price="11,780 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
           </div>
+          <span class="product-badge badge-new">New</span>
         </div>
-        <span class="product-badge badge-new">New</span>
       </div>
 
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400&h=500&fit=crop" alt="Woman with Hat" class="product-image">
-        <div class="product-info">
-          <div class="product-meta">
-            <div class="product-price">7,806 RWF <button class="favorite-btn">🧡</button></div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400&h=500&fit=crop" alt="Woman with Hat" class="product-image">
+          <div class="card-body">
+            <h5>Classic Fedora Hat</h5>
+            <p class="product-description">Accessories</p>
+            <p class="product-price">7,806 RWF</p>
+            <button class="add-btn" data-product-title="Classic Fedora Hat" data-product-price="7,806 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
           </div>
+          <span class="product-badge badge-sale">Sale</span>
         </div>
-        <span class="product-badge badge-sale">Sale</span>
       </div>
 
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=400&h=500&fit=crop" alt="Striped Shirt" class="product-image">
-        <div class="product-info">
-          <div class="product-meta">
-            <div class="product-price">1,956 RWF <button class="favorite-btn">🧡</button></div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=400&h=500&fit=crop" alt="Striped Shirt" class="product-image">
+          <div class="card-body">
+            <h5>Striped Summer Shirt</h5>
+            <p class="product-description">Casual Clothing</p>
+            <p class="product-price">1,956 RWF</p>
+            <button class="add-btn" data-product-title="Striped Summer Shirt" data-product-price="1,956 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
           </div>
+          <span class="product-badge badge-hot">Hot</span>
         </div>
-        <span class="product-badge badge-hot">Hot</span>
       </div>
 
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop" alt="Man in Coat" class="product-image">
-        <div class="product-info">
-          <div class="product-meta">
-            <div class="product-price">7,220 RWF <button class="favorite-btn">🧡</button></div>
+      <div class="col-md-3 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop" alt="Man in Coat" class="product-image">
+          <div class="card-body">
+            <h5>Double-Breasted Coat</h5>
+            <p class="product-description">Men's Outerwear</p>
+            <p class="product-price">7,220 RWF</p>
+            <button class="add-btn" data-product-title="Double-Breasted Coat" data-product-price="7,220 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
           </div>
+          <span class="product-badge badge-hot">Hot</span>
         </div>
-        <span class="product-badge badge-hot">Hot</span>
       </div>
 
     </div>
   </div>
-
-  <!-- Testimonial -->
-  <div class="testimonial-section">
-    <button class="slider-btn" onclick="previousTestimonial()">‹</button>
-    <div>
-      <h2 class="testimonial-header">People Are Talking</h2>
-      <div class="testimonial-slider">
-        <div class="testimonial-content">
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">"Love this shirt! Fits perfectly and the fabric is thick without being stiff."</p>
-          <p class="testimonial-author">- Juniper, <a href="#">the Heavyweight Overshirt</a></p>
-        </div>
-        <div class="testimonial-image">
-          <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&h=600&fit=crop" alt="Customer wearing product">
-        </div>
-      </div>
-    </div>
-    <button class="slider-btn" onclick="nextTestimonial()">›</button>
-  </div>
-
   <!-- Just For You -->
   <div class="just-for-you-section">
     <div class="section-header">
       <h2 class="section-title">Just For You</h2>
-      <span class="star-icon">★</span>
     </div>
-    <div class="products-grid" id="fashion-just-for-you-grid">
+    <div class="row gy-4" id="fashion-just-for-you-grid">
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=800&h=600&fit=crop" alt="White tops">
-        </div>
-        <div class="product-details">
-          <p class="product-description">White tops always bring a good mood.</p>
-          <p class="product-price">15,000 RWF</p>
+      <div class="col-md-4 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=800&h=600&fit=crop" alt="White tops" class="product-image">
+          <div class="card-body">
+            <h5>White Cotton Top</h5>
+            <p class="product-description">White tops always bring a good mood.</p>
+            <p class="product-price">15,000 RWF</p>
+            <button class="add-btn" data-product-title="White Cotton Top" data-product-price="15,000 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop" alt="Beautiful heels">
-        </div>
-        <div class="product-details">
-          <p class="product-description">Get yourself party-ready with beautiful heels!</p>
-          <p class="product-price">28,000 RWF</p>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop" alt="Simple bag">
-        </div>
-        <div class="product-details">
-          <p class="product-description">A simple bag for a simple outing!</p>
-          <p class="product-price">15,000 RWF</p>
+      <div class="col-md-4 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800&h=600&fit=crop" alt="Beautiful heels" class="product-image">
+          <div class="card-body">
+            <h5>Sleek Black Heels</h5>
+            <p class="product-description">Get yourself party-ready with beautiful heels!</p>
+            <p class="product-price">28,000 RWF</p>
+            <button class="add-btn" data-product-title="Sleek Black Heels" data-product-price="28,000 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&h=600&fit=crop" alt="Pink hoodie">
-        </div>
-        <div class="product-details">
-          <p class="product-description">Who said pink hoodies can't look good?</p>
-          <p class="product-price">13,000 RWF</p>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&h=600&fit=crop" alt="Fashion freedom">
-        </div>
-        <div class="product-details">
-          <p class="product-description">Good fashion also means freedom.</p>
-          <p class="product-price">22,000 RWF</p>
+      <div class="col-md-4 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=600&fit=crop" alt="Simple bag" class="product-image">
+          <div class="card-body">
+            <h5>Elegant Leather Handbag</h5>
+            <p class="product-description">A simple bag for a simple outing!</p>
+            <p class="product-price">15,000 RWF</p>
+            <button class="add-btn" data-product-title="Elegant Leather Handbag" data-product-price="15,000 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="product-card">
-        <div class="product-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=600&fit=crop" alt="Warm hoodie">
+      <div class="col-md-4 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&h=600&fit=crop" alt="Pink hoodie" class="product-image">
+          <div class="card-body">
+            <h5>Classic Pink Hoodie</h5>
+            <p class="product-description">Who said pink hoodies can't look good?</p>
+            <p class="product-price">13,000 RWF</p>
+            <button class="add-btn" data-product-title="Classic Pink Hoodie" data-product-price="13,000 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
+          </div>
         </div>
-        <div class="product-details">
-          <p class="product-description">Stay warm. Look cool.</p>
-          <p class="product-price">20,000 RWF</p>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&h=600&fit=crop" alt="Fashion freedom" class="product-image">
+          <div class="card-body">
+            <h5>Denim Jacket</h5>
+            <p class="product-description">Good fashion also means freedom.</p>
+            <p class="product-price">22,000 RWF</p>
+            <button class="add-btn" data-product-title="Denim Jacket" data-product-price="22,000 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="card product-card">
+          <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&h=600&fit=crop" alt="Warm hoodie" class="product-image">
+          <div class="card-body">
+            <h5>Warm Grey Hoodie</h5>
+            <p class="product-description">Stay warm. Look cool.</p>
+            <p class="product-price">20,000 RWF</p>
+            <button class="add-btn" data-product-title="Warm Grey Hoodie" data-product-price="20,000 RWF">
+              <i class="fas fa-shopping-cart"></i> Add
+            </button>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
-
-</main>
 {% endblock %}
 
 {% block extra_js %}
