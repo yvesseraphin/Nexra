@@ -3,7 +3,6 @@
   const params = new URLSearchParams(window.location.search);
   const requestedSlug = String(params.get("slug") || "").trim();
   const hero = document.getElementById("product-hero");
-  const feedback = document.getElementById("product-feedback");
   const image = document.getElementById("product-image");
   const thumbs = document.getElementById("product-thumbs");
   const eyebrow = document.getElementById("product-eyebrow");
@@ -26,17 +25,14 @@
 
   if (
     !hero ||
-    !feedback ||
     !image ||
     !thumbs ||
     !title ||
     !price ||
     !stockNote ||
     !summary ||
-    !description ||
     !quantityOptions ||
     !selectedQuantity ||
-    !deliveryGrid ||
     !addButton
   ) {
     return;
@@ -137,15 +133,14 @@
   }
 
   function renderMissingState() {
-    feedback.hidden = false;
-    feedback.className = "product-feedback is-error";
-    feedback.innerHTML = 'We could not find that product right now. <a href="/">Return to the store</a>.';
-    title.textContent = "Product unavailable";
-    price.textContent = "";
-    summary.textContent = "";
-    description.textContent = "";
-    addButton.disabled = true;
-    hero.hidden = false;
+    if (window.NexraNotify) {
+      window.NexraNotify.show("We could not find that product. Returning to the store.", "error");
+    }
+    if (title) title.textContent = "Product unavailable";
+    if (price) price.textContent = "";
+    if (summary) summary.textContent = "";
+    if (addButton) addButton.disabled = true;
+    if (hero) hero.hidden = false;
   }
 
   function renderGallery(gallery) {
@@ -380,9 +375,12 @@
       quantity: currentQuantity,
     });
 
-    feedback.hidden = false;
-    feedback.className = "product-feedback is-success";
-    feedback.textContent = `${currentProduct.title} was added to your cart with quantity ${currentQuantity}.`;
+    if (window.NexraNotify) {
+      window.NexraNotify.show(
+        `${currentProduct.title} (x${currentQuantity}) added to your cart.`,
+        "success"
+      );
+    }
   }
 
   function formatLabel(value) {

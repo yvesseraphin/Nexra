@@ -55,6 +55,12 @@
     letter-spacing: 0.02em;
 }
 
+.section-head {
+    margin-bottom: 2.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1.5px solid #f0f0f0;
+}
+
 /* ── Sidebar nav ────────────────────────────────────────── */
 .account-nav {
     display: grid;
@@ -162,11 +168,20 @@
 
 /* ── Content area ───────────────────────────────────────── */
 .account-content {
-    width: min(100%, 760px);
+    width: 100%;
 }
 
 .account-panel {
     display: block;
+    padding-top: 1rem;
+    max-width: 760px;
+    width: 100%;
+}
+
+/* Cart panel gets full width — no cap */
+.account-panel[data-account-panel="cart"] {
+    max-width: none;
+    width: 100%;
 }
 
 /* ── Profile summary row ────────────────────────────────── */
@@ -217,7 +232,7 @@
 }
 
 .profile-summary-copy p {
-    margin: 0.35rem 0 0;
+    margin: 0.75rem 0 0;
     color: var(--profile-muted);
     line-height: 1.55;
 }
@@ -226,7 +241,7 @@
     margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 0.9rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
 }
 
@@ -246,13 +261,13 @@
 
 /* ── Details form ───────────────────────────────────────── */
 .details-form {
-    padding-top: 1.35rem;
+    padding-top: 2.5rem;
 }
 
 .details-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem 1.2rem;
+    gap: 1.8rem 1.5rem;
 }
 
 .field-control {
@@ -771,4 +786,220 @@
     .profile-summary-actions {
         width: 100%;
     }
+}
+
+/* ── Cart panel extras ──────────────────────────────────── */
+.profile-item-qty-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.profile-qty-btn {
+    font-family: 'Outfit', sans-serif;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--profile-border-strong);
+    background: var(--profile-surface);
+    color: var(--profile-text);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.profile-qty-btn:hover {
+    border-color: var(--profile-text);
+    background: var(--profile-soft);
+}
+
+.profile-qty-val {
+    font-size: 0.9rem;
+    font-weight: 700;
+    min-width: 1.2rem;
+    text-align: center;
+}
+
+.profile-item-unit {
+    font-size: 0.8rem;
+    color: var(--profile-muted);
+    margin-left: 0.15rem;
+}
+
+.profile-item-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.profile-item-remove {
+    background: transparent;
+    border: none;
+    color: var(--profile-muted);
+    cursor: pointer;
+    font-size: 1.15rem;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.profile-item-remove:hover {
+    color: var(--profile-error);
+}
+
+.profile-cart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0 0.5rem;
+    border-top: 1px solid rgba(18, 18, 18, 0.09);
+    margin-top: 0.25rem;
+}
+
+.profile-cart-total-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--profile-muted);
+}
+
+.profile-cart-total-val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--profile-text);
+    letter-spacing: -0.01em;
+}
+
+.profile-go-cart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.25rem;
+    text-decoration: none;
+    /* inherits primary-pill styles */
+}
+
+/* ── Orders panel extras ────────────────────────────────── */
+.order-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid rgba(18, 18, 18, 0.07);
+    font-size: 0.92rem;
+    color: var(--profile-muted);
+}
+
+.order-total-row strong {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--profile-text);
+}
+
+/* ── Profile cart panel — mirrors /cart/ layout ─────────── */
+.pc-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1.5px solid #f0f0f0;
+}
+
+.pc-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: #111111;
+    letter-spacing: -0.02em;
+}
+
+.pc-count {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: #b0b0b0;
+}
+
+.pc-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 420px;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+}
+
+.pc-items-col {
+    min-width: 0;
+}
+
+.pc-summary-col .cart-summary-card {
+    position: sticky;
+    top: 24px;
+}
+
+@media (max-width: 860px) {
+    .pc-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .pc-summary-col .cart-summary-card {
+        position: static;
+    }
+}
+
+/* ── Profile cart panel spacing — match standalone /cart/ ── */
+
+/* Give the cart panel the same generous vertical padding */
+.account-panel[data-account-panel="cart"] {
+    padding-top: 0.5rem;
+}
+
+/* Items column: same item padding and gaps as cart page */
+.account-panel[data-account-panel="cart"] .cart-item {
+    padding: 1.4rem 0;
+    gap: 1.25rem;
+}
+
+.account-panel[data-account-panel="cart"] .cart-item:first-child {
+    padding-top: 0.5rem;
+}
+
+.account-panel[data-account-panel="cart"] .cart-item-img {
+    width: 72px;
+    height: 72px;
+}
+
+.account-panel[data-account-panel="cart"] .cart-item-title {
+    font-size: 1rem;
+}
+
+.account-panel[data-account-panel="cart"] .cart-item-meta {
+    margin-top: 0.6rem;
+}
+
+/* Summary card: more internal padding */
+.account-panel[data-account-panel="cart"] .cart-summary-card {
+    padding: 2.25rem 2rem;
+    gap: 1.25rem;
+}
+
+/* Checkout button area */
+.account-panel[data-account-panel="cart"] .cart-actions {
+    margin-top: 2.5rem;
+    gap: 1.5rem;
+}
+
+/* Empty state */
+.account-panel[data-account-panel="cart"] .cart-empty {
+    padding: 5rem 2rem;
 }
