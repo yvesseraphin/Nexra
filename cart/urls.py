@@ -18,6 +18,9 @@ urlpatterns = [
     path('api/payments/', views.api_payments, name='api_payments'),
     path('api/payments/<int:pm_id>/', views.api_payment_detail, name='api_payment_detail'),
 
+    # Coupon API
+    path('api/coupon/apply/', views.api_coupon_apply, name='api_coupon_apply'),
+
     # Addresses API
     path('api/addresses/', views.api_addresses, name='api_addresses'),
     path('api/addresses/<int:addr_id>/', views.api_address_detail, name='api_address_detail'),

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CartItem, Order, OrderItem, PaymentMethod, Address
+from .models import CartItem, Order, OrderItem, PaymentMethod, Address, Coupon
 
 
 class OrderItemInline(admin.TabularInline):
@@ -37,3 +37,22 @@ class AddressAdmin(admin.ModelAdmin):
     list_display  = ('user', 'full_name', 'city', 'country', 'is_default')
     search_fields = ('user__username', 'full_name', 'city')
     list_filter   = ('country', 'is_default')
+
+
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display  = ('code', 'discount_type', 'discount_value', 'min_order_value', 'times_used', 'usage_limit', 'is_active', 'valid_until')
+    list_filter   = ('discount_type', 'is_active')
+    search_fields = ('code', 'description')
+    readonly_fields = ('times_used', 'created_at')
+    fieldsets = (
+        (None, {
+            'fields': ('code', 'description', 'is_active')
+        }),
+        ('Discount', {
+            'fields': ('discount_type', 'discount_value', 'max_discount', 'min_order_value')
+        }),
+        ('Validity', {
+            'fields': ('valid_from', 'valid_until', 'usage_limit', 'times_used', 'created_at')
+        }),
+    )

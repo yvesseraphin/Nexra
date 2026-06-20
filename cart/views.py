@@ -191,7 +191,22 @@ def api_orders(request):
 
         subtotal = sum(l['price_value'] * l['quantity'] for l in lines)
         shipping = 5000
-        total = subtotal + shipping
+        # Apply coupon discount if provided
+        coupon_code = str(data.get('couponCode') or '').strip().upper()
+        coupon_discount = 0.0
+        if coupon_code:
+            try:
+                coupon = Coupon.objects.get(code__iexact=coupon_code)
+                valid, _ = coupon.is_valid()
+                if valid and subtotal >= float(coupon.min_order_value):
+                    coupon_discount = coupon.calculate_discount(subtotal)
+                    coupon.times_used += 1
+                    coupon.save(update_fields=['times_used'])
+            except Coupon.DoesNotExist:
+                coupon_code = ''
+
+        total = subtotal + shipping - coupon_discount
+        total = max(total, 0)
         total_items = sum(l['quantity'] for l in lines)
 
         # Contact
@@ -206,6 +221,8 @@ def api_orders(request):
             order_number=_generate_order_number(),
             subtotal=subtotal,
             shipping_cost=shipping,
+            coupon_code=coupon_code,
+            coupon_discount=coupon_discount,
             total=total,
             total_items=total_items,
             notes=str(data.get('notes') or ''),
@@ -383,6 +400,39 @@ def api_payment_detail(request, pm_id):
             pm.save()
         methods = PaymentMethod.objects.filter(user=user)
         return JsonResponse({'paymentMethods': [m.to_dict() for m in methods]})
+
+
+# ── Coupon API ───────────────────────────────────────────────
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def api_coupon_apply(request):
+    user = _require_auth(request)
+    if not user:
+        return JsonResponse({'error': 'Authentication required.'}, status=401)
+
+    data = _json(request)
+    code = str(data.get('code') or '').strip().upper()
+    if not code:
+        return JsonResponse({'error': 'Coupon code is required.'}, status=400)
+
+    subtotal = float(data.get('subtotal') or 0)
+
+    try:
+        coupon = Coupon.objects.get(code__iexact=code)
+    except Coupon.DoesNotExist:
+        return JsonResponse({'error': f'Coupon "{code}" is not valid or has expired.'}, status=404)
+
+    valid, reason = coupon.is_valid()
+    if not valid:
+        return JsonResponse({'error': reason}, status=400)
+
+    if subtotal < float(coupon.min_order_value):
+        return JsonResponse({
+            'error': f'This coupon requires a minimum order of {int(coupon.min_order_value):,} RWF.'
+        }, status=400)
+
+    return JsonResponse({'coupon': coupon.to_dict(subtotal)})
 
 
 # ── Addresses API ────────────────────────────────────────────
