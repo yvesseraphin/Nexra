@@ -179,7 +179,10 @@
 }
 
 /* Cart panel gets full width — no cap */
-.account-panel[data-account-panel="cart"] {
+.account-panel[data-account-panel="cart"],
+.account-panel[data-account-panel="orders"],
+.account-panel[data-account-panel="payments"],
+.account-panel[data-account-panel="address"] {
     max-width: none;
     width: 100%;
 }
@@ -808,7 +811,58 @@
     }
 }
 
-/* ── Cart panel extras ──────────────────────────────────── */
+/* ── Panel empty states — cart-style circle + label ────── */
+/* Reuses .cart-empty / .cart-empty-icon / .cart-empty-label from cart-main.css */
+/* panel-empty just adds the extra hint line below the label */
+.panel-empty {
+  padding: 4rem 2rem;
+}
+
+.panel-empty-hint {
+  font-size: 0.88rem;
+  color: #b0b0b0;
+  margin: 0;
+  text-align: center;
+  max-width: 320px;
+}
+
+/* Address cards */
+.address-list {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.address-card {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(18, 18, 18, 0.09);
+}
+
+.address-card:first-child {
+  padding-top: 0.2rem;
+}
+
+.address-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.address-card-head h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.address-card-copy p {
+  margin: 0.2rem 0 0;
+  color: var(--profile-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+
 .profile-item-qty-row {
     display: flex;
     align-items: center;

@@ -1,10 +1,10 @@
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_http_methods
 
 def login_view(request):
     return render(request, 'accounts/login.html')
@@ -181,4 +181,11 @@ def api_profile(request):
         })
         
     return JsonResponse({'error': 'Method not allowed.'}, status=405)
+
+
+@csrf_exempt
+@require_http_methods(['POST', 'GET'])
+def api_logout(request):
+    logout(request)
+    return JsonResponse({'message': 'Logged out successfully.'})
 

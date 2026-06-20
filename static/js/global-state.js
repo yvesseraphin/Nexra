@@ -924,6 +924,273 @@
     return false;
   }
 
+  // ── API sync helpers ─────────────────────────────────────
+
+  function apiGet(url) {
+    return fetch(buildApiUrl(url), { credentials: 'include' }).then(function(r) { return r.json(); });
+  }
+
+  function apiPost(url, body) {
+    return fetch(buildApiUrl(url), {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrfToken() },
+      body: JSON.stringify(body),
+    }).then(function(r) { return r.json(); });
+  }
+
+  function apiPatch(url, body) {
+    return fetch(buildApiUrl(url), {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrfToken() },
+      body: JSON.stringify(body),
+    }).then(function(r) { return r.json(); });
+  }
+
+  function apiDelete(url) {
+    return fetch(buildApiUrl(url), {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: { 'X-CSRFToken': getCsrfToken() },
+    }).then(function(r) { return r.json(); });
+  }
+
+  function getCsrfToken() {
+    const cookie = document.cookie.split(';').find(function(c) { return c.trim().startsWith('csrftoken='); });
+    return cookie ? cookie.trim().split('=')[1] : '';
+  }
+
+  // ── API: Cart ─────────────────────────────────────────────
+
+  function syncCartFromApi(user) {
+    if (!isAuthenticated()) return;
+    apiGet('/cart/api/cart/').then(function(data) {
+      if (data.cart) {
+        localStorage.setItem(getCartStorageKey(user), JSON.stringify(data.cart));
+        emitCartUpdate(user);
+      }
+    }).catch(function() {});
+  }
+
+  function addToCartApi(product, quantity) {
+    quantity = quantity || 1;
+    var user = getCurrentUser();
+    // Optimistic local update first
+    addToCart(product, quantity, user);
+    if (!isAuthenticated()) return;
+    apiPost('/cart/api/cart/', Object.assign({}, product, { quantity: quantity }))
+      .then(function(data) {
+        if (data.cart) {
+          localStorage.setItem(getCartStorageKey(user), JSON.stringify(data.cart));
+          emitCartUpdate(user);
+        }
+      }).catch(function() {});
+  }
+
+  function updateCartQuantityApi(productId, quantity) {
+    var user = getCurrentUser();
+    updateCartQuantity(productId, quantity, user);
+    if (!isAuthenticated()) return;
+    if (quantity <= 0) {
+      apiDelete('/cart/api/cart/' + encodeURIComponent(productId) + '/')
+        .then(function(data) {
+          if (data.cart) {
+            localStorage.setItem(getCartStorageKey(user), JSON.stringify(data.cart));
+            emitCartUpdate(user);
+          }
+        }).catch(function() {});
+    } else {
+      apiPatch('/cart/api/cart/' + encodeURIComponent(productId) + '/', { quantity: quantity })
+        .then(function(data) {
+          if (data.cart) {
+            localStorage.setItem(getCartStorageKey(user), JSON.stringify(data.cart));
+            emitCartUpdate(user);
+          }
+        }).catch(function() {});
+    }
+  }
+
+  function removeFromCartApi(productId) {
+    var user = getCurrentUser();
+    removeFromCart(productId, user);
+    if (!isAuthenticated()) return;
+    apiDelete('/cart/api/cart/' + encodeURIComponent(productId) + '/')
+      .then(function(data) {
+        if (data.cart) {
+          localStorage.setItem(getCartStorageKey(user), JSON.stringify(data.cart));
+          emitCartUpdate(user);
+        }
+      }).catch(function() {});
+  }
+
+  function clearCartApi() {
+    var user = getCurrentUser();
+    clearCart(user);
+    if (!isAuthenticated()) return;
+    apiDelete('/cart/api/cart/').catch(function() {});
+  }
+
+  // ── API: Orders ───────────────────────────────────────────
+
+  function syncOrdersFromApi(user) {
+    if (!isAuthenticated()) return;
+    apiGet('/cart/api/orders/').then(function(data) {
+      if (data.orders) {
+        localStorage.setItem(getOrderStorageKey(user), JSON.stringify(data.orders));
+        window.dispatchEvent(new CustomEvent('nexra:orders-updated', { detail: { orders: data.orders, user: user } }));
+      }
+    }).catch(function() {});
+  }
+
+  function createOrderFromCheckoutApi(checkout) {
+    var user = getCurrentUser();
+    var cart = getCart(user);
+    if (!cart.length) return Promise.resolve(null);
+
+    var payload = Object.assign({}, checkout, {
+      items: cart,
+      paymentSummary: checkout.paymentMethod ? buildMaskedPaymentMethod(checkout.paymentMethod) : null,
+    });
+
+    return apiPost('/cart/api/orders/', payload).then(function(data) {
+      if (data.error) return null;
+      var order = data.order;
+      // Clear local cart and save order locally
+      clearCart(user);
+      var orders = getOrders(user);
+      orders.unshift(order);
+      localStorage.setItem(getOrderStorageKey(user), JSON.stringify(orders));
+      window.dispatchEvent(new CustomEvent('nexra:orders-updated', { detail: { orders: orders, user: user } }));
+      emitCartUpdate(user);
+      return order;
+    }).catch(function() {
+      // Fallback to local-only
+      return createOrderFromCheckout(checkout, user);
+    });
+  }
+
+  function getOrdersApi(callback) {
+    var user = getCurrentUser();
+    var local = getOrders(user);
+    if (typeof callback === 'function') callback(local);
+    syncOrdersFromApi(user);
+  }
+
+  // ── API: Payment methods ──────────────────────────────────
+
+  function syncPaymentsFromApi(user) {
+    if (!isAuthenticated()) return;
+    apiGet('/cart/api/payments/').then(function(data) {
+      if (data.paymentMethods) {
+        localStorage.setItem(getPaymentStorageKey(user), JSON.stringify(data.paymentMethods));
+        emitPaymentUpdate(user);
+      }
+    }).catch(function() {});
+  }
+
+  function savePaymentMethodApi(details) {
+    var user = getCurrentUser();
+    // Save locally first
+    var local = savePaymentMethod(details, user);
+    if (!isAuthenticated()) return local;
+    apiPost('/cart/api/payments/', details).then(function(data) {
+      if (data.paymentMethod) {
+        syncPaymentsFromApi(user);
+      }
+    }).catch(function() {});
+    return local;
+  }
+
+  function removePaymentMethodApi(id) {
+    var user = getCurrentUser();
+    removePaymentMethod(id, user);
+    if (!isAuthenticated()) return;
+    apiDelete('/cart/api/payments/' + encodeURIComponent(id) + '/').then(function(data) {
+      if (data.paymentMethods) {
+        localStorage.setItem(getPaymentStorageKey(user), JSON.stringify(data.paymentMethods));
+        emitPaymentUpdate(user);
+      }
+    }).catch(function() {});
+  }
+
+  function setDefaultPaymentMethodApi(id) {
+    var user = getCurrentUser();
+    setDefaultPaymentMethod(id, user);
+    if (!isAuthenticated()) return;
+    apiPatch('/cart/api/payments/' + encodeURIComponent(id) + '/', { isDefault: true }).then(function(data) {
+      if (data.paymentMethods) {
+        localStorage.setItem(getPaymentStorageKey(user), JSON.stringify(data.paymentMethods));
+        emitPaymentUpdate(user);
+      }
+    }).catch(function() {});
+  }
+
+  // ── API: Addresses ────────────────────────────────────────
+
+  const ADDRESS_KEY_PREFIX = 'nexra_addresses_';
+
+  function getAddressStorageKey(user) {
+    return ADDRESS_KEY_PREFIX + (user ? (user.id || GUEST_KEY) : GUEST_KEY);
+  }
+
+  function getAddresses(user) {
+    user = user || getCurrentUser();
+    return safeParse(localStorage.getItem(getAddressStorageKey(user)), []);
+  }
+
+  function syncAddressesFromApi(user) {
+    if (!isAuthenticated()) return;
+    apiGet('/cart/api/addresses/').then(function(data) {
+      if (data.addresses) {
+        localStorage.setItem(getAddressStorageKey(user), JSON.stringify(data.addresses));
+        window.dispatchEvent(new CustomEvent('nexra:addresses-updated', { detail: { addresses: data.addresses } }));
+      }
+    }).catch(function() {});
+  }
+
+  function saveAddressApi(addressData) {
+    var user = getCurrentUser();
+    if (!isAuthenticated()) return;
+    apiPost('/cart/api/addresses/', addressData).then(function(data) {
+      if (data.address) {
+        syncAddressesFromApi(user);
+      }
+    }).catch(function() {});
+  }
+
+  function removeAddressApi(id) {
+    var user = getCurrentUser();
+    if (!isAuthenticated()) return;
+    apiDelete('/cart/api/addresses/' + encodeURIComponent(id) + '/').then(function(data) {
+      if (data.addresses) {
+        localStorage.setItem(getAddressStorageKey(user), JSON.stringify(data.addresses));
+        window.dispatchEvent(new CustomEvent('nexra:addresses-updated', { detail: { addresses: data.addresses } }));
+      }
+    }).catch(function() {});
+  }
+
+  function setDefaultAddressApi(id) {
+    var user = getCurrentUser();
+    if (!isAuthenticated()) return;
+    apiPatch('/cart/api/addresses/' + encodeURIComponent(id) + '/', { isDefault: true }).then(function(data) {
+      if (data.address) {
+        syncAddressesFromApi(user);
+      }
+    }).catch(function() {});
+  }
+
+  // Sync all server data on page load if authenticated
+  document.addEventListener('DOMContentLoaded', function() {
+    if (isAuthenticated()) {
+      var user = getCurrentUser();
+      syncCartFromApi(user);
+      syncOrdersFromApi(user);
+      syncPaymentsFromApi(user);
+      syncAddressesFromApi(user);
+    }
+  });
+
   window.NexraState = {
     TOKEN_KEY,
     USER_KEY,
@@ -936,35 +1203,53 @@
     getCurrentPath,
     setPostAuthRedirect,
     consumePostAuthRedirect,
+    // Cart (API-backed)
     getCart,
     getCartCount,
-    addToCart,
-    updateCartQuantity,
-    removeFromCart,
-    clearCart,
+    addToCart:            addToCartApi,
+    updateCartQuantity:   updateCartQuantityApi,
+    removeFromCart:       removeFromCartApi,
+    clearCart:            clearCartApi,
+    syncCartFromApi,
+    // Orders (API-backed)
     getOrders,
+    getOrdersApi,
+    createOrderFromCheckout,
+    createOrderFromCheckoutApi,
+    createOrderFromCart,
+    // Payments (API-backed)
     getPaymentMethods,
     getDefaultPaymentMethod,
-    savePaymentMethod,
-    removePaymentMethod,
-    setDefaultPaymentMethod,
-    createOrderFromCheckout,
-    createOrderFromCart,
+    savePaymentMethod:       savePaymentMethodApi,
+    removePaymentMethod:     removePaymentMethodApi,
+    setDefaultPaymentMethod: setDefaultPaymentMethodApi,
+    syncPaymentsFromApi,
+    // Addresses (API-backed)
+    getAddresses,
+    saveAddressApi,
+    removeAddressApi,
+    setDefaultAddressApi,
+    syncAddressesFromApi,
+    // Auth
     migrateGuestStateToUser,
     setCurrentUser,
     clearSession,
     ensureAuthenticated,
+    // User helpers
     getUserDisplayName,
     getUserAvatarUrl,
     getUserInitials,
+    // Product helpers
     getProductPreview,
     buildFallbackProductDetails,
     saveProductPreview,
     slugify,
     formatCurrency,
     parsePriceValue,
+    // Events
     emitCartUpdate,
     emitPaymentUpdate,
+    // Card helpers
     detectCardBrand,
     buildMaskedPaymentMethod,
   };

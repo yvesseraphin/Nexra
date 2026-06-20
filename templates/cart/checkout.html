@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout — Nexra{% endblock %}
+{% block body_page %}checkout{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart-checkout.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section class="checkout-page">
+  <div class="checkout-shell">
+
+    <!-- Page heading -->
+    <div class="checkout-heading">
+      <a href="{% url 'cart' %}" class="checkout-back">
+        <i class="bx bx-arrow-back"></i>
+      </a>
+      <h1>Checkout</h1>
+    </div>
+
+    <div class="checkout-layout">
+
+      <!-- Left: form steps -->
+      <div class="checkout-form-col">
+
+        <!-- Step indicator -->
+        <div class="ck-steps" id="ck-steps">
+          <div class="ck-step-item is-active" data-step="1">
+            <div class="ck-step-circle">1</div>
+            <span>Shipping</span>
+          </div>
+          <div class="ck-step-line"></div>
+          <div class="ck-step-item" data-step="2">
+            <div class="ck-step-circle">2</div>
+            <span>Payment</span>
+          </div>
+          <div class="ck-step-line"></div>
+          <div class="ck-step-item" data-step="3">
+            <div class="ck-step-circle">3</div>
+            <span>Confirm</span>
+          </div>
+        </div>
+
+        <!-- Step 1: Shipping -->
+        <div class="ck-panel is-active" id="ck-panel-1">
+          <div class="ck-panel-head">
+            <h2>Shipping details</h2>
+          </div>
+
+          <form class="ck-form" id="ck-shipping-form" novalidate>
+            <div class="ck-grid-2">
+              <div class="ck-field">
+                <label for="ck-full-name">Full name</label>
+                <div class="ck-input-wrap">
+                  <i class="bx bx-user ck-input-icon"></i>
+                  <input type="text" id="ck-full-name" placeholder="" autocomplete="name">
+                </div>
+                <p class="ck-error" id="ck-full-name-err"></p>
+              </div>
+              <div class="ck-field">
+                <label for="ck-phone">Phone number</label>
+                <div class="ck-input-wrap">
+                  <i class="bx bx-phone ck-input-icon"></i>
+                  <input type="tel" id="ck-phone" placeholder="+250 7XX XXX XXX" autocomplete="tel">
+                </div>
+                <p class="ck-error" id="ck-phone-err"></p>
+              </div>
+            </div>
+
+            <div class="ck-field">
+              <label for="ck-address1">Address line 1</label>
+              <div class="ck-input-wrap">
+                <i class="bx bx-map ck-input-icon"></i>
+                <input type="text" id="ck-address1" placeholder="KG 5 Ave, House 12" autocomplete="address-line1">
+              </div>
+              <p class="ck-error" id="ck-address1-err"></p>
+            </div>
+
+            <div class="ck-field">
+              <label for="ck-address2">Address line 2 <span class="ck-optional">(optional)</span></label>
+              <div class="ck-input-wrap">
+                <i class="bx bx-map-alt ck-input-icon"></i>
+                <input type="text" id="ck-address2" placeholder="Apartment, suite, unit…" autocomplete="address-line2">
+              </div>
+            </div>
+
+            <div class="ck-grid-2">
+              <div class="ck-field">
+                <label for="ck-city">City / District</label>
+                <div class="ck-input-wrap">
+                  <i class="bx bx-buildings ck-input-icon"></i>
+                  <input type="text" id="ck-city" placeholder="Kigali" autocomplete="address-level2">
+                </div>
+                <p class="ck-error" id="ck-city-err"></p>
+              </div>
+              <div class="ck-field">
+                <label for="ck-province">Province</label>
+                <div class="ck-input-wrap">
+                  <i class="bx bx-map-pin ck-input-icon"></i>
+                  <input type="text" id="ck-province" placeholder="Kigali Province" autocomplete="address-level1">
+                </div>
+              </div>
+            </div>
+
+            <div class="ck-field">
+              <label for="ck-country">Country</label>
+              <div class="ck-input-wrap">
+                <i class="bx bx-globe ck-input-icon"></i>
+                <input type="text" id="ck-country" value="Rwanda" autocomplete="country-name">
+              </div>
+              <p class="ck-error" id="ck-country-err"></p>
+            </div>
+
+            <div class="ck-field">
+              <label for="ck-notes">Delivery notes <span class="ck-optional">(optional)</span></label>
+              <div class="ck-input-wrap">
+                <i class="bx bx-note ck-input-icon ck-icon-top"></i>
+                <textarea id="ck-notes" rows="3" placeholder="Leave at gate, call on arrival…"></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="ck-btn-primary">
+              Continue to payment
+              <i class="bx bx-right-arrow-alt"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- Step 2: Payment -->
+        <div class="ck-panel" id="ck-panel-2">
+          <div class="ck-panel-head">
+            <h2>Payment</h2>
+          </div>
+
+          <div id="ck-saved-methods-section"></div>
+
+          <form class="ck-form" id="ck-payment-form" novalidate>
+            <div id="ck-new-card-label" class="ck-section-label">Card details</div>
+
+            <div class="ck-field">
+              <label for="ck-holder">Cardholder name</label>
+              <div class="ck-input-wrap">
+                <i class="bx bx-user ck-input-icon"></i>
+                <input type="text" id="ck-holder" placeholder="" autocomplete="cc-name">
+              </div>
+              <p class="ck-error" id="ck-holder-err"></p>
+            </div>
+
+            <div class="ck-field">
+              <label for="ck-card-num">Card number</label>
+              <div class="ck-input-wrap">
+                <i class="bx bx-credit-card ck-input-icon" id="ck-card-icon"></i>
+                <input type="text" id="ck-card-num" placeholder="1234 5678 9012 3456" autocomplete="cc-number" maxlength="19">
+                <span class="ck-card-brand" id="ck-card-brand" aria-hidden="true"></span>
+              </div>
+              <p class="ck-error" id="ck-card-num-err"></p>
+            </div>
+
+            <div class="ck-grid-3">
+              <div class="ck-field">
+                <label for="ck-expiry-m">Month</label>
+                <div class="ck-input-wrap">
+                  <i class="bx bx-calendar ck-input-icon"></i>
+                  <input type="text" id="ck-expiry-m" placeholder="MM" autocomplete="cc-exp-month" maxlength="2">
+                </div>
+                <p class="ck-error" id="ck-expiry-m-err"></p>
+              </div>
+              <div class="ck-field">
+                <label for="ck-expiry-y">Year</label>
+                <div class="ck-input-wrap">
+                  <i class="bx bx-calendar-check ck-input-icon"></i>
+                  <input type="text" id="ck-expiry-y" placeholder="YY" autocomplete="cc-exp-year" maxlength="4">
+                </div>
+                <p class="ck-error" id="ck-expiry-y-err"></p>
+              </div>
+              <div class="ck-field">
+                <label for="ck-cvv">CVV</label>
+                <div class="ck-input-wrap">
+                  <i class="bx bx-lock-alt ck-input-icon"></i>
+                  <input type="password" id="ck-cvv" placeholder="•••" autocomplete="cc-csc" maxlength="4">
+                </div>
+                <p class="ck-error" id="ck-cvv-err"></p>
+              </div>
+            </div>
+
+            <label class="ck-checkbox-row">
+              <input type="checkbox" id="ck-save-card">
+              <span>Save card for future purchases</span>
+            </label>
+
+            <div class="ck-payment-actions">
+              <button type="button" class="ck-btn-secondary" id="ck-back-btn">
+                <i class="bx bx-left-arrow-alt"></i>
+                Back
+              </button>
+              <button type="submit" class="ck-btn-primary" id="ck-place-btn">
+                Place order
+                <i class="bx bx-check"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Step 3: Confirmation -->
+        <div class="ck-panel" id="ck-panel-3">
+          <div class="ck-confirm">
+            <div class="ck-confirm-icon">
+              <i class="bx bx-check-circle"></i>
+            </div>
+            <h2 class="ck-confirm-heading">Order placed!</h2>
+            <p class="ck-confirm-sub">We've received your order and it's being prepared.</p>
+            <p class="ck-confirm-num" id="ck-order-num"></p>
+            <div class="ck-confirm-actions">
+              <a href="{% url 'profile' %}" class="ck-btn-primary ck-btn-link">View my orders</a>
+              <a href="{% url 'home' %}" class="ck-btn-secondary ck-btn-link">Continue shopping</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: order summary -->
+      <aside class="checkout-summary-col" id="ck-summary-col">
+        <div class="ck-summary-card">
+          <h3 class="ck-summary-title">Order summary</h3>
+          <div class="ck-summary-items" id="ck-summary-items">
+            <!-- populated by JS -->
+          </div>
+          <div class="ck-summary-lines" id="ck-summary-lines">
+            <div class="ck-summary-line"><span>Subtotal</span><span id="ck-sum-subtotal">0 RWF</span></div>
+            <div class="ck-summary-line"><span>Shipping</span><span id="ck-sum-shipping">5,000 RWF</span></div>
+            <div class="ck-summary-line ck-sum-total"><span>Total</span><span id="ck-sum-total">0 RWF</span></div>
+          </div>
+
+          <!-- Secure payments -->
+          <div class="ck-secure">
+            <p class="ck-secure-label">SECURE PAYMENTS PROVIDED BY</p>
+            <div class="ck-payment-logos">
+              <svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Mastercard"><rect width="38" height="24" rx="4" fill="#f5f5f5"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.8a7 7 0 0 1 0 10.4A7 7 0 0 1 19 6.8z" fill="#FF5F00"/></svg>
+              <svg width="38" height="24" viewBox="0 0 38 24" fill="none" aria-label="Visa"><rect width="38" height="24" rx="4" fill="#f5f5f5"/><text x="6" y="17" font-family="Arial" font-size="11" font-weight="bold" fill="#1A1F71">VISA</text></svg>
+              <div class="ck-logo-pill">MoMo</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/cart-checkout-page.js' %}"></script>
+{% endblock %}

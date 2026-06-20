@@ -14,7 +14,16 @@
     renderCartPanel();
     renderOrdersPanel();
     renderPaymentsPanel();
+    renderAddressPanel();
     updateBadges();
+
+    // Sync from server then re-render
+    if (state && state.isAuthenticated()) {
+      var user = state.getCurrentUser();
+      state.syncCartFromApi && state.syncCartFromApi(user);
+      state.syncPaymentsFromApi && state.syncPaymentsFromApi(user);
+      state.syncAddressesFromApi && state.syncAddressesFromApi(user);
+    }
 
     // Keep panels fresh if cart changes in another tab
     window.addEventListener('nexra:cart-updated', function () {
@@ -25,7 +34,19 @@
       initAvatar();
       renderOrdersPanel();
       renderPaymentsPanel();
+      renderAddressPanel();
       updateBadges();
+    });
+    window.addEventListener('nexra:orders-updated', function () {
+      renderOrdersPanel();
+      updateBadges();
+    });
+    window.addEventListener('nexra:payments-updated', function () {
+      renderPaymentsPanel();
+      updateBadges();
+    });
+    window.addEventListener('nexra:addresses-updated', function () {
+      renderAddressPanel();
     });
   }
 
@@ -190,7 +211,12 @@
     var checkoutBtn = container.querySelector('.pc-checkout');
     if (checkoutBtn) {
       checkoutBtn.addEventListener('click', function () {
-        if (window.NexraNotify) window.NexraNotify.show('Checkout coming soon!', 'success');
+        if (state && !state.isAuthenticated()) {
+          state.setPostAuthRedirect('/cart/checkout/');
+          window.location.href = '/accounts/login/?redirect=%2Fcart%2Fcheckout%2F';
+          return;
+        }
+        window.location.href = '/cart/checkout/';
       });
     }
   }
@@ -203,11 +229,11 @@
     var orders = state ? state.getOrders() : [];
 
     if (!orders.length) {
-      container.innerHTML = emptyPanel(
-        'bx bx-package',
-        'No orders yet',
-        'Once you place an order, it will appear here with full details.'
-      );
+      container.innerHTML =
+        '<div class="cart-empty panel-empty">' +
+          '<div class="cart-empty-icon"><i class="bx bx-package"></i></div>' +
+          '<p class="cart-empty-label">No orders yet</p>' +
+        '</div>';
       return;
     }
 
@@ -256,11 +282,11 @@
     var methods = state ? state.getPaymentMethods() : [];
 
     if (!methods.length) {
-      container.innerHTML = emptyPanel(
-        'bx bx-credit-card',
-        'No payment methods saved',
-        'Payment methods you use at checkout will be saved here.'
-      );
+      container.innerHTML =
+        '<div class="cart-empty panel-empty">' +
+          '<div class="cart-empty-icon"><i class="bx bx-credit-card"></i></div>' +
+          '<p class="cart-empty-label">No payment methods</p>' +
+        '</div>';
       return;
     }
 
@@ -432,6 +458,58 @@
           wrapper.classList.remove('is-open');
           trigger.setAttribute('aria-expanded', 'false');
         }
+      });
+    });
+  }
+
+  /* ── Address panel ────────────────────────────────────── */
+  function renderAddressPanel() {
+    var container = document.getElementById('profile-address');
+    if (!container) return;
+
+    var addresses = state && state.getAddresses ? state.getAddresses() : [];
+
+    if (!addresses.length) {
+      container.innerHTML =
+        '<div class="cart-empty panel-empty">' +
+          '<div class="cart-empty-icon"><i class="bx bx-map"></i></div>' +
+          '<p class="cart-empty-label">No saved addresses</p>' +
+        '</div>';
+      return;
+    }
+
+    var html = '<div class="address-list">';
+    addresses.forEach(function (addr) {
+      html += '<div class="address-card">' +
+        '<div class="address-card-copy">' +
+          '<div class="address-card-head">' +
+            '<h3>' + esc(addr.fullName || 'Address') + '</h3>' +
+            (addr.isDefault ? '<span class="payment-pill">Default</span>' : '') +
+          '</div>' +
+          '<p>' + esc(addr.addressLine1 || '') +
+            (addr.addressLine2 ? ', ' + esc(addr.addressLine2) : '') + '</p>' +
+          '<p>' + esc(addr.city || '') +
+            (addr.stateRegion ? ', ' + esc(addr.stateRegion) : '') +
+            (addr.postalCode ? ' ' + esc(addr.postalCode) : '') + '</p>' +
+          '<p>' + esc(addr.country || '') + '</p>' +
+        '</div>' +
+        '<div class="payment-method-actions">' +
+          (!addr.isDefault
+            ? '<button type="button" class="outline-pill addr-action-btn" data-action="default" data-id="' + esc(addr.id) + '">Set default</button>'
+            : '') +
+          '<button type="button" class="outline-pill addr-action-btn" data-action="remove" data-id="' + esc(addr.id) + '">Remove</button>' +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+
+    container.querySelectorAll('.addr-action-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id  = btn.dataset.id;
+        var act = btn.dataset.action;
+        if (act === 'remove' && state.removeAddressApi) state.removeAddressApi(id);
+        else if (act === 'default' && state.setDefaultAddressApi) state.setDefaultAddressApi(id);
       });
     });
   }

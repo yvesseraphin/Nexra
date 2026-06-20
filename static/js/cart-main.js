@@ -145,14 +145,13 @@
   function handleCheckout() {
     if (!state) return;
     if (!state.isAuthenticated()) {
-      state.setPostAuthRedirect('/cart/');
-      window.location.href = '/accounts/login/?redirect=%2Fcart%2F';
+      state.setPostAuthRedirect('/cart/checkout/');
+      window.location.href = '/accounts/login/?redirect=%2Fcart%2Fcheckout%2F';
       return;
     }
-    // Placeholder — order creation would go here
-    if (window.NexraNotify) {
-      window.NexraNotify.show('Checkout coming soon!', 'success');
-    }
+    var cart = state.getCart();
+    if (!cart.length) return;
+    window.location.href = '/cart/checkout/';
   }
 
   /* ── Helpers ────────────────────────────────────────── */

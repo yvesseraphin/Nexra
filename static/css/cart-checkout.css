@@ -1,0 +1,697 @@
+/* ============================================================
+   Checkout Page — Nexra
+   Full page with navbar + footer. Input styling matches login.
+   Two-column layout: form steps (left) + order summary (right).
+   ============================================================ */
+
+:root {
+  --ck-text:        #253D4E;
+  --ck-muted:       #7E7E7E;
+  --ck-border:      #E0E0E0;
+  --ck-black:       #111111;
+  --ck-soft:        #f5f5f5;
+  --ck-error:       #b04848;
+  --ck-success:     #2d7255;
+  --ck-radius:      8px;
+}
+
+/* ── Page shell ─────────────────────────────────────────── */
+.checkout-page {
+  min-height: calc(100vh - 76px);
+  background: #ffffff;
+  padding: clamp(2rem, 4vw, 3.5rem) 0 5rem;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.checkout-shell {
+  width: min(1320px, calc(100% - 2.5rem));
+  margin: 0 auto;
+}
+
+/* ── Heading row ────────────────────────────────────────── */
+.checkout-heading {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid #f0f0f0;
+}
+
+.checkout-heading h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--ck-black);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.checkout-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ck-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.checkout-back:hover {
+  color: var(--ck-black);
+}
+
+.checkout-back i {
+  font-size: 1.1rem;
+}
+
+/* ── Two-column layout ──────────────────────────────────── */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+/* ── Step indicator ─────────────────────────────────────── */
+.ck-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+}
+
+.ck-step-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ck-muted);
+  transition: color 0.2s ease;
+}
+
+.ck-step-item.is-active {
+  color: var(--ck-black);
+}
+
+.ck-step-item.is-done {
+  color: var(--ck-black);
+}
+
+.ck-step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--ck-border);
+  background: #ffffff;
+  color: var(--ck-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ck-step-item.is-active .ck-step-circle {
+  border-color: var(--ck-black);
+  background: var(--ck-black);
+  color: #ffffff;
+}
+
+.ck-step-item.is-done .ck-step-circle {
+  border-color: var(--ck-black);
+  background: var(--ck-black);
+  color: #ffffff;
+}
+
+.ck-step-line {
+  flex: 1;
+  height: 1.5px;
+  background: var(--ck-border);
+  margin: 0 0.75rem;
+  transition: background 0.3s ease;
+}
+
+.ck-step-line.is-done {
+  background: var(--ck-black);
+}
+
+/* ── Panel ──────────────────────────────────────────────── */
+.ck-panel {
+  display: none;
+}
+
+.ck-panel.is-active {
+  display: block;
+}
+
+.ck-panel-head {
+  margin-bottom: 2rem;
+}
+
+.ck-kicker {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ck-muted);
+  margin: 0 0 0.6rem;
+}
+
+.ck-panel-head h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--ck-black);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* ── Form ───────────────────────────────────────────────── */
+.ck-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.ck-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+}
+
+.ck-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+/* ── Field — mirrors login page ─────────────────────────── */
+.ck-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.ck-field label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #3f3f3f;
+}
+
+.ck-optional {
+  font-weight: 400;
+  color: var(--ck-muted);
+}
+
+.ck-input-wrap {
+  position: relative;
+}
+
+.ck-input-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ck-muted);
+  font-size: 1.05rem;
+  pointer-events: none;
+}
+
+.ck-icon-top {
+  top: 18px;
+  transform: none;
+}
+
+/* inputs — exactly like login page */
+.ck-input-wrap input,
+.ck-input-wrap textarea {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  width: 100%;
+  padding: 16px 18px 16px 50px;
+  border: 1px solid var(--ck-border);
+  border-radius: var(--ck-radius);
+  font-size: 0.95rem;
+  color: var(--ck-text);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  resize: none;
+}
+
+.ck-input-wrap textarea {
+  padding-top: 14px;
+  line-height: 1.55;
+}
+
+.ck-input-wrap input::placeholder,
+.ck-input-wrap textarea::placeholder {
+  color: var(--ck-muted);
+  font-weight: 500;
+}
+
+.ck-input-wrap input:focus,
+.ck-input-wrap textarea:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
+}
+
+.ck-input-wrap input.is-invalid,
+.ck-input-wrap textarea.is-invalid {
+  border-color: var(--ck-error);
+  box-shadow: 0 0 0 1px var(--ck-error);
+}
+
+.ck-input-wrap input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: var(--ck-text) !important;
+}
+
+/* ── Card brand badge ───────────────────────────────────── */
+.ck-card-brand {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ck-text);
+  background: var(--ck-soft);
+  padding: 3px 9px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.ck-card-brand.is-visible {
+  opacity: 1;
+}
+
+/* ── Error text ─────────────────────────────────────────── */
+.ck-error {
+  font-size: 0.78rem;
+  color: var(--ck-error);
+  font-weight: 600;
+  margin: 0;
+  min-height: 1rem;
+}
+
+/* ── Section label (payment) ────────────────────────────── */
+.ck-section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ck-muted);
+  margin: 0 0 1rem;
+}
+
+/* ── Saved payment methods ──────────────────────────────── */
+.ck-saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.ck-saved-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1.5px solid var(--ck-border);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ck-text);
+  background: #fff;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.ck-saved-item input[type="radio"] {
+  accent-color: var(--ck-black);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ck-saved-item.is-selected {
+  border-color: var(--ck-black);
+  background: #fafafa;
+}
+
+.ck-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ck-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.ck-divider::before,
+.ck-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #f0f0f0;
+}
+
+/* ── Checkbox row ───────────────────────────────────────── */
+.ck-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ck-muted);
+  cursor: pointer;
+  margin-top: 0.25rem;
+}
+
+.ck-checkbox-row input[type="checkbox"] {
+  accent-color: var(--ck-black);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.ck-btn-primary,
+.ck-btn-secondary {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 15px 32px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  text-decoration: none;
+}
+
+.ck-btn-primary {
+  background: var(--ck-black);
+  color: #ffffff;
+  border: none;
+  align-self: flex-start;
+}
+
+.ck-btn-primary:hover {
+  background: #333333;
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.ck-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ck-btn-secondary {
+  background: transparent;
+  color: var(--ck-black);
+  border: 1.25px solid rgba(18, 18, 18, 0.22);
+}
+
+.ck-btn-secondary:hover {
+  border-color: var(--ck-black);
+  transform: translateY(-2px);
+  color: var(--ck-black);
+}
+
+.ck-payment-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Confirmation ───────────────────────────────────────── */
+.ck-confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem 2rem;
+}
+
+.ck-confirm-icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--ck-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+}
+
+.ck-confirm-icon i {
+  font-size: 2.6rem;
+  color: var(--ck-black);
+}
+
+.ck-confirm-heading {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: var(--ck-black);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+}
+
+.ck-confirm-sub {
+  color: var(--ck-muted);
+  font-size: 1rem;
+  margin: 0 0 0.4rem;
+  text-align: center;
+}
+
+.ck-confirm-num {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ck-black);
+  letter-spacing: 0.06em;
+  margin: 0 0 2.5rem;
+}
+
+.ck-confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ── Order summary card ─────────────────────────────────── */
+.checkout-summary-col {
+  position: sticky;
+  top: 24px;
+}
+
+.ck-summary-card {
+  border: 1px solid #eeeeee;
+  border-radius: 18px;
+  padding: 2rem 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ck-summary-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ck-black);
+  margin: 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ck-summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.ck-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ck-summary-item-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--ck-soft);
+  flex-shrink: 0;
+}
+
+.ck-summary-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ck-summary-item-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ck-black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.ck-summary-item-qty {
+  font-size: 0.8rem;
+  color: var(--ck-muted);
+  margin: 0.2rem 0 0;
+}
+
+.ck-summary-item-price {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ck-black);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ck-summary-lines {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ck-summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--ck-muted);
+}
+
+.ck-summary-line span:last-child {
+  font-weight: 600;
+  color: var(--ck-black);
+}
+
+.ck-sum-total {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 0.7rem;
+  margin-top: 0.35rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ck-black);
+}
+
+.ck-sum-total span:last-child {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+/* ── Secure payments ────────────────────────────────────── */
+.ck-secure {
+  padding-top: 0.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.ck-secure-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ck-muted);
+  margin: 0 0 0.7rem;
+}
+
+.ck-payment-logos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ck-logo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 4px;
+  background: var(--ck-soft);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--ck-black);
+  letter-spacing: 0.04em;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary-col {
+    position: static;
+    order: -1;
+  }
+
+  .ck-summary-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .checkout-shell {
+    width: calc(100% - 1.5rem);
+  }
+
+  .ck-grid-2,
+  .ck-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .ck-steps {
+    gap: 0;
+  }
+
+  .ck-step-item span {
+    display: none;
+  }
+
+  .ck-btn-primary,
+  .ck-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ck-payment-actions {
+    flex-direction: column;
+  }
+
+  .ck-confirm-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ck-btn-link {
+    width: 100%;
+    text-align: center;
+  }
+}
