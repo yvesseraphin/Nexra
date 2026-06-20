@@ -1,5 +1,69 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
+
+class Coupon(models.Model):
+    DISCOUNT_PERCENT = 'percent'
+    DISCOUNT_FIXED   = 'fixed'
+    DISCOUNT_TYPES   = [
+        (DISCOUNT_PERCENT, 'Percentage (%)'),
+        (DISCOUNT_FIXED,   'Fixed amount (RWF)'),
+    ]
+
+    code            = models.CharField(max_length=50, unique=True)
+    description     = models.CharField(max_length=255, blank=True)
+    discount_type   = models.CharField(max_length=10, choices=DISCOUNT_TYPES, default=DISCOUNT_PERCENT)
+    discount_value  = models.DecimalField(max_digits=10, decimal_places=2)   # e.g. 20 = 20% or 5000 RWF
+    min_order_value = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    max_discount    = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)  # cap for % coupons
+    usage_limit     = models.PositiveIntegerField(null=True, blank=True)     # None = unlimited
+    times_used      = models.PositiveIntegerField(default=0)
+    is_active       = models.BooleanField(default=True)
+    valid_from      = models.DateTimeField(default=timezone.now)
+    valid_until     = models.DateTimeField(null=True, blank=True)
+    created_at      = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.code} — {self.discount_value}{'%' if self.discount_type == self.DISCOUNT_PERCENT else ' RWF'}"
+
+    def is_valid(self):
+        now = timezone.now()
+        if not self.is_active:
+            return False, 'This coupon is no longer active.'
+        if now < self.valid_from:
+            return False, 'This coupon is not yet valid.'
+        if self.valid_until and now > self.valid_until:
+            return False, 'This coupon has expired.'
+        if self.usage_limit is not None and self.times_used >= self.usage_limit:
+            return False, 'This coupon has reached its usage limit.'
+        return True, None
+
+    def calculate_discount(self, subtotal):
+        """Return the discount amount for a given subtotal."""
+        subtotal = float(subtotal)
+        if self.discount_type == self.DISCOUNT_PERCENT:
+            amount = subtotal * float(self.discount_value) / 100
+            if self.max_discount is not None:
+                amount = min(amount, float(self.max_discount))
+        else:
+            amount = float(self.discount_value)
+        return round(min(amount, subtotal), 2)
+
+    def to_dict(self, subtotal=0):
+        discount = self.calculate_discount(subtotal)
+        return {
+            'code':          self.code,
+            'description':   self.description,
+            'discountType':  self.discount_type,
+            'discountValue': float(self.discount_value),
+            'discountAmount': discount,
+            'maxDiscount':   float(self.max_discount) if self.max_discount else None,
+            'minOrderValue': float(self.min_order_value),
+        }
 
 
 class CartItem(models.Model):
@@ -76,6 +140,10 @@ class Order(models.Model):
     payment_label     = models.CharField(max_length=255, blank=True)
     payment_status    = models.CharField(max_length=100, blank=True, default='Payment details received')
 
+    # Coupon
+    coupon_code     = models.CharField(max_length=50, blank=True)
+    coupon_discount = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+
     placed_at  = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -95,6 +163,8 @@ class Order(models.Model):
             'total':            float(self.total),
             'totalItems':       self.total_items,
             'totalLabel':       f"{int(self.total):,} RWF",
+            'couponCode':       self.coupon_code,
+            'couponDiscount':   float(self.coupon_discount),
             'notes':            self.notes,
             'placedAt':         self.placed_at.isoformat(),
             'updatedAt':        self.updated_at.isoformat(),

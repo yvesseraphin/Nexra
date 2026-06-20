@@ -49,6 +49,7 @@ htmlcov/
 # Editor and OS files
 .vscode/
 .idea/
+.kiro/
 *.swp
 *.swo
 .DS_Store
