@@ -136,9 +136,47 @@
     var input = document.getElementById('coupon-input');
     var code = input ? input.value.trim() : '';
     if (!code) return;
-    if (window.NexraNotify) {
-      window.NexraNotify.show('Coupon "' + code + '" is not valid or has expired.', 'error');
-    }
+
+    var cart = state ? state.getCart() : [];
+    var subtotal = cart.reduce(function (s, i) {
+      return s + (Number(i.priceValue) || 0) * (Number(i.quantity) || 0);
+    }, 0);
+
+    fetch('/cart/api/coupon/apply/', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCsrfToken(),
+      },
+      body: JSON.stringify({ code: code, subtotal: subtotal }),
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.error) {
+          if (window.NexraNotify) window.NexraNotify.show(data.error, 'error');
+          return;
+        }
+        var coupon = data.coupon;
+        var discountEl = document.getElementById('summary-discount');
+        var shippingEl = document.getElementById('summary-shipping');
+        var totalValEl = document.getElementById('cart-total-value');
+        var discount = coupon.discountAmount || 0;
+        var shipping = subtotal > 0 ? 5000 : 0;
+        var total = Math.max(0, subtotal + shipping - discount);
+        if (discountEl) discountEl.textContent = formatRWF(discount);
+        if (shippingEl) shippingEl.textContent = formatRWF(shipping);
+        if (totalValEl) totalValEl.textContent = formatRWF(total);
+        if (window.NexraNotify) window.NexraNotify.show('Coupon applied! You saved ' + formatRWF(discount) + '.', 'success');
+      })
+      .catch(function () {
+        if (window.NexraNotify) window.NexraNotify.show('Could not apply coupon. Please try again.', 'error');
+      });
+  }
+
+  function getCsrfToken() {
+    var cookie = document.cookie.split(';').find(function (c) { return c.trim().startsWith('csrftoken='); });
+    return cookie ? cookie.trim().split('=')[1] : '';
   }
 
   /* ── Checkout ───────────────────────────────────────── */

@@ -260,19 +260,6 @@
         goToStep(3, order);
       });
     });
-
-      var order = state.createOrderFromCheckout(checkout);
-
-      if (!order) {
-        if (window.NexraNotify) window.NexraNotify.show('Could not place order. Please try again.', 'error');
-        return;
-      }
-
-      /* refresh cart badge */
-      window.dispatchEvent(new CustomEvent('nexra:cart-updated'));
-      window.dispatchEvent(new CustomEvent('nexra:user-updated'));
-
-      goToStep(3, order);
   }
 
   /* ── Card number formatting + brand detection ────────── */
