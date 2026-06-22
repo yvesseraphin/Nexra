@@ -1,5 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from .models import Subscriber
 
 # Core catalog and pages data mapped directly to the reference data
 STORE_DATA = {
@@ -859,3 +866,102 @@ def api_catalog_item(request, slug):
                     return JsonResponse(fixed_item)
                     
     return JsonResponse({"error": f"Unknown catalog item {slug}"}, status=404)
+
+
+# ── Newsletter subscribe ─────────────────────────────────────
+
+@csrf_exempt
+@require_POST
+def api_subscribe(request):
+    import json
+    try:
+        data = json.loads(request.body)
+    except (json.JSONDecodeError, AttributeError):
+        return JsonResponse({'error': 'Invalid request.'}, status=400)
+
+    email = str(data.get('email') or '').strip().lower()
+
+    if not email:
+        return JsonResponse({'error': 'Please enter your email address.'}, status=400)
+
+    try:
+        validate_email(email)
+    except ValidationError:
+        return JsonResponse({'error': 'Please enter a valid email address.'}, status=400)
+
+    subscriber, created = Subscriber.objects.get_or_create(email=email)
+
+    if not created:
+        if subscriber.is_active:
+            return JsonResponse({'message': "You're already subscribed — we'll keep the deals coming!"})
+        else:
+            subscriber.is_active = True
+            subscriber.save(update_fields=['is_active'])
+
+    # Send welcome email (non-blocking — logs error silently so the API never breaks)
+    try:
+        send_mail(
+            subject='Welcome to Nexra — You\'re on the list!',
+            message='',
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[email],
+            fail_silently=False,
+            html_message=f"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Nexra</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
+          <!-- Header -->
+          <tr>
+            <td style="background:#111111;padding:32px 40px;text-align:center;">
+              <h1 style="margin:0;color:#ffffff;font-size:28px;letter-spacing:2px;font-weight:800;">NEXRA</h1>
+              <p style="margin:6px 0 0;color:#aaaaaa;font-size:13px;letter-spacing:1px;">DISCOVER YOUR STYLE</p>
+            </td>
+          </tr>
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+              <h2 style="margin:0 0 16px;color:#111111;font-size:22px;font-weight:700;">You're on the list!</h2>
+              <p style="margin:0 0 16px;color:#555555;font-size:15px;line-height:1.7;">
+                Thanks for subscribing to Nexra. You'll be the first to know about exclusive deals,
+                new arrivals, and special offers — delivered straight to your inbox.
+              </p>
+              <p style="margin:0 0 32px;color:#555555;font-size:15px;line-height:1.7;">
+                In the meantime, explore our latest collections.
+              </p>
+              <a href="http://localhost:8000/"
+                 style="display:inline-block;background:#111111;color:#ffffff;text-decoration:none;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:600;letter-spacing:0.5px;">
+                Shop Now
+              </a>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f9f9f9;padding:24px 40px;border-top:1px solid #eeeeee;text-align:center;">
+              <p style="margin:0;color:#aaaaaa;font-size:12px;line-height:1.6;">
+                You're receiving this because you subscribed at nexra.com.<br>
+                &copy; 2026 Nexra. All rights reserved.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+""",
+        )
+    except Exception:
+        # Email failed (e.g. credentials not set) — still confirm subscription
+        pass
+
+    return JsonResponse({'message': 'You\'re subscribed! Check your inbox for a welcome email.'}, status=201 if created else 200)

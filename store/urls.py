@@ -16,4 +16,5 @@ urlpatterns = [
     # API endpoints
     path('api/pages/<str:slug>', views.api_page_data, name='api_page_data'),
     path('api/catalog/items/<str:slug>', views.api_catalog_item, name='api_catalog_item'),
+    path('api/subscribe/', views.api_subscribe, name='api_subscribe'),
 ]

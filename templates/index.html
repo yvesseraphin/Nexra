@@ -213,10 +213,12 @@
                 <h4 class="cta-title">Stop home & get your daily<br>needs from our shop</h4>
                 <p class="cta-subtitle">Start Your Daily Shopping with Nexra</p> 
                 <div class="subscribe-form">
-                    <form>    
-                        <input type="email" class="form-control email-input" placeholder="Enter your email">
-                        <button class="btn btn-secondary subscribe-btn">Subscribe</button>
+                    {% csrf_token %}
+                    <form id="cta-subscribe-form" novalidate>
+                        <input type="email" id="cta-email-input" class="form-control email-input" placeholder="Enter your email" autocomplete="email" required>
+                        <button type="submit" class="btn btn-secondary subscribe-btn" id="cta-subscribe-btn">Subscribe</button>
                     </form>
+                    <p id="cta-subscribe-msg" style="display:none;margin-top:10px;font-size:14px;font-weight:500;"></p>
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-end mt-4 mt-lg-0">
@@ -229,4 +231,61 @@
 
 {% block extra_js %}
 <script src="{% static 'js/store-dynamic.js' %}"></script>
+<script>
+(function () {
+  'use strict';
+
+  var form    = document.getElementById('cta-subscribe-form');
+  var input   = document.getElementById('cta-email-input');
+  var btn     = document.getElementById('cta-subscribe-btn');
+  var msgEl   = document.getElementById('cta-subscribe-msg');
+
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = input ? input.value.trim() : '';
+    if (!email) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Subscribing…';
+    msgEl.style.display = 'none';
+
+    var csrfToken = (document.cookie.split(';').find(function (c) {
+      return c.trim().startsWith('csrftoken=');
+    }) || '').trim().split('=')[1] || '';
+
+    fetch('/api/subscribe/', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      body: JSON.stringify({ email: email }),
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.error) {
+          msgEl.style.color = '#e53935';
+          msgEl.textContent = data.error;
+        } else {
+          msgEl.style.color = '#2e7d32';
+          msgEl.textContent = data.message;
+          if (input) input.value = '';
+        }
+        msgEl.style.display = 'block';
+      })
+      .catch(function () {
+        msgEl.style.color = '#e53935';
+        msgEl.textContent = 'Something went wrong. Please try again.';
+        msgEl.style.display = 'block';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'Subscribe';
+      });
+  });
+})();
+</script>
 {% endblock %}
