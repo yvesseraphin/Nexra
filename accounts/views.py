@@ -6,6 +6,26 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_http_methods
+from .models import UserProfile
+
+
+def _build_user_data(user):
+    """Return a consistent user dict including gender from profile."""
+    display_name = user.first_name if user.first_name else user.username
+    if user.first_name and user.last_name:
+        display_name = f"{user.first_name} {user.last_name}"
+
+    profile, _ = UserProfile.objects.get_or_create(user=user)
+
+    return {
+        'id': user.id,
+        'email': user.email,
+        'firstName': user.first_name,
+        'lastName': user.last_name,
+        'displayName': display_name,
+        'phone': "" if "@" in user.username else user.username,
+        'gender': profile.gender,
+    }
 
 def login_view(request):
     return render(request, 'accounts/login.html')
@@ -34,27 +54,14 @@ def api_login(request):
 
     if user is not None:
         login(request, user)
-        
-        display_name = user.first_name if user.first_name else user.username
-        if user.first_name and user.last_name:
-            display_name = f"{user.first_name} {user.last_name}"
-
-        user_data = {
-            'id': user.id,
-            'email': user.email,
-            'firstName': user.first_name,
-            'lastName': user.last_name,
-            'displayName': display_name,
-            'phone': "" if "@" in user.username else user.username
-        }
 
         if not request.session.session_key:
             request.session.save()
         token = request.session.session_key
-        
+
         return JsonResponse({
             'token': token,
-            'user': user_data,
+            'user': _build_user_data(user),
             'message': 'Login successful. Redirecting...'
         })
     else:
@@ -99,24 +106,13 @@ def api_signup(request):
         )
         login(request, user)
 
-        display_name = f"{first_name} {last_name}".strip() if last_name else first_name
-
-        user_data = {
-            'id': user.id,
-            'email': user.email,
-            'firstName': user.first_name,
-            'lastName': user.last_name,
-            'displayName': display_name,
-            'phone': "" if "@" in user.username else user.username
-        }
-
         if not request.session.session_key:
             request.session.save()
         token = request.session.session_key
 
         return JsonResponse({
             'token': token,
-            'user': user_data,
+            'user': _build_user_data(user),
             'message': 'Account created successfully! Redirecting...'
         })
     except Exception as e:
@@ -126,62 +122,44 @@ def api_signup(request):
 def api_profile(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Your session expired. Sign in again to continue.'}, status=401)
-    
+
     user = request.user
+
     if request.method == 'GET':
-        display_name = user.first_name if user.first_name else user.username
-        if user.first_name and user.last_name:
-            display_name = f"{user.first_name} {user.last_name}"
-            
-        user_data = {
-            'id': user.id,
-            'email': user.email,
-            'firstName': user.first_name,
-            'lastName': user.last_name,
-            'displayName': display_name,
-            'phone': "" if "@" in user.username else user.username
-        }
-        return JsonResponse({'user': user_data})
-        
+        return JsonResponse({'user': _build_user_data(user)})
+
     elif request.method == 'PATCH':
         try:
             data = json.loads(request.body)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON.'}, status=400)
-            
+
         first_name = data.get('firstName')
-        last_name = data.get('lastName')
-        email = data.get('email')
-        
+        last_name  = data.get('lastName')
+        email      = data.get('email')
+        gender     = data.get('gender')
+
         if first_name is not None:
             user.first_name = first_name.strip()
         if last_name is not None:
             user.last_name = last_name.strip()
         if email is not None:
             user.email = email.strip()
-            # If username is an email address, keep it in sync
             if '@' in user.username:
                 user.username = email.strip()
-                
+
         user.save()
-        
-        display_name = user.first_name if user.first_name else user.username
-        if user.first_name and user.last_name:
-            display_name = f"{user.first_name} {user.last_name}"
-            
-        user_data = {
-            'id': user.id,
-            'email': user.email,
-            'firstName': user.first_name,
-            'lastName': user.last_name,
-            'displayName': display_name,
-            'phone': "" if "@" in user.username else user.username
-        }
+
+        if gender is not None:
+            profile, _ = UserProfile.objects.get_or_create(user=user)
+            profile.gender = gender.strip()
+            profile.save()
+
         return JsonResponse({
-            'user': user_data,
+            'user': _build_user_data(user),
             'message': 'Profile details saved.'
         })
-        
+
     return JsonResponse({'error': 'Method not allowed.'}, status=405)
 
 

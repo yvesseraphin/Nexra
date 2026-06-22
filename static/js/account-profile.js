@@ -333,6 +333,26 @@
     setVal('profile-email',      user.email     || '');
     setVal('profile-phone',      user.phone     || '');
 
+    // Restore gender dropdown
+    if (user.gender) {
+      var genderInput = document.getElementById('profile-gender');
+      var genderDropdown = document.getElementById('profile-gender-dropdown');
+      if (genderInput) genderInput.value = user.gender;
+      if (genderDropdown) {
+        var valueEl = genderDropdown.querySelector('.custom-select-value');
+        var items   = genderDropdown.querySelectorAll('.custom-select-item');
+        items.forEach(function (item) {
+          if (item.dataset.value === user.gender) {
+            item.classList.add('is-selected');
+            if (valueEl) valueEl.textContent = item.querySelector('span') ? item.querySelector('span').textContent : user.gender;
+            genderDropdown.classList.add('has-value');
+          } else {
+            item.classList.remove('is-selected');
+          }
+        });
+      }
+    }
+
     var nameEl   = document.getElementById('profile-name');
     var detailEl = document.getElementById('profile-detail');
     if (nameEl)   nameEl.textContent   = state.getUserDisplayName(user);
@@ -349,6 +369,7 @@
         firstName: getVal('profile-first-name'),
         lastName:  getVal('profile-last-name'),
         email:     getVal('profile-email'),
+        gender:    getVal('profile-gender'),
       };
 
       fetch('/api/profile/', {
