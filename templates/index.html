@@ -218,7 +218,6 @@
                         <input type="email" id="cta-email-input" class="form-control email-input" placeholder="Enter your email" autocomplete="email" required>
                         <button type="submit" class="btn btn-secondary subscribe-btn" id="cta-subscribe-btn">Subscribe</button>
                     </form>
-                    <p id="cta-subscribe-msg" style="display:none;margin-top:10px;font-size:14px;font-weight:500;"></p>
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-end mt-4 mt-lg-0">
@@ -235,10 +234,9 @@
 (function () {
   'use strict';
 
-  var form    = document.getElementById('cta-subscribe-form');
-  var input   = document.getElementById('cta-email-input');
-  var btn     = document.getElementById('cta-subscribe-btn');
-  var msgEl   = document.getElementById('cta-subscribe-msg');
+  var form  = document.getElementById('cta-subscribe-form');
+  var input = document.getElementById('cta-email-input');
+  var btn   = document.getElementById('cta-subscribe-btn');
 
   if (!form) return;
 
@@ -249,7 +247,6 @@
 
     btn.disabled = true;
     btn.textContent = 'Subscribing…';
-    msgEl.style.display = 'none';
 
     var csrfToken = (document.cookie.split(';').find(function (c) {
       return c.trim().startsWith('csrftoken=');
@@ -267,19 +264,14 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         if (data.error) {
-          msgEl.style.color = '#e53935';
-          msgEl.textContent = data.error;
+          if (window.NexraNotify) window.NexraNotify.show(data.error, 'error');
         } else {
-          msgEl.style.color = '#2e7d32';
-          msgEl.textContent = data.message;
+          if (window.NexraNotify) window.NexraNotify.show(data.message, 'success');
           if (input) input.value = '';
         }
-        msgEl.style.display = 'block';
       })
       .catch(function () {
-        msgEl.style.color = '#e53935';
-        msgEl.textContent = 'Something went wrong. Please try again.';
-        msgEl.style.display = 'block';
+        if (window.NexraNotify) window.NexraNotify.show('Something went wrong. Please try again.', 'error');
       })
       .finally(function () {
         btn.disabled = false;
