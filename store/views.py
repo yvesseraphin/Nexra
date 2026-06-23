@@ -895,6 +895,7 @@ def api_subscribe(request):
         if subscriber.is_active:
             return JsonResponse({'message': "You're already subscribed — we'll keep the deals coming!"})
         else:
+            # Re-activating an unsubscribed email — fall through to send welcome again
             subscriber.is_active = True
             subscriber.save(update_fields=['is_active'])
 
