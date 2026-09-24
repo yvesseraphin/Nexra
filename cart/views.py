@@ -7,21 +7,16 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .models import CartItem, Order, OrderItem, PaymentMethod, Address, Coupon
-
-
-# ── Page views ──────────────────────────────────────────────
 
 def cart_view(request):
     return render(request, 'cart/cart.html')
 
-
 def checkout_view(request):
     return render(request, 'cart/checkout.html')
-
-
-# ── Helpers ──────────────────────────────────────────────────
 
 def _require_auth(request):
     """Return user if authenticated via session, else None."""
@@ -29,18 +24,15 @@ def _require_auth(request):
         return request.user
     return None
 
-
 def _json(request):
     try:
         return json.loads(request.body)
     except (json.JSONDecodeError, AttributeError):
         return {}
 
-
 def _generate_order_number():
     ts = str(int(time.time() * 1000))[-8:]
     return f"NXR-{ts}"
-
 
 def _detect_brand(number):
     n = str(number or '').replace(' ', '').replace('-', '')
@@ -54,16 +46,12 @@ def _detect_brand(number):
         return 'Discover'
     return 'Card'
 
-
 def _format_expiry_label(month, year):
     m = str(month or '').zfill(2)[:2]
     y = str(year or '')
     if len(y) == 4:
         y = y[-2:]
     return f"{m}/{y}" if m and y else ''
-
-
-# ── Cart API ─────────────────────────────────────────────────
 
 @csrf_exempt
 @require_http_methods(['GET', 'POST', 'DELETE'])
@@ -107,7 +95,6 @@ def api_cart(request):
         CartItem.objects.filter(user=user).delete()
         return JsonResponse({'cart': []})
 
-
 @csrf_exempt
 @require_http_methods(['PATCH', 'DELETE'])
 def api_cart_item(request, product_id):
@@ -138,9 +125,6 @@ def api_cart_item(request, product_id):
         items = CartItem.objects.filter(user=user)
         return JsonResponse({'cart': [i.to_dict() for i in items]})
 
-
-# ── Orders API ───────────────────────────────────────────────
-
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
 def api_orders(request):
@@ -155,14 +139,12 @@ def api_orders(request):
     if request.method == 'POST':
         data = _json(request)
 
-        # Gather cart items — prefer DB, fall back to payload
         cart_items = list(CartItem.objects.filter(user=user))
         payload_items = data.get('items') or []
 
         if not cart_items and not payload_items:
             return JsonResponse({'error': 'Cart is empty.'}, status=400)
 
-        # Build line items list
         lines = []
         if cart_items:
             for ci in cart_items:
@@ -191,7 +173,7 @@ def api_orders(request):
 
         subtotal = sum(l['price_value'] * l['quantity'] for l in lines)
         shipping = 5000
-        # Apply coupon discount if provided
+
         coupon_code = str(data.get('couponCode') or '').strip().upper()
         coupon_discount = 0.0
         if coupon_code:
@@ -209,11 +191,10 @@ def api_orders(request):
         total = max(total, 0)
         total_items = sum(l['quantity'] for l in lines)
 
-        # Contact
         contact = data.get('contact') or {}
-        # Shipping
+
         ship = data.get('shippingAddress') or {}
-        # Payment summary (masked)
+
         pay = data.get('paymentSummary') or data.get('paymentMethod') or {}
 
         order = Order.objects.create(
@@ -258,10 +239,8 @@ def api_orders(request):
                 quantity=l['quantity'],
             )
 
-        # Clear DB cart
         CartItem.objects.filter(user=user).delete()
 
-        # Auto-save address if requested
         if data.get('saveAddress') and ship.get('addressLine1'):
             addr_qs = Address.objects.filter(user=user)
             Address.objects.create(
@@ -277,7 +256,6 @@ def api_orders(request):
                 is_default=not addr_qs.exists(),
             )
 
-        # Auto-save payment method if requested
         if data.get('savePaymentMethod') and pay.get('last4'):
             pm_qs = PaymentMethod.objects.filter(user=user)
             brand = str(pay.get('brand') or _detect_brand(str(pay.get('cardNumber') or '')))
@@ -297,11 +275,44 @@ def api_orders(request):
                 is_default=not pm_qs.exists(),
             )
 
+        recipient_email = order.contact_email or user.email
+        if recipient_email:
+            try:
+                items_summary = "\n".join([f"• {item.title} x{item.quantity} — {item.price}" for item in order.items.all()])
+                send_mail(
+                    subject=f"Order Confirmed — {order.order_number} | Nexra",
+                    message=f"""Hi {order.contact_full_name or user.username},
+
+Thank you for your order with Nexra!
+
+Order Number: {order.order_number}
+Total Items: {order.total_items}
+Total Amount: {int(order.total):,} RWF
+
+Items:
+{items_summary}
+
+Delivery to:
+{order.ship_full_name}
+{order.ship_address1}{', ' + order.ship_address2 if order.ship_address2 else ''}
+{order.ship_city}, {order.ship_country}
+
+We will notify you when your items are dispatched.
+
+Best regards,
+The Nexra Team
+""",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[recipient_email],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
+
         return JsonResponse({'order': order.to_dict()}, status=201)
 
-
 @csrf_exempt
-@require_http_methods(['GET'])
+@require_http_methods(['GET', 'PATCH'])
 def api_order_detail(request, order_id):
     user = _require_auth(request)
     if not user:
@@ -312,10 +323,19 @@ def api_order_detail(request, order_id):
     except Order.DoesNotExist:
         return JsonResponse({'error': 'Order not found.'}, status=404)
 
-    return JsonResponse({'order': order.to_dict()})
+    if request.method == 'GET':
+        return JsonResponse({'order': order.to_dict()})
 
-
-# ── Payment Methods API ──────────────────────────────────────
+    if request.method == 'PATCH':
+        data = _json(request)
+        action = data.get('action')
+        if action == 'cancel':
+            if order.status in ('Delivered', 'Cancelled'):
+                return JsonResponse({'error': f'Order cannot be cancelled in its current state ({order.status}).'}, status=400)
+            order.status = 'Cancelled'
+            order.save(update_fields=['status', 'updated_at'])
+            return JsonResponse({'order': order.to_dict(), 'message': 'Order has been cancelled.'})
+        return JsonResponse({'error': 'Invalid action.'}, status=400)
 
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
@@ -369,7 +389,6 @@ def api_payments(request):
         )
         return JsonResponse({'paymentMethod': pm.to_dict()}, status=201)
 
-
 @csrf_exempt
 @require_http_methods(['PATCH', 'DELETE'])
 def api_payment_detail(request, pm_id):
@@ -384,7 +403,7 @@ def api_payment_detail(request, pm_id):
 
     if request.method == 'DELETE':
         pm.delete()
-        # Re-assign default if needed
+
         methods = PaymentMethod.objects.filter(user=user)
         if methods.exists() and not methods.filter(is_default=True).exists():
             first = methods.first()
@@ -401,16 +420,9 @@ def api_payment_detail(request, pm_id):
         methods = PaymentMethod.objects.filter(user=user)
         return JsonResponse({'paymentMethods': [m.to_dict() for m in methods]})
 
-
-# ── Coupon API ───────────────────────────────────────────────
-
 @csrf_exempt
 @require_http_methods(['POST'])
 def api_coupon_apply(request):
-    user = _require_auth(request)
-    if not user:
-        return JsonResponse({'error': 'Authentication required.'}, status=401)
-
     data = _json(request)
     code = str(data.get('code') or '').strip().upper()
     if not code:
@@ -433,9 +445,6 @@ def api_coupon_apply(request):
         }, status=400)
 
     return JsonResponse({'coupon': coupon.to_dict(subtotal)})
-
-
-# ── Addresses API ────────────────────────────────────────────
 
 @csrf_exempt
 @require_http_methods(['GET', 'POST'])
@@ -473,7 +482,6 @@ def api_addresses(request):
         )
         return JsonResponse({'address': addr.to_dict()}, status=201)
 
-
 @csrf_exempt
 @require_http_methods(['PATCH', 'DELETE'])
 def api_address_detail(request, addr_id):
@@ -501,7 +509,7 @@ def api_address_detail(request, addr_id):
             Address.objects.filter(user=user).update(is_default=False)
             addr.is_default = True
             addr.save()
-        # Allow updating fields
+
         for field, model_field in [
             ('fullName', 'full_name'), ('addressLine1', 'address1'),
             ('addressLine2', 'address2'), ('city', 'city'),

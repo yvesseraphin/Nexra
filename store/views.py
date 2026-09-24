@@ -6,9 +6,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from .models import Subscriber
+from django.db.models import Q
+from .models import Subscriber, Category, Product, ProductReview
 
-# Core catalog and pages data mapped directly to the reference data
 STORE_DATA = {
   "pages": {
     "index": {
@@ -790,7 +790,6 @@ STORE_DATA = {
   }
 }
 
-# Add static paths helper
 def fix_static_paths(data):
     if isinstance(data, dict):
         new_dict = {}
@@ -804,7 +803,6 @@ def fix_static_paths(data):
         return [fix_static_paths(x) for x in data]
     return data
 
-# Django HTML Views
 def home(request):
     return render(request, 'index.html')
 
@@ -829,21 +827,28 @@ def accessories(request):
 def product(request):
     return render(request, 'store/product.html')
 
-# Django JSON API endpoints
 def api_page_data(request, slug):
     page_data = STORE_DATA["pages"].get(slug)
     if not page_data:
         return JsonResponse({"error": f"Unknown page {slug}"}, status=404)
-    # Return page data with fixed static image paths
+
     fixed_data = fix_static_paths(page_data)
     return JsonResponse(fixed_data)
 
 def api_catalog_item(request, slug):
-    # Search in all pages for item with matching slug
-    # slug is structured as "page-title_slugified"
+
+    product = Product.objects.filter(slug=slug).first()
+    if product:
+        data = product.to_dict()
+        data = fix_static_paths(data)
+        reviews = list(product.reviews.values('user__username', 'rating', 'comment', 'created_at'))
+        for r in reviews:
+            r['created_at'] = r['created_at'].isoformat()
+        data['reviews'] = reviews
+        return JsonResponse(data)
+
     for page_slug, page_data in STORE_DATA["pages"].items():
         for section_name, section in page_data["sections"].items():
-            # some sections have groups or columns
             items = []
             if "items" in section:
                 items = section["items"]
@@ -853,22 +858,73 @@ def api_catalog_item(request, slug):
             elif "columns" in section:
                 for col in section["columns"]:
                     items.extend(col.get("items", []))
-            
+
             for item in items:
                 title = item.get("title", item.get("alt", ""))
                 import re
                 item_slug = f"{page_slug}-{re.sub(r'[^a-z0-9]+', '-', title.lower()).strip('-')}"
                 if item_slug == slug:
-                    # Found it! Let's return details
                     fixed_item = fix_static_paths(item)
                     fixed_item["slug"] = item_slug
                     fixed_item["page"] = page_slug
                     return JsonResponse(fixed_item)
-                    
+
     return JsonResponse({"error": f"Unknown catalog item {slug}"}, status=404)
 
+def api_search_products(request):
+    q = request.GET.get('q', '').strip()
+    if not q:
+        return JsonResponse({'query': '', 'count': 0, 'results': []})
 
-# ── Newsletter subscribe ─────────────────────────────────────
+    products = Product.objects.filter(
+        Q(title__icontains=q) | Q(description__icontains=q) | Q(page__icontains=q)
+    )[:20]
+
+    results = [fix_static_paths(p.to_dict()) for p in products]
+    return JsonResponse({'query': q, 'count': len(results), 'results': results})
+
+@csrf_exempt
+def api_product_reviews(request, slug):
+    product = Product.objects.filter(slug=slug).first()
+    if not product:
+        return JsonResponse({'error': f'Product {slug} not found.'}, status=404)
+
+    if request.method == 'GET':
+        reviews = list(product.reviews.values('user__username', 'rating', 'comment', 'created_at'))
+        for r in reviews:
+            r['created_at'] = r['created_at'].isoformat()
+        return JsonResponse({'reviews': reviews})
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Authentication required to post a review.'}, status=401)
+        import json
+        try:
+            body = json.loads(request.body)
+            rating = int(body.get('rating', 5))
+            comment = str(body.get('comment', '')).strip()
+            if not comment:
+                return JsonResponse({'error': 'Comment is required.'}, status=400)
+            rating = max(1, min(5, rating))
+            review = ProductReview.objects.create(
+                product=product,
+                user=request.user,
+                rating=rating,
+                comment=comment,
+            )
+            return JsonResponse({
+                'message': 'Review submitted successfully.',
+                'review': {
+                    'user__username': request.user.username,
+                    'rating': review.rating,
+                    'comment': review.comment,
+                    'created_at': review.created_at.isoformat(),
+                }
+            }, status=201)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Method not allowed.'}, status=405)
 
 @csrf_exempt
 @require_POST
@@ -895,11 +951,10 @@ def api_subscribe(request):
         if subscriber.is_active:
             return JsonResponse({'message': "You're already subscribed — we'll keep the deals coming!"})
         else:
-            # Re-activating an unsubscribed email — fall through to send welcome again
+
             subscriber.is_active = True
             subscriber.save(update_fields=['is_active'])
 
-    # Send welcome email (non-blocking — logs error silently so the API never breaks)
     try:
         send_mail(
             subject='Welcome to Nexra — You\'re on the list!',
@@ -962,7 +1017,7 @@ def api_subscribe(request):
 """,
         )
     except Exception:
-        # Email failed (e.g. credentials not set) — still confirm subscription
+
         pass
 
     return JsonResponse({'message': 'You\'re subscribed! Check your inbox for a welcome email.'}, status=201 if created else 200)

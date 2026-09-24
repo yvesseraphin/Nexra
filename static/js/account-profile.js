@@ -17,7 +17,6 @@
     renderAddressPanel();
     updateBadges();
 
-    // Sync from server then re-render
     if (state && state.isAuthenticated()) {
       var user = state.getCurrentUser();
       state.syncCartFromApi && state.syncCartFromApi(user);
@@ -25,7 +24,6 @@
       state.syncAddressesFromApi && state.syncAddressesFromApi(user);
     }
 
-    // Keep panels fresh if cart changes in another tab
     window.addEventListener('nexra:cart-updated', function () {
       renderCartPanel();
       updateBadges();
@@ -50,7 +48,6 @@
     });
   }
 
-  /* ── Tab switcher ─────────────────────────────────────── */
   function initTabSwitcher() {
     var navLinks = document.querySelectorAll('.account-nav-link[data-account-tab]');
     var panels   = document.querySelectorAll('.account-panel[data-account-panel]');
@@ -69,7 +66,6 @@
     });
   }
 
-  /* ── Badges ───────────────────────────────────────────── */
   function updateBadges() {
     var cartCount    = state ? state.getCartCount() : 0;
     var orders       = state ? state.getOrders() : [];
@@ -80,7 +76,6 @@
     setText('account-payment-count', payments.length);
   }
 
-  /* ── Cart panel — same UI as /cart/ page ─────────────── */
   function renderCartPanel() {
     var container = document.getElementById('profile-cart');
     if (!container) return;
@@ -91,20 +86,18 @@
     var shipping = subtotal > 0 ? 5000 : 0;
     var total    = subtotal + shipping;
 
-    /* ── layout ── */
     var html = '<div class="pc-layout">';
 
-    /* ── left: items ── */
     html += '<div class="pc-items-col">';
 
     if (!cart.length) {
-      /* empty state — same circle + label as cart page */
+
       html += '<div class="cart-empty">' +
         '<div class="cart-empty-icon"><i class="bx bx-shopping-bag"></i></div>' +
         '<p class="cart-empty-label">Cart is Empty</p>' +
       '</div>';
     } else {
-      /* item rows */
+
       html += '<div class="cart-items-list" id="pc-items-list">';
       cart.forEach(function (item) {
         var lineTotal = formatRWF((item.priceValue || 0) * (item.quantity || 1));
@@ -129,9 +122,8 @@
           '</div>' +
         '</div>';
       });
-      html += '</div>'; /* cart-items-list */
+      html += '</div>';
 
-      /* total + checkout */
       html += '<div class="cart-actions">' +
         '<div class="cart-total-row">' +
           '<span>TOTAL</span>' +
@@ -141,9 +133,8 @@
       '</div>';
     }
 
-    html += '</div>'; /* pc-items-col */
+    html += '</div>';
 
-    /* ── right: summary card — same as cart page ── */
     html += '<aside class="pc-summary-col">' +
       '<div class="cart-summary-card">' +
         '<div class="summary-line"><span>Subtotal</span><span>' + formatRWF(subtotal) + '</span></div>' +
@@ -164,10 +155,9 @@
       '</div>' +
     '</aside>';
 
-    html += '</div>'; /* pc-layout */
+    html += '</div>';
     container.innerHTML = html;
 
-    /* wire buttons */
     container.querySelectorAll('.pc-remove').forEach(function (btn) {
       btn.addEventListener('click', function () {
         if (state) state.removeFromCart(btn.dataset.id);
@@ -204,7 +194,31 @@
         var input = container.querySelector('.pc-coupon-input');
         var code  = input ? input.value.trim() : '';
         if (!code) return;
-        if (window.NexraNotify) window.NexraNotify.show('Coupon "' + code + '" is not valid or has expired.', 'error');
+
+        var cart = state ? state.getCart() : [];
+        var subtotal = cart.reduce(function (s, i) {
+          return s + (Number(i.priceValue) || 0) * (Number(i.quantity) || 0);
+        }, 0);
+
+        fetch('/cart/api/coupon/apply/', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: code, subtotal: subtotal }),
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.error) {
+            if (window.NexraNotify) window.NexraNotify.show(data.error, 'error');
+            return;
+          }
+          sessionStorage.setItem('nexra_applied_coupon', JSON.stringify(data.coupon));
+          if (window.NexraNotify) window.NexraNotify.show('Coupon applied! You saved ' + formatRWF(data.coupon.discountAmount || 0) + '.', 'success');
+          renderCartPanel();
+        })
+        .catch(function () {
+          if (window.NexraNotify) window.NexraNotify.show('Could not apply coupon. Please try again.', 'error');
+        });
       });
     }
 
@@ -221,7 +235,6 @@
     }
   }
 
-  /* ── Orders panel ─────────────────────────────────────── */
   function renderOrdersPanel() {
     var container = document.getElementById('profile-orders');
     if (!container) return;
@@ -274,7 +287,6 @@
     container.innerHTML = html;
   }
 
-  /* ── Payments panel ───────────────────────────────────── */
   function renderPaymentsPanel() {
     var container = document.getElementById('profile-payments');
     if (!container) return;
@@ -323,7 +335,6 @@
     });
   }
 
-  /* ── Profile form — load user data & save ─────────────── */
   function initProfileForm() {
     var user = state ? state.getCurrentUser() : null;
     if (!user) return;
@@ -333,7 +344,6 @@
     setVal('profile-email',      user.email     || '');
     setVal('profile-phone',      user.phone     || '');
 
-    // Restore gender dropdown
     if (user.gender) {
       var genderInput = document.getElementById('profile-gender');
       var genderDropdown = document.getElementById('profile-gender-dropdown');
@@ -369,6 +379,7 @@
         firstName: getVal('profile-first-name'),
         lastName:  getVal('profile-last-name'),
         email:     getVal('profile-email'),
+        phone:     getVal('profile-phone'),
         gender:    getVal('profile-gender'),
       };
 
@@ -393,7 +404,6 @@
     });
   }
 
-  /* ── Logout ───────────────────────────────────────────── */
   function initLogout() {
     var btn = document.getElementById('logout-button');
     if (!btn) return;
@@ -403,7 +413,6 @@
     });
   }
 
-  /* ── Avatar ───────────────────────────────────────────── */
   function initAvatar() {
     var user       = state ? state.getCurrentUser() : null;
     var avatarEl   = document.getElementById('profile-avatar');
@@ -427,9 +436,63 @@
       else if (user && user.email)                           letter = user.email.charAt(0).toUpperCase();
       if (avatarFb) avatarFb.textContent = letter;
     }
+
+    var photoInput = document.getElementById('profile-photo-input');
+    var photoBtn   = document.getElementById('profile-photo-button');
+    var removeBtn  = document.getElementById('profile-photo-remove');
+
+    if (photoBtn && photoInput && !photoBtn._wired) {
+      photoBtn._wired = true;
+      photoBtn.addEventListener('click', function () { photoInput.click(); });
+      photoInput.addEventListener('change', function () {
+        if (!photoInput.files || !photoInput.files[0]) return;
+        var formData = new FormData();
+        formData.append('avatar', photoInput.files[0]);
+        fetch('/api/profile/avatar/', {
+          method: 'POST',
+          credentials: 'include',
+          body: formData,
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.error) {
+            if (window.NexraNotify) window.NexraNotify.show(data.error, 'error');
+            return;
+          }
+          if (data.user && state) state.setCurrentUser(data.user);
+          initAvatar();
+          if (window.NexraNotify) window.NexraNotify.show('Profile photo updated.', 'success');
+        })
+        .catch(function () {
+          if (window.NexraNotify) window.NexraNotify.show('Failed to upload photo.', 'error');
+        });
+      });
+    }
+
+    if (removeBtn && !removeBtn._wired) {
+      removeBtn._wired = true;
+      removeBtn.addEventListener('click', function () {
+        fetch('/api/profile/avatar/remove/', {
+          method: 'POST',
+          credentials: 'include',
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.error) {
+            if (window.NexraNotify) window.NexraNotify.show(data.error, 'error');
+            return;
+          }
+          if (data.user && state) state.setCurrentUser(data.user);
+          initAvatar();
+          if (window.NexraNotify) window.NexraNotify.show('Profile photo removed.', 'success');
+        })
+        .catch(function () {
+          if (window.NexraNotify) window.NexraNotify.show('Failed to remove photo.', 'error');
+        });
+      });
+    }
   }
 
-  /* ── Custom select dropdowns ──────────────────────────── */
   function initCustomSelects() {
     document.querySelectorAll('.custom-select').forEach(function (wrapper) {
       var trigger    = wrapper.querySelector('.custom-select-trigger');
@@ -483,7 +546,6 @@
     });
   }
 
-  /* ── Address panel ────────────────────────────────────── */
   function renderAddressPanel() {
     var container = document.getElementById('profile-address');
     if (!container) return;
@@ -535,7 +597,6 @@
     });
   }
 
-  /* ── Helpers ──────────────────────────────────────────── */
   function emptyPanel(icon, heading, body) {
     return '<div class="empty-panel">' +
       '<i class="' + icon + '"></i>' +

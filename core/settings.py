@@ -19,8 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Nexra apps
+
     'store',
     'accounts',
     'cart',
@@ -92,9 +91,11 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ── Email (newsletter) ───────────────────────────────────────
 EMAIL_BACKEND       = config('EMAIL_BACKEND',       default='django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST          = config('EMAIL_HOST',           default='smtp.gmail.com')
 EMAIL_PORT          = config('EMAIL_PORT',           default=587, cast=int)

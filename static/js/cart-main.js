@@ -6,23 +6,19 @@
   document.addEventListener('DOMContentLoaded', function () {
     renderCart();
 
-    // Re-render whenever cart changes from any tab
     window.addEventListener('nexra:cart-updated', renderCart);
 
-    // Coupon button (UI only for now)
     var btnCoupon = document.getElementById('btn-coupon');
     if (btnCoupon) {
       btnCoupon.addEventListener('click', applyCoupon);
     }
 
-    // Checkout button
     var btnCheckout = document.getElementById('btn-checkout');
     if (btnCheckout) {
       btnCheckout.addEventListener('click', handleCheckout);
     }
   });
 
-  /* ── Render ──────────────────────────────────────────── */
   function renderCart() {
     var cart = state ? state.getCart() : [];
     var countBadge   = document.getElementById('cart-count-badge');
@@ -40,10 +36,8 @@
     var shipping = subtotal > 0 ? 5000 : 0;
     var total = subtotal + shipping;
 
-    // Badge
     if (countBadge) countBadge.textContent = '(' + count + ')';
 
-    // Summary panel
     if (subtotalEl) subtotalEl.textContent = formatRWF(subtotal);
     var discountEl = document.getElementById('summary-discount');
     if (discountEl) discountEl.textContent = formatRWF(0);
@@ -61,7 +55,6 @@
     show(listEl);
     show(actionsEl);
 
-    // Build item rows
     if (listEl) {
       listEl.innerHTML = '';
       cart.forEach(function (item) {
@@ -70,7 +63,6 @@
     }
   }
 
-  /* ── Build one item row from template ──────────────── */
   function buildItemRow(item) {
     var tpl = document.getElementById('cart-item-tpl');
     var clone = tpl.content.cloneNode(true);
@@ -98,7 +90,6 @@
       lineTotal.textContent = formatRWF((item.priceValue || 0) * (item.quantity || 1));
     }
 
-    // Remove
     var removeBtn = row.querySelector('.cart-item-remove');
     if (removeBtn) {
       removeBtn.addEventListener('click', function () {
@@ -106,7 +97,6 @@
       });
     }
 
-    // Decrease qty
     var decBtn = row.querySelector('.qty-dec');
     if (decBtn) {
       decBtn.addEventListener('click', function () {
@@ -119,7 +109,6 @@
       });
     }
 
-    // Increase qty
     var incBtn = row.querySelector('.qty-inc');
     if (incBtn) {
       incBtn.addEventListener('click', function () {
@@ -131,7 +120,6 @@
     return clone;
   }
 
-  /* ── Coupon ─────────────────────────────────────────── */
   function applyCoupon() {
     var input = document.getElementById('coupon-input');
     var code = input ? input.value.trim() : '';
@@ -158,6 +146,7 @@
           return;
         }
         var coupon = data.coupon;
+        sessionStorage.setItem('nexra_applied_coupon', JSON.stringify(coupon));
         var discountEl = document.getElementById('summary-discount');
         var shippingEl = document.getElementById('summary-shipping');
         var totalValEl = document.getElementById('cart-total-value');
@@ -179,7 +168,6 @@
     return cookie ? cookie.trim().split('=')[1] : '';
   }
 
-  /* ── Checkout ───────────────────────────────────────── */
   function handleCheckout() {
     if (!state) return;
     if (!state.isAuthenticated()) {
@@ -192,7 +180,6 @@
     window.location.href = '/cart/checkout/';
   }
 
-  /* ── Helpers ────────────────────────────────────────── */
   function formatRWF(value) {
     var n = Math.round(Number(value) || 0);
     return n.toLocaleString('en-US') + ' RWF';

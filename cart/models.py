@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-
 class Coupon(models.Model):
     DISCOUNT_PERCENT = 'percent'
     DISCOUNT_FIXED   = 'fixed'
@@ -14,10 +13,10 @@ class Coupon(models.Model):
     code            = models.CharField(max_length=50, unique=True)
     description     = models.CharField(max_length=255, blank=True)
     discount_type   = models.CharField(max_length=10, choices=DISCOUNT_TYPES, default=DISCOUNT_PERCENT)
-    discount_value  = models.DecimalField(max_digits=10, decimal_places=2)   # e.g. 20 = 20% or 5000 RWF
+    discount_value  = models.DecimalField(max_digits=10, decimal_places=2)
     min_order_value = models.DecimalField(max_digits=14, decimal_places=2, default=0)
-    max_discount    = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)  # cap for % coupons
-    usage_limit     = models.PositiveIntegerField(null=True, blank=True)     # None = unlimited
+    max_discount    = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
+    usage_limit     = models.PositiveIntegerField(null=True, blank=True)
     times_used      = models.PositiveIntegerField(default=0)
     is_active       = models.BooleanField(default=True)
     valid_from      = models.DateTimeField(default=timezone.now)
@@ -65,13 +64,12 @@ class Coupon(models.Model):
             'minOrderValue': float(self.min_order_value),
         }
 
-
 class CartItem(models.Model):
     user        = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cart_items')
-    product_id  = models.CharField(max_length=255)          # e.g. "tech-lg-smart-tv"
+    product_id  = models.CharField(max_length=255)
     slug        = models.CharField(max_length=255)
     title       = models.CharField(max_length=512)
-    price       = models.CharField(max_length=100, blank=True)  # display string "660 000 RWF"
+    price       = models.CharField(max_length=100, blank=True)
     price_value = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     image       = models.TextField(blank=True)
     page        = models.CharField(max_length=100, blank=True)
@@ -98,7 +96,6 @@ class CartItem(models.Model):
             'addedAt':    self.added_at.isoformat(),
         }
 
-
 class Order(models.Model):
     STATUS_CHOICES = [
         ('Confirmed',   'Confirmed'),
@@ -117,12 +114,10 @@ class Order(models.Model):
     total_items      = models.PositiveIntegerField(default=0)
     notes            = models.TextField(blank=True)
 
-    # Contact
     contact_full_name = models.CharField(max_length=255, blank=True)
     contact_email     = models.EmailField(blank=True)
     contact_phone     = models.CharField(max_length=50, blank=True)
 
-    # Shipping address
     ship_full_name    = models.CharField(max_length=255, blank=True)
     ship_address1     = models.CharField(max_length=512, blank=True)
     ship_address2     = models.CharField(max_length=512, blank=True)
@@ -132,7 +127,6 @@ class Order(models.Model):
     ship_country      = models.CharField(max_length=100, blank=True, default='Rwanda')
     ship_instructions = models.TextField(blank=True)
 
-    # Payment summary (masked — no real card data)
     payment_brand     = models.CharField(max_length=50, blank=True)
     payment_last4     = models.CharField(max_length=4, blank=True)
     payment_expiry    = models.CharField(max_length=10, blank=True)
@@ -140,7 +134,6 @@ class Order(models.Model):
     payment_label     = models.CharField(max_length=255, blank=True)
     payment_status    = models.CharField(max_length=100, blank=True, default='Payment details received')
 
-    # Coupon
     coupon_code     = models.CharField(max_length=50, blank=True)
     coupon_discount = models.DecimalField(max_digits=14, decimal_places=2, default=0)
 
@@ -195,7 +188,6 @@ class Order(models.Model):
             'items': [item.to_dict() for item in self.items.all()],
         }
 
-
 class OrderItem(models.Model):
     order       = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product_id  = models.CharField(max_length=255)
@@ -221,7 +213,6 @@ class OrderItem(models.Model):
             'page':       self.page,
             'quantity':   self.quantity,
         }
-
 
 class PaymentMethod(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payment_methods')
@@ -262,7 +253,6 @@ class PaymentMethod(models.Model):
             'createdAt':   self.created_at.isoformat(),
             'updatedAt':   self.updated_at.isoformat(),
         }
-
 
 class Address(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE, related_name='addresses')

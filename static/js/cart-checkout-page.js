@@ -1,25 +1,19 @@
-/* ============================================================
-   Checkout Page — Nexra
-   Handles the multi-step checkout flow on /cart/checkout/
-   Steps: 1 Shipping  →  2 Payment  →  3 Confirmation
-   ============================================================ */
 (function () {
   'use strict';
 
   var state = window.NexraState;
 
   var _shippingData = {};
-  var _selectedPaymentId = null; // saved method id, or null = new card
+  var _selectedPaymentId = null;
 
   document.addEventListener('DOMContentLoaded', function () {
-    /* redirect away if not logged in */
+
     if (state && !state.isAuthenticated()) {
       state.setPostAuthRedirect('/cart/checkout/');
       window.location.href = '/accounts/login/?redirect=%2Fcart%2Fcheckout%2F';
       return;
     }
 
-    /* redirect away if cart is empty */
     var cart = state ? state.getCart() : [];
     if (!cart.length) {
       window.location.href = '/cart/';
@@ -33,16 +27,20 @@
     wireCardFormatting();
   });
 
-  /* ── Render order summary sidebar ───────────────────── */
   function renderSummary() {
     var cart = state.getCart();
     var subtotal = cart.reduce(function (s, i) {
       return s + (Number(i.priceValue) || 0) * (Number(i.quantity) || 0);
     }, 0);
     var shipping = 5000;
-    var total = subtotal + shipping;
+    var appliedCoupon = null;
+    try {
+      appliedCoupon = JSON.parse(sessionStorage.getItem('nexra_applied_coupon') || 'null');
+    } catch (e) {}
 
-    /* items */
+    var discount = (appliedCoupon && appliedCoupon.discountAmount) ? Number(appliedCoupon.discountAmount) : 0;
+    var total = Math.max(0, subtotal + shipping - discount);
+
     var itemsEl = document.getElementById('ck-summary-items');
     if (itemsEl) {
       var html = '';
@@ -64,7 +62,6 @@
     setText('ck-sum-total', fmt(total));
   }
 
-  /* ── Render saved payment methods (step 2) ──────────── */
   function renderSavedMethods() {
     var methods = state ? state.getPaymentMethods() : [];
     var section = document.getElementById('ck-saved-methods-section');
@@ -94,7 +91,6 @@
     html += '<div class="ck-divider">or add new card</div>';
     section.innerHTML = html;
 
-    /* wire radio changes */
     section.querySelectorAll('input[name="ck-saved-payment"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         _selectedPaymentId = radio.value;
@@ -105,18 +101,15 @@
       });
     });
 
-    /* set default selection */
     if (_selectedPaymentId === null && methods.length) {
       _selectedPaymentId = methods[0].id;
     }
   }
 
-  /* ── Wire step 1 form ───────────────────────────────── */
   function wireStep1() {
     var form = document.getElementById('ck-shipping-form');
     if (!form) return;
 
-    /* pre-fill from state if user has data */
     var user = state ? state.getCurrentUser() : null;
     if (user) {
       setVal('ck-full-name', user.firstName ? (user.firstName + ' ' + (user.lastName || '')).trim() : '');
@@ -156,12 +149,10 @@
     });
   }
 
-  /* ── Wire step 2 form ───────────────────────────────── */
   function wireStep2() {
     var backBtn = document.getElementById('ck-back-btn');
     if (backBtn) backBtn.addEventListener('click', function () { goToStep(1); });
 
-    /* autofill cardholder name with logged-in user's name */
     var user = state ? state.getCurrentUser() : null;
     if (user) {
       var holderEl = document.getElementById('ck-holder');
@@ -184,10 +175,10 @@
       var saveCard = false;
 
       if (checkedRadio && methods.length) {
-        /* use saved card */
+
         paymentInput = { id: checkedRadio.value };
       } else {
-        /* new card */
+
         var holder  = getVal('ck-holder');
         var cardNum = getVal('ck-card-num').replace(/\s/g, '');
         var expM    = getVal('ck-expiry-m');
@@ -212,7 +203,6 @@
           showError('ck-expiry-y', 'Enter a valid year'); ok = false;
         }
 
-        /* CVV: 3 digits for most cards, 4 for Amex */
         var brand = detectBrandFromNumber(cardNum);
         var cvvLen = brand === 'American Express' ? 4 : 3;
         if (!cvv || cvv.replace(/\D/g, '').length !== cvvLen) {
@@ -229,6 +219,11 @@
         };
       }
 
+      var appliedCoupon = null;
+      try {
+        appliedCoupon = JSON.parse(sessionStorage.getItem('nexra_applied_coupon') || 'null');
+      } catch (e) {}
+
       var currentUser = state.getCurrentUser();
       var checkout = {
         contact: {
@@ -242,10 +237,10 @@
         paymentSummary:  paymentInput.last4 ? paymentInput : null,
         savePaymentMethod: saveCard,
         saveAddress: true,
+        couponCode: (appliedCoupon && appliedCoupon.code) ? appliedCoupon.code : '',
         notes: _shippingData.deliveryInstructions || '',
       };
 
-      /* Use API-backed order creation */
       var placeBtn = document.getElementById('ck-place-btn');
       if (placeBtn) { placeBtn.disabled = true; placeBtn.textContent = 'Placing order…'; }
 
@@ -255,6 +250,7 @@
           if (placeBtn) { placeBtn.disabled = false; placeBtn.innerHTML = 'Place order <i class="bx bx-check"></i>'; }
           return;
         }
+        sessionStorage.removeItem('nexra_applied_coupon');
         window.dispatchEvent(new CustomEvent('nexra:cart-updated'));
         window.dispatchEvent(new CustomEvent('nexra:user-updated'));
         goToStep(3, order);
@@ -262,7 +258,6 @@
     });
   }
 
-  /* ── Card number formatting + brand detection ────────── */
   function wireCardFormatting() {
     var cardInput  = document.getElementById('ck-card-num');
     var brandBadge = document.getElementById('ck-card-brand');
@@ -285,7 +280,6 @@
     });
   }
 
-  /* ── Luhn algorithm ─────────────────────────────────── */
   function luhnCheck(num) {
     var digits = String(num).replace(/\D/g, '');
     if (!digits.length) return false;
@@ -303,7 +297,6 @@
     return sum % 10 === 0;
   }
 
-  /* ── Detect card brand from number ──────────────────── */
   function detectBrandFromNumber(num) {
     var n = String(num || '').replace(/\D/g, '');
     if (/^4/.test(n)) return 'Visa';
@@ -313,18 +306,15 @@
     return 'Card';
   }
 
-  /* ── Step navigation ────────────────────────────────── */
   function goToStep(n, order) {
-    /* hide all panels */
+
     document.querySelectorAll('.ck-panel').forEach(function (p) {
       p.classList.remove('is-active');
     });
 
-    /* show target */
     var target = document.getElementById('ck-panel-' + n);
     if (target) target.classList.add('is-active');
 
-    /* update step indicator */
     document.querySelectorAll('.ck-step-item').forEach(function (el) {
       var s = Number(el.dataset.step);
       el.classList.remove('is-active', 'is-done');
@@ -332,18 +322,15 @@
       else if (s < n) el.classList.add('is-done');
     });
 
-    /* update step lines */
     document.querySelectorAll('.ck-step-line').forEach(function (line, idx) {
-      /* line 0 is between step 1 and 2, line 1 between 2 and 3 */
+
       if (idx + 1 < n) line.classList.add('is-done');
       else line.classList.remove('is-done');
     });
 
-    /* scroll to top of form area */
     var formCol = document.querySelector('.checkout-form-col');
     if (formCol) formCol.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    /* hide summary on confirmation */
     var summaryCol = document.getElementById('ck-summary-col');
     if (n === 3) {
       if (summaryCol) summaryCol.style.display = 'none';
@@ -355,10 +342,9 @@
       if (summaryCol) summaryCol.style.display = '';
     }
 
-    /* re-render saved methods when entering step 2 */
     if (n === 2) {
       renderSavedMethods();
-      /* autofill cardholder name */
+
       var user = state ? state.getCurrentUser() : null;
       if (user) {
         var holderEl = document.getElementById('ck-holder');
@@ -371,7 +357,6 @@
     }
   }
 
-  /* ── Helpers ────────────────────────────────────────── */
   function getVal(id) {
     var el = document.getElementById(id);
     return el ? el.value.trim() : '';
