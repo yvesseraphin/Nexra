@@ -27,24 +27,35 @@
     wireCardFormatting();
   });
 
-  function renderSummary() {
-    var cart = state.getCart();
-    var subtotal = cart.reduce(function (s, i) {
-      return s + (Number(i.priceValue) || 0) * (Number(i.quantity) || 0);
-    }, 0);
-    var shipping = 5000;
-    var appliedCoupon = null;
-    try {
-      appliedCoupon = JSON.parse(sessionStorage.getItem('nexra_applied_coupon') || 'null');
-    } catch (e) {}
+  function renderSummary(order) {
+    var subtotal, shipping, discount, total, items;
 
-    var discount = (appliedCoupon && appliedCoupon.discountAmount) ? Number(appliedCoupon.discountAmount) : 0;
-    var total = Math.max(0, subtotal + shipping - discount);
+    if (order) {
+      subtotal = order.subtotal !== undefined ? Number(order.subtotal) : 0;
+      discount = order.couponDiscount !== undefined ? Number(order.couponDiscount) : 0;
+      shipping = order.shippingCost !== undefined ? Number(order.shippingCost) : 5000;
+      total = order.total !== undefined ? Number(order.total) : Math.max(0, subtotal + shipping - discount);
+      items = (order.items && order.items.length) ? order.items : state.getCart();
+    } else {
+      var cart = state.getCart();
+      subtotal = cart.reduce(function (s, i) {
+        return s + (Number(i.priceValue) || 0) * (Number(i.quantity) || 0);
+      }, 0);
+      shipping = subtotal > 0 ? 5000 : 0;
+      var appliedCoupon = null;
+      try {
+        appliedCoupon = JSON.parse(sessionStorage.getItem('nexra_applied_coupon') || 'null');
+      } catch (e) {}
+
+      discount = (appliedCoupon && appliedCoupon.discountAmount) ? Number(appliedCoupon.discountAmount) : 0;
+      total = Math.max(0, subtotal + shipping - discount);
+      items = cart;
+    }
 
     var itemsEl = document.getElementById('ck-summary-items');
     if (itemsEl) {
       var html = '';
-      cart.forEach(function (item) {
+      items.forEach(function (item) {
         html += '<div class="ck-summary-item">' +
           '<img class="ck-summary-item-img" src="' + esc(item.image || '') + '" alt="' + esc(item.title || '') + '">' +
           '<div class="ck-summary-item-body">' +
@@ -60,6 +71,15 @@
     setText('ck-sum-subtotal', fmt(subtotal));
     setText('ck-sum-shipping', fmt(shipping));
     setText('ck-sum-total', fmt(total));
+
+    var discountEl = document.getElementById('ck-sum-discount');
+    var discountRow = document.getElementById('ck-sum-discount-row');
+    if (discountEl) {
+      discountEl.textContent = (discount > 0 ? '-' : '') + fmt(discount);
+    }
+    if (discountRow) {
+      discountRow.style.display = 'flex';
+    }
   }
 
   function renderSavedMethods() {
@@ -332,14 +352,21 @@
     if (formCol) formCol.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     var summaryCol = document.getElementById('ck-summary-col');
+    if (summaryCol) summaryCol.style.display = '';
+
     if (n === 3) {
-      if (summaryCol) summaryCol.style.display = 'none';
+      if (!order) {
+        try {
+          var saved = sessionStorage.getItem('nexra_last_order');
+          if (saved) order = JSON.parse(saved);
+        } catch (e) {}
+      }
       if (order) {
+        try { sessionStorage.setItem('nexra_last_order', JSON.stringify(order)); } catch (e) {}
         var numEl = document.getElementById('ck-order-num');
         if (numEl) numEl.textContent = order.orderNumber || order.id;
+        renderSummary(order);
       }
-    } else {
-      if (summaryCol) summaryCol.style.display = '';
     }
 
     if (n === 2) {

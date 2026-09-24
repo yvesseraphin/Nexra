@@ -12,7 +12,6 @@
 <section class="checkout-page">
   <div class="checkout-shell">
 
-    <!-- Page heading -->
     <div class="checkout-heading">
       <a href="{% url 'cart' %}" class="checkout-back">
         <i class="bx bx-arrow-back"></i>
@@ -22,10 +21,8 @@
 
     <div class="checkout-layout">
 
-      <!-- Left: form steps -->
       <div class="checkout-form-col">
 
-        <!-- Step indicator -->
         <div class="ck-steps" id="ck-steps">
           <div class="ck-step-item is-active" data-step="1">
             <div class="ck-step-circle">1</div>
@@ -43,7 +40,6 @@
           </div>
         </div>
 
-        <!-- Step 1: Shipping -->
         <div class="ck-panel is-active" id="ck-panel-1">
           <div class="ck-panel-head">
             <h2>Shipping details</h2>
@@ -128,7 +124,6 @@
           </form>
         </div>
 
-        <!-- Step 2: Payment -->
         <div class="ck-panel" id="ck-panel-2">
           <div class="ck-panel-head">
             <h2>Payment</h2>
@@ -203,7 +198,6 @@
           </form>
         </div>
 
-        <!-- Step 3: Confirmation -->
         <div class="ck-panel" id="ck-panel-3">
           <div class="ck-confirm">
             <div class="ck-confirm-icon">
@@ -221,20 +215,17 @@
 
       </div>
 
-      <!-- Right: order summary -->
       <aside class="checkout-summary-col" id="ck-summary-col">
         <div class="ck-summary-card">
           <h3 class="ck-summary-title">Order summary</h3>
-          <div class="ck-summary-items" id="ck-summary-items">
-            <!-- populated by JS -->
-          </div>
+          <div class="ck-summary-items" id="ck-summary-items"></div>
           <div class="ck-summary-lines" id="ck-summary-lines">
             <div class="ck-summary-line"><span>Subtotal</span><span id="ck-sum-subtotal">0 RWF</span></div>
-            <div class="ck-summary-line"><span>Shipping</span><span id="ck-sum-shipping">5,000 RWF</span></div>
+            <div class="ck-summary-line" id="ck-sum-discount-row"><span>Discount</span><span id="ck-sum-discount">0 RWF</span></div>
+            <div class="ck-summary-line"><span>Delivery</span><span id="ck-sum-shipping">5,000 RWF</span></div>
             <div class="ck-summary-line ck-sum-total"><span>Total</span><span id="ck-sum-total">0 RWF</span></div>
           </div>
 
-          <!-- Secure payments -->
           <div class="ck-secure">
             <p class="ck-secure-label">SECURE PAYMENTS PROVIDED BY</p>
             <div class="ck-payment-logos">
