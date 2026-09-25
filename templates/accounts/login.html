@@ -19,9 +19,9 @@
 <!-- Login Page -->
 <div class="login-page">
     <div class="login-left">
-        <img src="{% static 'images/login-illustration.png' %}"
+        <img src="{% static 'images/login-illustration.webp' %}"
              alt="Nexra Shopping App"
-             class="login-illustration">
+             class="login-illustration" loading="lazy" decoding="async">
     </div>
     <div class="login-right">
         <div class="login-container">
@@ -91,7 +91,7 @@
                     <button type="button" class="btn-social btn-google" style="display: flex; align-items: center; gap: 10px;">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
                             alt="Google Logo" 
-                            style="width: 18px; height: 18px;">
+                            style="width: 18px; height: 18px;" fetchpriority="high" decoding="async">
                         Google
                     </button>
                 </div>

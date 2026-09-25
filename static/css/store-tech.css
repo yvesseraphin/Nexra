@@ -19,7 +19,7 @@ body {
   display: flex;
   align-items: center;
   padding: 80px 0;
-  background-image: url('/static/images/s1.png');
+  background-image: url('/static/images/s1.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -108,7 +108,7 @@ body {
 
 
 .promo-banner {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/static/images/tech_promo_banner.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/static/images/tech_promo_banner.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

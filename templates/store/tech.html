@@ -37,7 +37,7 @@
         <div class="col-6 col-md-2 category-item">
           <a href="{% url 'food' %}" class="category-link">
             <div class="category-circle">
-              <img src="{% static 'images/s2.png' %}" alt="Dell">
+              <img src="{% static 'images/s2.webp' %}" alt="Dell" loading="lazy" decoding="async">
             </div>
           </a>
           <p>Dell</p>
@@ -45,7 +45,7 @@
         <div class="col-6 col-md-2 category-item">
           <a href="{% url 'tech' %}" class="category-link">
             <div class="category-circle">
-              <img src="{% static 'images/s3.png' %}" alt="JBL">
+              <img src="{% static 'images/s3.webp' %}" alt="JBL" loading="lazy" decoding="async">
             </div>
           </a>
           <p>JBL</p>
@@ -53,7 +53,7 @@
         <div class="col-6 col-md-2 category-item">
           <a href="{% url 'fashion' %}" class="category-link">
             <div class="category-circle">
-              <img src="{% static 'images/s4.png' %}" alt="Apple">
+              <img src="{% static 'images/s4.webp' %}" alt="Apple" loading="lazy" decoding="async">
             </div>
           </a>
           <p>Apple</p>
@@ -61,7 +61,7 @@
         <div class="col-6 col-md-2 category-item">
           <a href="{% url 'kids' %}" class="category-link">
             <div class="category-circle">
-              <img src="{% static 'images/s5.png' %}" alt="Samsung">
+              <img src="{% static 'images/s5.webp' %}" alt="Samsung" loading="lazy" decoding="async">
             </div>
           </a>
           <p>Samsung</p>
@@ -69,7 +69,7 @@
         <div class="col-6 col-md-2 category-item">
           <a href="{% url 'accessories' %}" class="category-link">
             <div class="category-circle">
-              <img src="{% static 'images/s6.png' %}" alt="LG">
+              <img src="{% static 'images/s6.webp' %}" alt="LG" loading="lazy" decoding="async">
             </div>
           </a>
           <p>LG</p>
@@ -88,7 +88,7 @@
         {% for item in products %}
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="/static/{{ item.image }}" class="product-image" alt="{{ item.alt }}">
+            <img src="/static/{{ item.image }}" class="product-image" alt="{{ item.alt }}" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>{{ item.title }}</h5>
               <p class="product-description">{{ item.description }}</p>
@@ -105,7 +105,7 @@
         <!-- Static fallback -->
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s7.png' %}" class="product-image" alt="LG SMART TV">
+            <img src="{% static 'images/s7.webp' %}" class="product-image" alt="LG SMART TV" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>LG SMART TV</h5>
               <p class="product-description">Smart TV</p>
@@ -118,7 +118,7 @@
         </div>
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s8.png' %}" class="product-image" alt="Flash Drive">
+            <img src="{% static 'images/s8.webp' %}" class="product-image" alt="Flash Drive" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>FLASH DRIVE</h5>
               <p class="product-description">Storage</p>
@@ -131,7 +131,7 @@
         </div>
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s9.png' %}" class="product-image" alt="Samsung Fridge">
+            <img src="{% static 'images/s9.webp' %}" class="product-image" alt="Samsung Fridge" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>SAMSUNG FRIDGE</h5>
               <p class="product-description">Home Appliance</p>
@@ -144,7 +144,7 @@
         </div>
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s10.png' %}" class="product-image" alt="iPhone 17 Pro Max">
+            <img src="{% static 'images/s10.webp' %}" class="product-image" alt="iPhone 17 Pro Max" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>IPHONE 17 PRO MAX</h5>
               <p class="product-description">Smartphone</p>
@@ -157,7 +157,7 @@
         </div>
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s11.png' %}" class="product-image" alt="Dell Inspiron">
+            <img src="{% static 'images/s11.webp' %}" class="product-image" alt="Dell Inspiron" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>DELL INSPIRON</h5>
               <p class="product-description">Laptop</p>
@@ -170,7 +170,7 @@
         </div>
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s12.png' %}" class="product-image" alt="LG Smart Pods">
+            <img src="{% static 'images/s12.webp' %}" class="product-image" alt="LG Smart Pods" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>LG SMART PODS</h5>
               <p class="product-description">Audio</p>
@@ -183,7 +183,7 @@
         </div>
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s13.png' %}" class="product-image" alt="Camera">
+            <img src="{% static 'images/s13.webp' %}" class="product-image" alt="Camera" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>CAMERA</h5>
               <p class="product-description">Photography</p>
@@ -196,7 +196,7 @@
         </div>
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s14.png' %}" class="product-image" alt="Bluetooth Speaker">
+            <img src="{% static 'images/s14.webp' %}" class="product-image" alt="Bluetooth Speaker" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>BLUETOOTH SPEAKER</h5>
               <p class="product-description">Audio</p>
@@ -222,7 +222,7 @@
 
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s16.png' %}" class="product-image" alt="Apple Smart Watch">
+            <img src="{% static 'images/s16.webp' %}" class="product-image" alt="Apple Smart Watch" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>APPLE SMART WATCH</h5>
               <p class="product-description">Wearable</p>
@@ -236,7 +236,7 @@
 
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s17.png' %}" class="product-image" alt="Robot Fan">
+            <img src="{% static 'images/s17.webp' %}" class="product-image" alt="Robot Fan" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>ROBOT FAN</h5>
               <p class="product-description">Home Appliance</p>
@@ -250,7 +250,7 @@
 
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s18.png' %}" class="product-image" alt="HP ProBook 450">
+            <img src="{% static 'images/s18.webp' %}" class="product-image" alt="HP ProBook 450" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>HP PROBOOK 450</h5>
               <p class="product-description">Laptop</p>
@@ -264,7 +264,7 @@
 
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/s19.png' %}" class="product-image" alt="GB Headsets">
+            <img src="{% static 'images/s19.webp' %}" class="product-image" alt="GB Headsets" loading="lazy" decoding="async">
             <div class="card-body">
               <h5>GB HEADSETS</h5>
               <p class="product-description">Audio</p>
@@ -295,7 +295,7 @@
           </div>
         </div>
         <div class="col-lg-6 text-center text-lg-end mt-4 mt-lg-0">
-          <img src="{% static 'images/s20.png' %}" class="cta-image img-fluid" alt="Tech CTA">
+          <img src="{% static 'images/s20.webp' %}" class="cta-image img-fluid" alt="Tech CTA" loading="lazy" decoding="async">
         </div>
       </div>
     </div>

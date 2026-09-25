@@ -117,6 +117,7 @@ try:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
     WHITENOISE_USE_FINDERS = True
     WHITENOISE_MANIFEST_STRICT = False
+    WHITENOISE_MAX_AGE = 31536000  # 1 year in seconds
 except ImportError:
     pass
 

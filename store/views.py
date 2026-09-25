@@ -17,42 +17,42 @@ STORE_DATA = {
         "todayBestDeals": {
           "items": [
             {
-              "image": "images/product-nike-sneakers.png",
+              "image": "images/product-nike-sneakers.webp",
               "alt": "Nike Sneakers",
               "title": "Nike Sneakers",
               "description": "Best Sellers Sneakers",
               "price": "30 000RWF"
             },
             {
-              "image": "images/product-goose-feather-comforter.png",
+              "image": "images/product-goose-feather-comforter.webp",
               "alt": "Goose Feather Fiber Comforter",
               "title": "Goose Feather Fiber Comforter",
               "description": "Bedding",
               "price": "10 000RWF"
             },
             {
-              "image": "images/product-iphone-case.png",
+              "image": "images/product-iphone-case.webp",
               "alt": "iPhone 17 Pro Max Case",
               "title": "iPhone 17 Pro Max Case",
               "description": "Accessories",
               "price": "20 000RWF"
             },
             {
-              "image": "images/product-diamond-earrings.png",
+              "image": "images/product-diamond-earrings.webp",
               "alt": "Diamond Stud Earrings",
               "title": "Diamond Stud Earrings",
               "description": "Earrings",
               "price": "30 000RWF"
             },
             {
-              "image": "images/product-intex-beanless-chair.png",
+              "image": "images/product-intex-beanless-chair.webp",
               "alt": "Intex Beanless Chair",
               "title": "Intex Beanless Chair",
               "description": "Luxury",
               "price": "50 000RWF"
             },
             {
-              "image": "images/product-gucci-handbag.png",
+              "image": "images/product-gucci-handbag.webp",
               "alt": "Gucci HandBag",
               "title": "Gucci HandBag",
               "description": "Side bag",
@@ -63,21 +63,21 @@ STORE_DATA = {
         "bestSellers": {
           "items": [
             {
-              "image": "images/product-blender.png",
+              "image": "images/product-blender.webp",
               "alt": "Blender",
               "title": "Blender",
               "description": "Kitchen Appliance",
               "price": "30 000RWF"
             },
             {
-              "image": "images/product-perfume.png",
+              "image": "images/product-perfume.webp",
               "alt": "Perfume",
               "title": "Perfume",
               "description": "Luxury",
               "price": "50 000RWF"
             },
             {
-              "image": "images/product-book-shelf.png",
+              "image": "images/product-book-shelf.webp",
               "alt": "Furinno Pasir Book Shelf",
               "title": "Furinno Pasir Book Shelf",
               "description": "Accessories",
@@ -93,56 +93,56 @@ STORE_DATA = {
         "trendingProducts": {
           "items": [
             {
-              "image": "images/s7.png",
+              "image": "images/s7.webp",
               "alt": "LG SMART TV",
               "title": "LG SMART TV",
               "description": "Smart TV",
               "price": "660 000RWF"
             },
             {
-              "image": "images/s8.png",
+              "image": "images/s8.webp",
               "alt": "FLASH DRIVE",
               "title": "FLASH DRIVE",
               "description": "Storage",
               "price": "10 000RWF"
             },
             {
-              "image": "images/s9.png",
+              "image": "images/s9.webp",
               "alt": "SAMSUNG FRIDGE",
               "title": "SAMSUNG FRIDGE",
               "description": "Home Appliance",
               "price": "500 000RWF"
             },
             {
-              "image": "images/s10.png",
+              "image": "images/s10.webp",
               "alt": "IPHONE 17 PRO MAX",
               "title": "IPHONE 17 PRO MAX",
               "description": "Smartphone",
               "price": "1 000 000RWF"
             },
             {
-              "image": "images/s11.png",
+              "image": "images/s11.webp",
               "alt": "DELL INSPIRON",
               "title": "DELL INSPIRON",
               "description": "Laptop",
               "price": "250 000RWF"
             },
             {
-              "image": "images/s12.png",
+              "image": "images/s12.webp",
               "alt": "LG SMART PODS",
               "title": "LG SMART PODS",
               "description": "Audio",
               "price": "15 000RWF"
             },
             {
-              "image": "images/s13.png",
+              "image": "images/s13.webp",
               "alt": "CAMERA",
               "title": "CAMERA",
               "description": "Photography",
               "price": "200 000RWF"
             },
             {
-              "image": "images/s14.png",
+              "image": "images/s14.webp",
               "alt": "BLUETOOTH SPEAKER",
               "title": "BLUETOOTH SPEAKER",
               "description": "Audio",
@@ -153,28 +153,28 @@ STORE_DATA = {
         "bestSellers": {
           "items": [
             {
-              "image": "images/s16.png",
+              "image": "images/s16.webp",
               "alt": "APPLE SMART WATCH",
               "title": "APPLE SMART WATCH",
               "description": "Wearable",
               "price": "100 000RWF"
             },
             {
-              "image": "images/s17.png",
+              "image": "images/s17.webp",
               "alt": "ROBOT FAN",
               "title": "ROBOT FAN",
               "description": "Home Appliance",
               "price": "20 000RWF"
             },
             {
-              "image": "images/s18.png",
+              "image": "images/s18.webp",
               "alt": "HP PROBOOK 450",
               "title": "HP PROBOOK 450",
               "description": "Laptop",
               "price": "1 500 000RWF"
             },
             {
-              "image": "images/s19.png",
+              "image": "images/s19.webp",
               "alt": "GB HEADSETS",
               "title": "GB HEADSETS",
               "description": "Audio",
@@ -190,42 +190,42 @@ STORE_DATA = {
         "todayBestDeals": {
           "items": [
             {
-              "image": "images/K2.png",
+              "image": "images/K2.webp",
               "alt": "PlayStation",
               "title": "PlayStation",
               "description": "Video Games",
               "price": "50 000RWF"
             },
             {
-              "image": "images/K3.png",
+              "image": "images/K3.webp",
               "alt": "Nintendo Switch 2",
               "title": "Nintendo Switch 2",
               "description": "Video Games",
               "price": "80 000RWF"
             },
             {
-              "image": "images/K4.png",
+              "image": "images/K4.webp",
               "alt": "Microsoft Xbox",
               "title": "Microsoft Xbox",
               "description": "Entertainment",
               "price": "85 000RWF"
             },
             {
-              "image": "images/K5.png",
+              "image": "images/K5.webp",
               "alt": "High Chair",
               "title": "High Chair",
               "description": "Babies",
               "price": "30 000RWF"
             },
             {
-              "image": "images/K6.png",
+              "image": "images/K6.webp",
               "alt": "Baby Swing",
               "title": "Baby Swing",
               "description": "Babies",
               "price": "50 000RWF"
             },
             {
-              "image": "images/K7.png",
+              "image": "images/K7.webp",
               "alt": "Baby Walker",
               "title": "Baby Walker",
               "description": "Side bag",
@@ -236,42 +236,42 @@ STORE_DATA = {
         "toyHighlights": {
           "items": [
             {
-              "image": "images/Component 1.png",
+              "image": "images/Component 1.webp",
               "alt": "Teddy bear",
               "title": "Teddy bear",
               "description": "Toys",
               "price": "5 000RWF"
             },
             {
-              "image": "images/K10.png",
+              "image": "images/K10.webp",
               "alt": "Rabbits Toy",
               "title": "Rabbits Toy",
               "description": "Toys",
               "price": "4 000RWF"
             },
             {
-              "image": "images/K11.png",
+              "image": "images/K11.webp",
               "alt": "Big Teddy Bear",
               "title": "Big Teddy Bear",
               "description": "Toys",
               "price": "10 000RWF"
             },
             {
-              "image": "images/K12.png",
+              "image": "images/K12.webp",
               "alt": "Non-Toxic Wax Crayon",
               "title": "Non-Toxic Wax Crayon",
               "description": "Toys",
               "price": "8 000RWF"
             },
             {
-              "image": "images/K13.png",
+              "image": "images/K13.webp",
               "alt": "Color Paint",
               "title": "Color Paint",
               "description": "Painting",
               "price": "7 000RWF"
             },
             {
-              "image": "images/K14.png",
+              "image": "images/K14.webp",
               "alt": "3Doodler 3D Pen",
               "title": "3Doodler 3D Pen",
               "description": "Entertainment",
@@ -287,42 +287,42 @@ STORE_DATA = {
         "trendingProducts": {
           "items": [
             {
-              "image": "images/top.png",
+              "image": "images/top.webp",
               "alt": "Laxi collection",
               "title": "Laxi collection",
               "description": "Collection of skin products",
               "price": "30 000 RWF"
             },
             {
-              "image": "images/Component 1.png",
+              "image": "images/Component 1.webp",
               "alt": "Biodance Products",
               "title": "Biodance Products",
               "description": "Facial masks",
               "price": "10 000 RWF"
             },
             {
-              "image": "images/Rectangle 35.png",
+              "image": "images/Rectangle 35.webp",
               "alt": "Alya skin care products",
               "title": "Alya skin care products",
               "description": "Best of the brands",
               "price": "20 000 RWF"
             },
             {
-              "image": "images/Rectangle 21.png",
+              "image": "images/Rectangle 21.webp",
               "alt": "Kylie Skin",
               "title": "Kylie Skin",
               "description": "Sunscreen",
               "price": "30 000 RWF"
             },
             {
-              "image": "images/Rectangle 22.png",
+              "image": "images/Rectangle 22.webp",
               "alt": "Collagen pad",
               "title": "Collagen pad",
               "description": "Day and Night",
               "price": "50 000 RWF"
             },
             {
-              "image": "images/Rectangle 24.png",
+              "image": "images/Rectangle 24.webp",
               "alt": "Breylee Rose",
               "title": "Breylee Rose",
               "description": "Eye Mask",
@@ -333,21 +333,21 @@ STORE_DATA = {
         "collections": {
           "items": [
             {
-              "image": "images/Rectangle 31.png",
+              "image": "images/Rectangle 31.webp",
               "alt": "Cherry Blossom",
               "title": "Cherry Blossom",
               "description": "The light of autumn",
               "price": "30 000 RWF"
             },
             {
-              "image": "images/Rectangle 35.png",
+              "image": "images/Rectangle 35.webp",
               "alt": "Moistures",
               "title": "Moistures",
               "description": "Luxury",
               "price": "50 000 RWF"
             },
             {
-              "image": "images/Rectangle 30 (1).png",
+              "image": "images/Rectangle 30 (1).webp",
               "alt": "Jarsking Collection",
               "title": "Jarsking Collection",
               "description": "Serums & Moisturizers",
@@ -363,42 +363,42 @@ STORE_DATA = {
         "popularProducts": {
           "items": [
             {
-              "image": "images/div.product-img-action-wrap.png",
+              "image": "images/div.product-img-action-wrap.webp",
               "alt": "Lemon",
               "category": "Snack",
               "title": "Fresh organic wild farm lemon 500gm pack",
               "price": "5 000 RWF"
             },
             {
-              "image": "images/div.product-img-action-wrap (1).png",
+              "image": "images/div.product-img-action-wrap (1).webp",
               "alt": "Hazelnut",
               "category": "Hodo Foods",
               "title": "Best snacks with hazel nut pack 200gm",
               "price": "52 085 RWF"
             },
             {
-              "image": "images/→ product-3-1.jpg.png",
+              "image": "images/→ product-3-1.jpg.webp",
               "alt": "Watermelon",
               "category": "Snack",
               "title": "Organic fresh venila farm watermelon 5kg",
               "price": "48 085 RWF"
             },
             {
-              "image": "images/→ product-6-1.jpg.png",
+              "image": "images/→ product-6-1.jpg.webp",
               "alt": "Muffin",
               "category": "Hodo Foods",
               "title": "Chobani Complete Vanilla Greek Yogurt",
               "price": "1200 RWF"
             },
             {
-              "image": "images/→ product-7-1.jpg.png",
+              "image": "images/→ product-7-1.jpg.webp",
               "alt": "Blackberries",
               "category": "Fruit",
               "title": "BlackBerries",
               "price": "8 085 RWF"
             },
             {
-              "image": "images/→ product-8-1.jpg.png",
+              "image": "images/→ product-8-1.jpg.webp",
               "alt": "Black Burgers",
               "category": "Snack",
               "title": "Black Burgers",
@@ -409,19 +409,19 @@ STORE_DATA = {
         "dealsOfDay": {
           "items": [
             {
-              "image": "images/banner-5.png.png",
+              "image": "images/banner-5.png.webp",
               "alt": "Organic Quinoa",
               "title": "Seeds of Change Organic Quinoa, Brown, & Red Rice",
               "price": "2000 RWF"
             },
             {
-              "image": "images/banner-6.png.png",
+              "image": "images/banner-6.png.webp",
               "alt": "Perdue Simply Smart Organics",
               "title": "Perdue Simply Smart Organics Gluten Free",
               "price": "7000 RWF"
             },
             {
-              "image": "images/banner-8.png.png",
+              "image": "images/banner-8.png.webp",
               "alt": "Simply Lemonade with Raspberry Juice",
               "title": "Simply Lemonade with Raspberry Juice",
               "price": "85000 RWF"
@@ -683,28 +683,28 @@ STORE_DATA = {
         "monthlyDeals": {
           "items": [
             {
-              "image": "images/image 26.png",
+              "image": "images/image 26.webp",
               "alt": "Simple Watches",
               "title": "Simple watches",
               "description": "Timeless design with elegance",
               "price": "18,000 RWF"
             },
             {
-              "image": "images/image 28.png",
+              "image": "images/image 28.webp",
               "alt": "Necklaces",
               "title": "Necklaces",
               "description": "Get a simple but elegant look",
               "price": "20,000 RWF"
             },
             {
-              "image": "images/image 25.png",
+              "image": "images/image 25.webp",
               "alt": "Bracelets",
               "title": "Bracelets",
               "description": "Timeless design with elegant gems",
               "price": "5,000 RWF"
             },
             {
-              "image": "images/image 12.png",
+              "image": "images/image 12.webp",
               "alt": "Elite Mini",
               "title": "Elite Mini",
               "description": "Luxury feels everyday price",
@@ -718,19 +718,19 @@ STORE_DATA = {
               "title": "Necklace",
               "items": [
                 {
-                  "image": "images/image 31.png",
+                  "image": "images/image 31.webp",
                   "alt": "Pendant Necklace",
                   "title": "Pendant Necklace",
                   "price": "20,000 RWF"
                 },
                 {
-                  "image": "images/image 32.png",
+                  "image": "images/image 32.webp",
                   "alt": "Choker Necklace",
                   "title": "Choker Necklace",
                   "price": "Rp 950.000"
                 },
                 {
-                  "image": "images/image 33.png",
+                  "image": "images/image 33.webp",
                   "alt": "Lariat Necklace",
                   "title": "Lariat Necklace",
                   "price": "Rp 1.170.000"
@@ -741,19 +741,19 @@ STORE_DATA = {
               "title": "Women's Watch",
               "items": [
                 {
-                  "image": "images/image 34.png",
+                  "image": "images/image 34.webp",
                   "alt": "Analog Dress Watch",
                   "title": "Analog Dress Watch",
                   "price": "Rp 960.000"
                 },
                 {
-                  "image": "images/image 36.png",
+                  "image": "images/image 36.webp",
                   "alt": "Leather watch",
                   "title": "Leather watch",
                   "price": "Rp 950.000"
                 },
                 {
-                  "image": "images/image 37.png",
+                  "image": "images/image 37.webp",
                   "alt": "Minimalist Slim Watch",
                   "title": "Minimalist Slim Watch",
                   "price": "Rp 1.170.000"
@@ -764,19 +764,19 @@ STORE_DATA = {
               "title": "Men's Watch",
               "items": [
                 {
-                  "image": "images/image 38.png",
+                  "image": "images/image 38.webp",
                   "alt": "Dress Watch",
                   "title": "Dress Watch",
                   "price": "Rp 1.198.000"
                 },
                 {
-                  "image": "images/image 39.png",
+                  "image": "images/image 39.webp",
                   "alt": "Chronograph watch",
                   "title": "Chronograph watch",
                   "price": "Rp 1.280.000"
                 },
                 {
-                  "image": "images/image 41.png",
+                  "image": "images/image 41.webp",
                   "alt": "Rado watch",
                   "title": "Rado watch",
                   "price": "Rp 1.170.000"
