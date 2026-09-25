@@ -809,6 +809,17 @@
     .profile-summary-actions {
         width: 100%;
     }
+
+    .payment-method-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .payment-method-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
 }
 
 /* ── Panel empty states — cart-style circle + label ────── */

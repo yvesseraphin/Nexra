@@ -6,11 +6,8 @@
 *.secrets
 
 # Local databases
-db.sqlite3
+# db.sqlite3 included for deployment demo
 db.sqlite3-journal
-*.sqlite
-*.sqlite3
-*.db
 
 # Django generated files
 staticfiles/

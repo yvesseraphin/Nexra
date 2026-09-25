@@ -82,3 +82,33 @@
   width: 120px;
   background: linear-gradient(90deg, #333 0%, #666 100%);
 }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 991px) {
+  .slider-container {
+    height: 420px;
+  }
+}
+
+@media (max-width: 576px) {
+  .slider-container {
+    height: 260px;
+  }
+  .slider-nav {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  .slider-nav.prev { left: 10px; }
+  .slider-nav.next { right: 10px; }
+  .dots {
+    padding: 20px 0;
+    gap: 8px;
+  }
+  .dot:not(.active) {
+    width: 25px;
+  }
+  .dot.active {
+    width: 60px;
+  }
+}

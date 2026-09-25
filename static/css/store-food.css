@@ -477,21 +477,41 @@ body {
   .hero-title { font-size: 3.5rem; }
   .hero-title .quote { font-size: 4.5rem; }
   .breakfast, .fresh-onions { height: 280px; padding: 30px; }
+  .hero-image-wrapper { margin-top: 30px; }
+  .hero-orange { max-height: 420px; }
 }
 
 @media (max-width: 768px) {
-  .hero-section { padding: 60px 0 80px; }
+  .hero-section { padding: 50px 0 70px; }
   .hero-title { font-size: 2.8rem; }
   .hero-title .quote { font-size: 3.5rem; }
-  .featured-cards-container { flex-direction: column; align-items: center; padding: 0 20px; }
-  .breakfast, .fresh-onions { width: 100%; max-width: 100%; height: 250px; }
+  .featured-cards-container { flex-direction: column; align-items: center; padding: 0 15px; }
+  .breakfast, .fresh-onions { width: 100%; max-width: 100%; height: 240px; }
 
-  .deals-day { padding: 30px 20px; }
+  .banner-content { padding: 30px 24px; }
+  .banner-title { font-size: 1.8rem; }
+
+  .deals-day { padding: 25px 16px; gap: 14px; }
   .decorative-leaf, .decorative-orange-slice { display: none; }
 }
 
 @media (max-width: 576px) {
-  .hero-title { font-size: 2.2rem; }
-  .hero-title .quote { font-size: 3rem; }
+  .hero-section { padding: 40px 0 50px; }
+  .hero-title { font-size: clamp(1.9rem, 6vw, 2.3rem); }
+  .hero-title .quote { font-size: clamp(2.4rem, 8vw, 3rem); }
+  .hero-orange { max-height: 260px; }
 
+  .category-buttons { gap: 8px; }
+  .category-btn { padding: 10px 18px; font-size: 0.88rem; }
+
+  .card-text-content { max-width: 75%; }
+  .card-text { font-size: 18px; }
+
+  .daily-banner { height: 280px; border-radius: 14px; }
+  .banner-content { padding: 20px 16px; }
+  .banner-title { font-size: 1.35rem; margin-bottom: 16px; }
+  .btn-shop-now-white { padding: 10px 20px; font-size: 0.88rem; }
+  .banner-arrow { width: 38px; height: 38px; font-size: 15px; }
+
+  .images-deals { min-width: 100%; }
 }

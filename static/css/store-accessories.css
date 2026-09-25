@@ -498,6 +498,9 @@ body {
 }
 
 @media (max-width: 992px) {
+  .hero-section { min-height: auto; padding: 60px 0 80px; }
+  .hero-content h2 { font-size: 2.5rem; }
+  .hero-arrows { bottom: 20px; right: 25px; }
   .testimonial-content { padding-left: 0; margin-top: 40px; }
   .testimonial-heading { font-size: 2rem; }
   .testimonial-image { max-width: 350px; }

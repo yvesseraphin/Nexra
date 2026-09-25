@@ -39,8 +39,8 @@ body.has-shared-navbar {
 }
 
 .shared-navbar .navbar-brand img {
-    width: 80px;
-    height: 80pxa;
+    width: 70px;
+    height: 70px;
     object-fit: contain;
 }
 
@@ -293,28 +293,60 @@ body.has-shared-navbar {
     transform: translateY(-2px);
 }
 
-.shared-navbar .navbar-toggler {
+.shared-navbar .navbar-toggler,
+.shared-navbar button.navbar-toggler {
     display: none;
-    width: 48px;
-    height: 48px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 5px;
-    background: transparent;
-    border: 1px solid rgba(37, 61, 78, 0.14);
-    border-radius: 14px;
-    padding: 0;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    border: none !important;
+    border-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    outline: 0 !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    padding: 8px 4px !important;
     margin-left: auto;
     cursor: pointer;
+    width: auto;
+    height: auto;
 }
 
-.shared-navbar .navbar-toggler span {
+.shared-navbar .navbar-toggler:hover,
+.shared-navbar .navbar-toggler:focus,
+.shared-navbar .navbar-toggler:focus-visible,
+.shared-navbar .navbar-toggler:active,
+.shared-navbar button.navbar-toggler:hover,
+.shared-navbar button.navbar-toggler:focus,
+.shared-navbar button.navbar-toggler:focus-visible,
+.shared-navbar button.navbar-toggler:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    border: none !important;
+    border-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    outline: 0 !important;
+    outline: none !important;
+}
+
+.shared-navbar .navbar-toggler span,
+.shared-navbar button.navbar-toggler span {
     display: block;
-    width: 20px;
-    height: 2px;
-    background: #253d4e;
-    border-radius: 999px;
+    width: 24px;
+    height: 2.5px;
+    background-color: #253d4e !important;
+    border-radius: 2px;
+    margin: 0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .shared-navbar a::after {
@@ -328,22 +360,23 @@ body.has-shared-navbar {
 
     .shared-navbar .navbar-shell {
         width: calc(100% - 1.5rem);
-        min-height: 66px;
+        min-height: 64px;
         padding: 0.3rem 0;
         gap: 1rem;
     }
 
     .shared-navbar .navbar-brand img {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
     }
 
     .shared-navbar .brand-name {
         font-size: 1.1rem;
     }
 
-    .shared-navbar .navbar-toggler {
-        display: inline-flex;
+    .shared-navbar .navbar-toggler,
+    .shared-navbar button.navbar-toggler {
+        display: inline-flex !important;
     }
 
     .shared-navbar .navbar-menu {
@@ -358,6 +391,8 @@ body.has-shared-navbar {
         border-radius: 1.25rem;
         box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
         padding: 1rem;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
     }
 
     .shared-navbar.is-open .navbar-menu {
@@ -387,6 +422,22 @@ body.has-shared-navbar {
         justify-content: space-between;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
+        border-bottom: none !important;
+        text-decoration: none !important;
+    }
+
+    .shared-navbar .nav-link.is-current,
+    .shared-navbar .dropdown-toggle.is-current,
+    .shared-navbar .dropdown-item.is-current,
+    .shared-navbar .profile-link.is-current {
+        border-bottom: none !important;
+        border-bottom-color: transparent !important;
+        text-decoration: none !important;
+    }
+
+    .shared-navbar .dropdown-item {
+        border-bottom: none !important;
+        text-decoration: none !important;
     }
 
     .shared-navbar .nav-action {
@@ -403,7 +454,8 @@ body.has-shared-navbar {
         width: 100%;
         justify-content: flex-start;
         padding-left: 0.35rem;
-        border-bottom: 0;
+        border-bottom: 0 !important;
+        text-decoration: none !important;
     }
 
     .shared-navbar .dropdown-menu {
@@ -412,5 +464,20 @@ body.has-shared-navbar {
         margin-top: 0.5rem;
         border-radius: 0.9rem;
         box-shadow: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .shared-navbar .navbar-shell {
+        width: calc(100% - 1rem);
+    }
+
+    .shared-navbar .navbar-brand img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .shared-navbar .brand-name {
+        font-size: 1.05rem;
     }
 }

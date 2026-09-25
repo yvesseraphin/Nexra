@@ -46,6 +46,15 @@ body {
   animation: fadeInUp 1s ease;
 }
 
+.hero-subtitle {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.hero-desktop-br {
+  display: inline;
+}
+
 .hero-images {
   position: relative;
   display: flex;
@@ -463,15 +472,81 @@ body {
     font-weight: 400;
 }
 
+/* Button toggler reset - strictly 3 lines only, absolutely NO circle, NO borders, NO outline, NO shadow */
+button.navbar-toggler,
+.navbar-toggler {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border: none !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  outline: 0 !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  padding: 8px 4px !important;
+}
+
+button.navbar-toggler:hover,
+button.navbar-toggler:focus,
+button.navbar-toggler:focus-visible,
+button.navbar-toggler:active,
+.navbar-toggler:hover,
+.navbar-toggler:focus,
+.navbar-toggler:focus-visible,
+.navbar-toggler:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border: none !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+button.navbar-toggler span,
+.navbar-toggler span {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background-color: #253d4e !important;
+  border-radius: 2px;
+  margin: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
 /* Tablets */
 @media (max-width: 991px) {
+  .hero-desktop-br {
+    display: none;
+  }
+
   .hero {
     text-align: center;
+    padding: 50px 0;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 2.7rem);
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
   }
 
   .hero-images {
     justify-content: center;
     margin-top: 40px;
+    position: relative;
   }
 
   .hero-images img {
@@ -479,36 +554,137 @@ body {
     margin-right: 0;
   }
 
+  .img-main {
+    left: 0;
+  }
+
   .img-overlay {
-    right: -50px;
+    right: 0;
     bottom: -20px;
+    max-width: 50%;
+  }
+
+  .promo-banner h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
   }
 
   .cta-image {
     max-width: 400px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(1.75rem, 5.8vw, 2.25rem);
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .promo-banner {
+    padding: 3rem 0;
+    margin: 2.5rem 0;
+  }
+
+  .promo-banner h2 {
+    font-size: 1.8rem;
+  }
+
+  .cta-section {
+    padding: 3.5rem 0;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-size: 1.8rem;
+  }
+
+  .subscribe-form form {
+    margin: 1.5rem auto 0;
+  }
+
+  .footer {
+    padding: 35px 0 20px 0;
+  }
+
+  .footer-content {
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .footer-links-bottom {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 }
 
 /* Mobile */
 @media (max-width: 576px) {
+  .hero {
+    padding: 40px 0;
+  }
+
   .hero-title {
-    font-size: 2rem;
+    font-size: clamp(1.65rem, 6.2vw, 2.05rem);
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
   }
 
   .hero-images {
     flex-direction: column;
+    align-items: center;
+  }
+
+  .img-main {
+    left: 0;
+    width: 90%;
   }
 
   .img-overlay {
     position: relative;
     right: 0;
     bottom: 0;
-    margin-top: -40px;
-    width: 70%;
+    margin-top: -30px;
+    width: 75%;
+    max-width: 260px;
+  }
+
+  .btn-shop {
+    padding: 0.85rem 2.2rem;
+  }
+
+  .category-circle {
+    width: 65px;
+    height: 65px;
   }
 
   .product-image {
-    height: 250px;
+    height: 240px;
   }
 
   .subscribe-form form {
