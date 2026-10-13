@@ -1,7 +1,7 @@
-/* =========================================================
-   store-fashion.css — Fashion storefront page styles
-   Ported from frontend/fashion.css · Font: Outfit
-========================================================= */
+
+
+
+
 
 * {
   box-sizing: border-box;
@@ -23,7 +23,7 @@ h1 {
   color: #333;
 }
 
-/* ================= SLIDESHOW ================= */
+
 .slideshow-container {
   position: relative;
   max-width: 100%;
@@ -97,7 +97,7 @@ h1 {
   background-color: #4a2c1a;
 }
 
-/* ================= COLLECTIONS ================= */
+
 .collections-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -185,7 +185,7 @@ h1 {
   display: block;
 }
 
-/* ================= MOST POPULAR ================= */
+
 .most-popular-section {
   margin-top: 20px;
 }
@@ -211,7 +211,7 @@ h1 {
   z-index: 10;
 }
 
-/* ================= TESTIMONIAL ================= */
+
 .testimonial-section {
   background-color: rgb(251, 245, 237);
   border-radius: 20px;
@@ -306,7 +306,7 @@ h1 {
   transform: scale(1.1);
 }
 
-/* ================= JUST FOR YOU ================= */
+
 .just-for-you-section { margin-top: 60px; }
 
 .section-header {
@@ -323,7 +323,7 @@ h1 {
   margin-left: 10px;
 }
 
-/* ================= RESPONSIVE ================= */
+
 @media (max-width: 1200px) {
   .collections-grid { grid-template-columns: 1fr; }
 }

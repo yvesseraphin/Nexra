@@ -1,9 +1,9 @@
-/* ============================================================
-   Global Notification Bar
-   A slim bar that slides down from the very top of the page.
-   Works on every page — both base.html children and standalone
-   pages like login / signup.
-   ============================================================ */
+
+
+
+
+
+
 
 .nexra-notify-bar {
   position: fixed;
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 0 48px; /* leave room for the close button on the right */
+  padding: 0 48px;
   height: 0;
   overflow: hidden;
   opacity: 0;
@@ -28,7 +28,7 @@
   font-size: 0.92rem;
   font-weight: 500;
   line-height: 1.4;
-  /* allows close button to be absolutely positioned inside */
+
   isolation: isolate;
 }
 
@@ -37,7 +37,7 @@
   opacity: 1;
 }
 
-/* Tones -------------------------------------------------------- */
+
 .nexra-notify-bar.is-error {
   background: #111111;
   color: #ffffff;
@@ -48,7 +48,7 @@
   color: #ffffff;
 }
 
-/* Inner layout ------------------------------------------------- */
+
 .nexra-notify-bar__body {
   display: flex;
   align-items: center;
@@ -64,7 +64,7 @@
   text-overflow: ellipsis;
 }
 
-/* Close button ------------------------------------------------- */
+
 .nexra-notify-bar__close {
   position: absolute;
   right: 14px;
@@ -90,20 +90,20 @@
   color: #ffffff;
 }
 
-/* Push page content down when bar is visible ------------------- */
+
 body.has-notify-bar .shared-navbar,
 body.has-notify-bar nav.navbar {
   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(46px);
 }
 
-/* On auth pages (no shared navbar) push the login layout */
+
 body.has-notify-bar .login-page {
   transition: padding-top 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   padding-top: 46px;
 }
 
-/* Mobile tweak */
+
 @media (max-width: 480px) {
   .nexra-notify-bar.is-visible {
     height: 52px;

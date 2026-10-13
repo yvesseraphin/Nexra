@@ -1,8 +1,8 @@
-/* ============================================================
-   Cart Page — Nexra
-   Matches the design: two-column layout (items | summary),
-   empty state with bag icon, item rows with qty controls.
-   ============================================================ */
+
+
+
+
+
 
 .cart-page {
   min-height: calc(100vh - 76px);
@@ -16,7 +16,7 @@
   margin: 0 auto;
 }
 
-/* ── Heading ─────────────────────────────────────────────── */
+
 .cart-heading {
   display: flex;
   align-items: baseline;
@@ -40,7 +40,7 @@
   color: #b0b0b0;
 }
 
-/* ── Two-column layout ───────────────────────────────────── */
+
 .cart-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 420px;
@@ -48,7 +48,7 @@
   align-items: start;
 }
 
-/* ── Empty state ─────────────────────────────────────────── */
+
 .cart-empty {
   display: flex;
   flex-direction: column;
@@ -80,7 +80,7 @@
   margin: 0;
 }
 
-/* ── Item list ───────────────────────────────────────────── */
+
 .cart-items-list {
   display: flex;
   flex-direction: column;
@@ -202,7 +202,7 @@
   white-space: nowrap;
 }
 
-/* ── Total + checkout ────────────────────────────────────── */
+
 .cart-actions {
   margin-top: 2rem;
   display: flex;
@@ -249,7 +249,7 @@
   transform: translateY(-2px);
 }
 
-/* ── Summary card ────────────────────────────────────────── */
+
 .cart-summary-card {
   border: 1px solid #eeeeee;
   border-radius: 16px;
@@ -274,7 +274,7 @@
   color: #111111;
 }
 
-/* ── Coupon ──────────────────────────────────────────────── */
+
 .coupon-row {
   display: flex;
   gap: 0;
@@ -318,7 +318,7 @@
   background: #333333;
 }
 
-/* ── Secure payments ─────────────────────────────────────── */
+
 .secure-payments {
   margin-top: 0.5rem;
   padding-top: 1rem;
@@ -359,7 +359,7 @@
   letter-spacing: 0.04em;
 }
 
-/* ── Responsive ──────────────────────────────────────────── */
+
 @media (max-width: 860px) {
   .cart-layout {
     grid-template-columns: 1fr;

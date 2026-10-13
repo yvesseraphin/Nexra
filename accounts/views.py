@@ -4,8 +4,9 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST, require_http_methods
+from django.db import IntegrityError
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_POST
 from .models import UserProfile
 
 def _build_user_data(user):
@@ -34,95 +35,56 @@ def _build_user_data(user):
         'avatarUrl': avatar_url,
     }
 
+@ensure_csrf_cookie
 def login_view(request):
     return render(request, 'accounts/login.html')
 
+@ensure_csrf_cookie
 def signup_view(request):
     return render(request, 'accounts/signUp.html')
 
+@ensure_csrf_cookie
 def profile_view(request):
     return render(request, 'accounts/profile.html')
 
-@csrf_exempt
 @require_POST
 def api_login(request):
     try:
         data = json.loads(request.body)
-        identifier = data.get('identifier', '').strip()
-        password = data.get('password', '')
-    except (json.JSONDecodeError, AttributeError):
+        if not isinstance(data, dict):
+            raise ValueError
+        identifier = str(data.get('identifier') or '').strip()
+        password = str(data.get('password') or '')
+    except (json.JSONDecodeError, AttributeError, ValueError):
         return JsonResponse({'error': 'Invalid request payload.'}, status=400)
 
     if not identifier or not password:
         return JsonResponse({'error': 'Enter your email or phone number and password.'}, status=400)
 
-    try:
-        user = authenticate(request, username=identifier, password=password)
-    except Exception:
-        user = None
+    user = authenticate(request, username=identifier, password=password)
+    if user is None:
+        return JsonResponse({'error': 'Invalid email or phone number and password.'}, status=401)
 
-    if user is not None:
-        try:
-            login(request, user)
-            if not request.session.session_key:
-                request.session.save()
-            token = request.session.session_key or 'demo_session_token'
-        except Exception:
-            token = 'demo_session_token'
+    login(request, user)
+    if not request.session.session_key:
+        request.session.save()
 
-        return JsonResponse({
-            'token': token,
-            'user': _build_user_data(user),
-            'message': 'Login successful. Redirecting...'
-        })
-    else:
-        # Check if user matches email or username directly in database
-        try:
-            matched_user = User.objects.filter(username=identifier).first() or User.objects.filter(email=identifier).first()
-            if matched_user and matched_user.check_password(password):
-                try:
-                    login(request, matched_user)
-                    token = request.session.session_key or 'demo_session_token'
-                except Exception:
-                    token = 'demo_session_token'
-                return JsonResponse({
-                    'token': token,
-                    'user': _build_user_data(matched_user),
-                    'message': 'Login successful. Redirecting...'
-                })
-        except Exception:
-            pass
+    return JsonResponse({
+        'authenticated': True,
+        'user': _build_user_data(user),
+        'message': 'Login successful. Redirecting...'
+    })
 
-        # Fallback for serverless demo so frontend and design can always be showcased
-        raw_name = identifier.split('@')[0].replace('.', ' ').replace('_', ' ').replace('-', ' ').title()
-        name_parts = raw_name.split(' ', 1)
-        first_name = name_parts[0] if name_parts else 'User'
-        last_name = name_parts[1] if len(name_parts) > 1 else ''
-        demo_user = {
-            'id': 1,
-            'email': identifier if '@' in identifier else f"{identifier}@example.com",
-            'firstName': first_name,
-            'lastName': last_name,
-            'displayName': f"{first_name} {last_name}".strip(),
-            'phone': "" if "@" in identifier else identifier,
-            'gender': "Prefer not to say",
-            'avatarUrl': "",
-        }
-        return JsonResponse({
-            'token': 'demo_session_token',
-            'user': demo_user,
-            'message': 'Login successful. Redirecting...'
-        })
-
-@csrf_exempt
 @require_POST
 def api_signup(request):
     try:
         data = json.loads(request.body)
-        identifier = data.get('identifier', '').strip()
-        password = data.get('password', '')
-        full_name = data.get('fullName', '').strip()
-    except (json.JSONDecodeError, AttributeError):
+        if not isinstance(data, dict):
+            raise ValueError
+        identifier = str(data.get('identifier') or '').strip()
+        password = str(data.get('password') or '')
+        full_name = str(data.get('fullName') or '').strip()
+    except (json.JSONDecodeError, AttributeError, ValueError):
         return JsonResponse({'error': 'Invalid request payload.'}, status=400)
 
     if not identifier or not password:
@@ -134,50 +96,40 @@ def api_signup(request):
     if len(password) < 6:
         return JsonResponse({'error': 'Password must be at least 6 characters long.'}, status=400)
 
+    if User.objects.filter(username=identifier).exists():
+        return JsonResponse({'error': 'An account with these details already exists. Please sign in.'}, status=409)
+
+    name_parts = full_name.split(' ', 1)
+    first_name = name_parts[0]
+    last_name = name_parts[1] if len(name_parts) > 1 else ''
+    email = identifier if "@" in identifier else ""
+
     try:
-        name_parts = full_name.split(' ', 1)
-        first_name = name_parts[0]
-        last_name = name_parts[1] if len(name_parts) > 1 else ''
-        email = identifier if "@" in identifier else ""
+        user = User.objects.create_user(
+            username=identifier,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+        )
+    except IntegrityError:
+        return JsonResponse({'error': 'An account with these details already exists. Please sign in.'}, status=409)
+    except Exception:
+        return JsonResponse({'error': 'The account could not be created. Please try again.'}, status=500)
 
-        try:
-            user = User.objects.filter(username=identifier).first()
-            if not user:
-                user = User.objects.create_user(
-                    username=identifier,
-                    email=email,
-                    password=password,
-                    first_name=first_name,
-                    last_name=last_name,
-                )
-            user_data = _build_user_data(user)
-            try:
-                login(request, user)
-                if not request.session.session_key:
-                    request.session.save()
-            except Exception:
-                pass
-        except Exception:
-            user_data = {
-                'id': 1,
-                'email': email,
-                'firstName': first_name,
-                'lastName': last_name,
-                'displayName': full_name,
-                'phone': "" if "@" in identifier else identifier,
-                'gender': "Prefer not to say",
-                'avatarUrl': "",
-            }
+    try:
+        login(request, user)
+        if not request.session.session_key:
+            request.session.save()
+    except Exception:
+        return JsonResponse({'error': 'The account was created, but sign-in failed. Please sign in.'}, status=500)
 
-        return JsonResponse({
-            'token': 'demo_session_token',
-            'user': user_data,
-            'message': 'Account created successfully! Redirecting...'
-        })
-    except Exception as e:
-        return JsonResponse({'error': f'Failed to create account: {str(e)}'}, status=500)
+    return JsonResponse({
+        'authenticated': True,
+        'user': _build_user_data(user),
+        'message': 'Account created successfully! Redirecting...'
+    }, status=201)
 
-@csrf_exempt
 def api_profile(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Your session expired. Sign in again to continue.'}, status=401)
@@ -224,7 +176,6 @@ def api_profile(request):
 
     return JsonResponse({'error': 'Method not allowed.'}, status=405)
 
-@csrf_exempt
 @require_POST
 def api_avatar_upload(request):
     if not request.user.is_authenticated:
@@ -248,7 +199,6 @@ def api_avatar_upload(request):
         'message': 'Profile photo updated.',
     })
 
-@csrf_exempt
 @require_POST
 def api_avatar_remove(request):
     if not request.user.is_authenticated:
@@ -268,7 +218,6 @@ def api_avatar_remove(request):
         'message': 'Profile photo removed.',
     })
 
-@csrf_exempt
 @require_POST
 def api_change_password(request):
     if not request.user.is_authenticated:
@@ -296,8 +245,7 @@ def api_change_password(request):
     login(request, request.user)
     return JsonResponse({'message': 'Password changed successfully.'})
 
-@csrf_exempt
-@require_http_methods(['POST', 'GET'])
+@require_POST
 def api_logout(request):
     logout(request)
     return JsonResponse({'message': 'Logged out successfully.'})

@@ -1,27 +1,27 @@
-/* ============================================================
-   Checkout Modal — Nexra
-   Handles the full checkout flow from cart to order confirmation.
-   Steps: 1 Shipping  →  2 Payment  →  3 Confirmation
-   Works on /cart/ page and the profile cart panel.
-   ============================================================ */
+
+
+
+
+
+
 (function () {
   'use strict';
 
   var state = window.NexraState;
 
-  /* ── Public entry point — called by checkout buttons ─── */
+
   window.NexraCheckout = {
     open: openCheckout,
   };
 
-  /* ── State ──────────────────────────────────────────── */
+
   var _overlay = null;
   var _currentStep = 1;
   var _shippingData = {};
   var _paymentData = {};
-  var _selectedPaymentId = null; // id of a saved method, or null = new card
+  var _selectedPaymentId = null;
 
-  /* ── Open ───────────────────────────────────────────── */
+
   function openCheckout() {
     if (!state) return;
 
@@ -50,7 +50,7 @@
     });
   }
 
-  /* ── Close ──────────────────────────────────────────── */
+
   function closeCheckout() {
     if (!_overlay) return;
     _overlay.classList.remove('is-open');
@@ -61,7 +61,7 @@
     });
   }
 
-  /* ── Render overlay + sheet ─────────────────────────── */
+
   function renderOverlay() {
     if (_overlay && _overlay.parentNode) _overlay.parentNode.removeChild(_overlay);
 
@@ -77,7 +77,7 @@
     _overlay.appendChild(sheet);
     document.body.appendChild(_overlay);
 
-    // Close on backdrop click
+
     _overlay.addEventListener('click', function (e) {
       if (e.target === _overlay) closeCheckout();
     });
@@ -85,7 +85,7 @@
     wireStep();
   }
 
-  /* ── Build full sheet HTML ──────────────────────────── */
+
   function buildSheetHTML() {
     var cart     = state.getCart();
     var subtotal = cart.reduce(function (s, i) { return s + (Number(i.priceValue) || 0) * (Number(i.quantity) || 0); }, 0);
@@ -103,7 +103,7 @@
       '</div>' +
       buildStepDots() +
 
-      /* ── Step 1: Shipping ── */
+
       '<div class="co-step' + (_currentStep === 1 ? ' is-active' : '') + '" id="co-step-1">' +
         buildShippingStep() +
         buildSummaryBox(subtotal, shipping, total) +
@@ -112,7 +112,7 @@
         '</div>' +
       '</div>' +
 
-      /* ── Step 2: Payment ── */
+
       '<div class="co-step' + (_currentStep === 2 ? ' is-active' : '') + '" id="co-step-2">' +
         buildPaymentStep() +
         buildSummaryBox(subtotal, shipping, total) +
@@ -122,13 +122,13 @@
         '</div>' +
       '</div>' +
 
-      /* ── Step 3: Confirmation ── */
+
       '<div class="co-step' + (_currentStep === 3 ? ' is-active' : '') + '" id="co-step-3">' +
         buildConfirmStep() +
       '</div>';
   }
 
-  /* ── Step dots ──────────────────────────────────────── */
+
   function buildStepDots() {
     if (_currentStep === 3) return '';
     var html = '<div class="co-steps">';
@@ -142,7 +142,7 @@
     return html;
   }
 
-  /* ── Shipping step ──────────────────────────────────── */
+
   function buildShippingStep() {
     var d = _shippingData;
     return '<p class="co-section-label">Delivery address</p>' +
@@ -161,7 +161,7 @@
       '</div>';
   }
 
-  /* ── Payment step ───────────────────────────────────── */
+
   function buildPaymentStep() {
     var methods = state.getPaymentMethods();
     var html = '';
@@ -203,7 +203,7 @@
     return html;
   }
 
-  /* ── Confirmation step ──────────────────────────────── */
+
   function buildConfirmStep() {
     return '<div class="co-confirm-icon"><i class="bx bx-check-circle"></i></div>' +
       '<h3 class="co-confirm-heading">Order placed!</h3>' +
@@ -214,7 +214,7 @@
       '</div>';
   }
 
-  /* ── Summary box ────────────────────────────────────── */
+
   function buildSummaryBox(subtotal, shipping, total) {
     return '<div class="co-summary-box">' +
       '<div class="co-summary-line"><span>Subtotal</span><span>' + fmt(subtotal) + '</span></div>' +
@@ -223,32 +223,32 @@
     '</div>';
   }
 
-  /* ── Wire buttons for current step ─────────────────── */
+
   function wireStep() {
     var sheet = _overlay ? _overlay.querySelector('.co-sheet') : null;
     if (!sheet) return;
 
-    // Close
+
     var closeBtn = sheet.querySelector('#co-close-btn');
     if (closeBtn) closeBtn.addEventListener('click', closeCheckout);
 
-    // Step 1 → 2
+
     var next1 = sheet.querySelector('#co-next-1');
     if (next1) next1.addEventListener('click', handleNext1);
 
-    // Step 2 back
+
     var back2 = sheet.querySelector('#co-back-2');
     if (back2) back2.addEventListener('click', function () { goToStep(1); });
 
-    // Step 2 → place order
+
     var placeBtn = sheet.querySelector('#co-place-order');
     if (placeBtn) placeBtn.addEventListener('click', handlePlaceOrder);
 
-    // Step 3 done
+
     var doneBtn = sheet.querySelector('#co-done-btn');
     if (doneBtn) doneBtn.addEventListener('click', handleDone);
 
-    // Saved payment radio — toggle new card form
+
     sheet.querySelectorAll('input[name="co-saved-payment"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         _selectedPaymentId = radio.value;
@@ -262,7 +262,7 @@
     });
   }
 
-  /* ── Step navigation ────────────────────────────────── */
+
   function goToStep(n) {
     _currentStep = n;
     var sheet = _overlay.querySelector('.co-sheet');
@@ -271,7 +271,7 @@
     wireStep();
   }
 
-  /* ── Handle step 1 → 2 ──────────────────────────────── */
+
   function handleNext1() {
     var sheet = _overlay.querySelector('.co-sheet');
     clearErrors(sheet);
@@ -304,24 +304,24 @@
     goToStep(2);
   }
 
-  /* ── Handle place order ─────────────────────────────── */
+
   function handlePlaceOrder() {
     var sheet = _overlay.querySelector('.co-sheet');
     clearErrors(sheet);
 
     var methods = state.getPaymentMethods();
 
-    /* decide which payment to use */
+
     var checkedRadio = sheet.querySelector('input[name="co-saved-payment"]:checked');
 
     var paymentInput = null;
     var saveCard     = false;
 
     if (checkedRadio && methods.length) {
-      /* user picked a saved card */
+
       paymentInput = { id: checkedRadio.value };
     } else {
-      /* new card form */
+
       var holder  = val(sheet, '#co-holder');
       var cardNum = val(sheet, '#co-card-num');
       var expM    = val(sheet, '#co-expiry-m');
@@ -353,7 +353,7 @@
       };
     }
 
-    /* build checkout object */
+
     var user = state.getCurrentUser();
     var checkout = {
       contact: {
@@ -374,30 +374,30 @@
       return;
     }
 
-    /* go to confirmation */
+
     _currentStep = 3;
     var sheetEl = _overlay.querySelector('.co-sheet');
     sheetEl.innerHTML = buildSheetHTML();
     sheetEl.scrollTop = 0;
     wireStep();
 
-    /* fill in order number */
+
     var numEl = sheetEl.querySelector('#co-order-num');
     if (numEl) numEl.textContent = order.orderNumber || order.id;
 
-    /* refresh cart UI on the page */
+
     window.dispatchEvent(new CustomEvent('nexra:cart-updated'));
     window.dispatchEvent(new CustomEvent('nexra:user-updated'));
   }
 
-  /* ── Done button ────────────────────────────────────── */
+
   function handleDone() {
     closeCheckout();
-    /* if on cart page, nothing special needed — cart is already re-rendered */
-    /* if on profile, the panels updated via event above */
+
+
   }
 
-  /* ── Helpers ────────────────────────────────────────── */
+
   function field(id, label, type, value, autocomplete) {
     return '<div class="co-field">' +
       '<label for="' + id + '">' + label + '</label>' +

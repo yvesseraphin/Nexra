@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="col-lg-6 text-center mt-4 mt-lg-0 hero-image-container">
-        <img src="{% static 'images/image 6.webp' %}" alt="Luminex Watch" id="watch-img" class="img-fluid" loading="lazy" decoding="async">
+        <img src="{% static 'images/image 6.webp' %}" alt="Luminex Watch" id="watch-img" class="img-fluid" loading="eager" fetchpriority="high" decoding="async">
       </div>
     </div>
   </div>
@@ -74,13 +74,13 @@
   </div>
 </div>
 
-<!-- Monthly Deals Section -->
+
 <section class="monthly-deals-section">
   <div class="container">
     <h2 class="section-title">Monthly Deals</h2>
-    
+
     <div class="row g-4" id="accessories-monthly-deals-grid">
-      <!-- Simple Watches -->
+
       <div class="col-lg-3 col-md-6">
         <div class="deal-card">
           <div class="deal-image-wrapper">
@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      <!-- Necklaces -->
+
       <div class="col-lg-3 col-md-6">
         <div class="deal-card">
           <div class="deal-image-wrapper">
@@ -114,7 +114,7 @@
         </div>
       </div>
 
-      <!-- Bracelets -->
+
       <div class="col-lg-3 col-md-6">
         <div class="deal-card">
           <div class="deal-image-wrapper">
@@ -131,7 +131,7 @@
         </div>
       </div>
 
-      <!-- Elite Mini -->
+
       <div class="col-lg-3 col-md-6">
         <div class="deal-card">
           <div class="deal-image-wrapper">
@@ -176,15 +176,15 @@
   </div>
 </section>
 
-<!-- Products Grid Section -->
+
 <section class="products-grid-section">
   <div class="container">
     <div class="row" id="accessories-columns-grid">
-      <!-- Necklace Column -->
+
       <div class="col-lg-4 col-md-6">
         <h3 class="category-heading">Necklace</h3>
-        
-        <!-- Product Item 1 -->
+
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 31.webp' %}" alt="Pendant Necklace" loading="lazy" decoding="async">
@@ -195,7 +195,7 @@
           </div>
         </div>
 
-        <!-- Product Item 2 -->
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 32.webp' %}" alt="Choker Necklace" loading="lazy" decoding="async">
@@ -206,7 +206,7 @@
           </div>
         </div>
 
-        <!-- Product Item 3 -->
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 33.webp' %}" alt="Lariat Necklace" loading="lazy" decoding="async">
@@ -218,11 +218,11 @@
         </div>
       </div>
 
-      <!-- Women's Watch Column -->
+
       <div class="col-lg-4 col-md-6">
         <h3 class="category-heading">Women's Watch</h3>
-        
-        <!-- Product Item 1 -->
+
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 34.webp' %}" alt="Analog Dress Watch" loading="lazy" decoding="async">
@@ -233,7 +233,7 @@
           </div>
         </div>
 
-        <!-- Product Item 2 -->
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 36.webp' %}" alt="leather watch" loading="lazy" decoding="async">
@@ -244,7 +244,7 @@
           </div>
         </div>
 
-        <!-- Product Item 3 -->
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 37.webp' %}" alt="Minimalist Slim Watch" loading="lazy" decoding="async">
@@ -256,11 +256,11 @@
         </div>
       </div>
 
-      <!-- Men's Watch Column -->
+
       <div class="col-lg-4 col-md-6">
         <h3 class="category-heading">Men's Watch</h3>
-        
-        <!-- Product Item 1 -->
+
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 38.webp' %}" alt="Dress Watch" loading="lazy" decoding="async">
@@ -271,7 +271,7 @@
           </div>
         </div>
 
-        <!-- Product Item 2 -->
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 39.webp' %}" alt="Chronograph watch" loading="lazy" decoding="async">
@@ -282,7 +282,7 @@
           </div>
         </div>
 
-        <!-- Product Item 3 -->
+
         <div class="product-grid-item">
           <div class="product-grid-image">
             <img src="{% static 'images/image 41.webp' %}" alt="Rado watch" loading="lazy" decoding="async">
@@ -295,16 +295,16 @@
       </div>
     </div>
 
-    <!-- See More Button -->
+
     <div class="text-center mt-5">
       <button class="see-more-btn">See More</button>
     </div>
   </div>
 </section>
 
-<!-- Testimonials Section -->
+
 <section class="testimonials-section">
-  <!-- Geometric decoration top left -->
+
   <div class="testimonial-geometric-decoration">
     <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 100 L80 20 L140 100 L80 180 Z" stroke="#E3D0B5" stroke-width="1.5" fill="none"/>
@@ -315,7 +315,7 @@
 
   <div class="container">
     <div class="row align-items-center">
-      <!-- Left Side - Image -->
+
       <div class="col-lg-5">
         <div class="testimonial-image-wrapper">
           <div class="testimonial-image-bg"></div>
@@ -323,7 +323,7 @@
         </div>
       </div>
 
-      <!-- Right Side - Content -->
+
       <div class="col-lg-7">
         <div class="testimonial-content">
           <h2 class="testimonial-heading">Testimonials</h2>
@@ -340,7 +340,7 @@
   </div>
 </section>
 
-<!-- Instagram Gallery Section -->
+
 <section class="instagram-gallery-section">
   <div class="container">
     <div class="instagram-header">
@@ -357,7 +357,7 @@
       </div>
 
       <div class="instagram-item">
-        <img src="{% static 'images/cr7w.webp' %}" alt="Instagram Post 2" loading="lazy" decoding="async">
+        <img src="{% static 'images/cr7w.webp' %}" srcset="{% static 'images/cr7w-480.webp' %} 480w" sizes="(max-width: 768px) 50vw, 20vw" alt="Instagram Post 2" loading="lazy" decoding="async">
         <div class="instagram-overlay">
           <i class="fab fa-instagram"></i>
         </div>
@@ -371,7 +371,7 @@
       </div>
 
       <div class="instagram-item">
-        <img src="{% static 'images/sss3.webp' %}" alt="Instagram Post 4" loading="lazy" decoding="async">
+        <img src="{% static 'images/sss3.webp' %}" srcset="{% static 'images/sss3-480.webp' %} 480w" sizes="(max-width: 768px) 50vw, 20vw" alt="Instagram Post 4" loading="lazy" decoding="async">
         <div class="instagram-overlay">
           <i class="fab fa-instagram"></i>
         </div>
@@ -392,7 +392,7 @@
 {% block extra_js %}
 <script src="{% static 'js/store-dynamic.js' %}"></script>
 <script>
-  // Watch slideshow controller for Hero section
+
   const watches = [
     {
       name: "Luminex",

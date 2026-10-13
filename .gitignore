@@ -1,19 +1,14 @@
-# Environment and secrets
 .env
 .env.*
 !.env.example
 *.secret
 *.secrets
 
-# Local databases
-# db.sqlite3 included for deployment demo
 db.sqlite3-journal
 
-# Django generated files
 staticfiles/
 media/
 
-# Python caches and build output
 __pycache__/
 *.py[cod]
 *$py.class
@@ -23,19 +18,16 @@ dist/
 *.egg-info/
 .eggs/
 
-# Virtual environments
 .venv/
 venv/
 env/
 ENV/
 
-# Logs and runtime files
 *.log
 logs/
 *.pid
 *.sock
 
-# Test and coverage output
 .coverage
 .coverage.*
 htmlcov/
@@ -43,7 +35,6 @@ htmlcov/
 .mypy_cache/
 .ruff_cache/
 
-# Editor and OS files
 .vscode/
 .idea/
 .kiro/
@@ -52,14 +43,12 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Package manager dependencies and caches
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Private keys and certificates
 *.pem
 *.key
 *.p12
@@ -71,7 +60,6 @@ id_rsa.pub
 id_ed25519
 id_ed25519.pub
 
-# Backups and local archives
 *.bak
 *.backup
 *.tmp

@@ -49,8 +49,10 @@
     try {
       const response = await fetch(endpoint, {
         method: "POST",
+        credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
+          "X-CSRFToken": getCsrfToken(),
         },
         body: JSON.stringify({
           identifier,
@@ -65,18 +67,20 @@
         throw new Error(getErrorMessage(payload, response.status));
       }
 
-      if (payload.token) {
-        localStorage.setItem("nexra_token", payload.token);
+      if (payload.authenticated) {
+        localStorage.setItem("nexra_token", "django-session");
         if (typeof state?.setCurrentUser === "function") {
           state.setCurrentUser(payload.user);
         } else {
           localStorage.setItem("nexra_user", JSON.stringify(payload.user));
         }
-        state?.migrateGuestStateToUser(payload.user);
+        state?.migrateGuestStateToUser?.(payload.user);
         showFeedback(payload.message || successLabel, false);
 
         window.setTimeout(() => {
-          const nextTarget = redirectTarget || state?.consumePostAuthRedirect?.() || "/";
+          const nextTarget = getInternalRedirect(redirectTarget)
+            || getInternalRedirect(state?.consumePostAuthRedirect?.())
+            || (mode === "signup" ? "/accounts/profile/" : "/");
           window.location.href = nextTarget;
         }, 900);
         return;
@@ -88,40 +92,17 @@
       } else {
         localStorage.removeItem("nexra_user");
       }
-      showFeedback(payload.message || "Account created. Continue with login once the account is confirmed.", false);
+      showFeedback(payload.message || "Unable to complete the request.", true);
 
       window.setTimeout(() => {
-        const nextTarget = redirectTarget ? `/accounts/login/?redirect=${encodeURIComponent(redirectTarget)}` : "/accounts/login/";
+        const safeRedirect = getInternalRedirect(redirectTarget);
+        const nextTarget = safeRedirect
+          ? `/accounts/login/?redirect=${encodeURIComponent(safeRedirect)}`
+          : "/accounts/login/";
         window.location.href = nextTarget;
       }, 1400);
     } catch (error) {
-      // Fallback for demo when backend serverless is offline so frontend & design can always be showcased!
-      const rawName = fullName || identifier.split("@")[0].replace(/[._-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-      const nameParts = rawName.trim().split(" ");
-      const fallbackUser = {
-        id: 1,
-        email: identifier.includes("@") ? identifier : `${identifier}@example.com`,
-        firstName: nameParts[0] || "User",
-        lastName: nameParts.slice(1).join(" ") || "",
-        displayName: rawName,
-        phone: identifier.includes("@") ? "" : identifier,
-        gender: "Prefer not to say",
-        avatarUrl: "",
-      };
-
-      localStorage.setItem("nexra_token", "demo_local_token");
-      if (typeof state?.setCurrentUser === "function") {
-        state.setCurrentUser(fallbackUser);
-      } else {
-        localStorage.setItem("nexra_user", JSON.stringify(fallbackUser));
-      }
-      state?.migrateGuestStateToUser?.(fallbackUser);
-      showFeedback(mode === "signup" ? "Account created! Redirecting..." : "Login successful. Redirecting...", false);
-
-      window.setTimeout(() => {
-        const nextTarget = redirectTarget || state?.consumePostAuthRedirect?.() || "/accounts/profile/";
-        window.location.href = nextTarget;
-      }, 800);
+      showFeedback(error.message || "We could not complete your request. Please try again.", true);
     } finally {
       setLoading(false);
     }
@@ -135,7 +116,7 @@
     }
   }
 
-  // Uses NexraNotify to display the global top bar
+
   function showFeedback(message, isError) {
     clearFeedback();
     if (window.NexraNotify) {
@@ -171,7 +152,7 @@
     emailStatus.hidden = !hasValidEmail;
   }
 
-  // Regex validation
+
   function isValidEmail(value) {
     if (!value || /\s/.test(value)) {
       return false;
@@ -232,7 +213,25 @@
       return `http://localhost:8000${normalizedPath}`;
     }
 
-    // Same origin — let Django handle it
+
     return normalizedPath;
+  }
+
+  function getCsrfToken() {
+    const cookie = document.cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith("csrftoken="));
+    return cookie ? decodeURIComponent(cookie.slice("csrftoken=".length)) : "";
+  }
+
+  function getInternalRedirect(target) {
+    if (!target) {
+      return "";
+    }
+
+    try {
+      const url = new URL(target, window.location.origin);
+      return url.origin === window.location.origin ? `${url.pathname}${url.search}${url.hash}` : "";
+    } catch (error) {
+      return "";
+    }
   }
 })();

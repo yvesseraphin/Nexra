@@ -57,7 +57,7 @@
       var html = '';
       items.forEach(function (item) {
         html += '<div class="ck-summary-item">' +
-          '<img class="ck-summary-item-img" src="' + esc(item.image || '') + '" alt="' + esc(item.title || '') + '">' +
+          '<img class="ck-summary-item-img" src="' + esc(item.image || '') + '" alt="' + esc(item.title || '') + '" loading="lazy" decoding="async">' +
           '<div class="ck-summary-item-body">' +
             '<p class="ck-summary-item-title">' + esc(item.title || 'Item') + '</p>' +
             '<p class="ck-summary-item-qty">Qty: ' + (item.quantity || 1) + '</p>' +

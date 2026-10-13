@@ -10,11 +10,11 @@
 
 {% block content %}
 
-  <!-- Image Slider -->
+
   <div class="slider-container">
     <div class="slider" id="slider">
       <div class="slide">
-        <img src="{% static 'images/Rectangle 5.webp' %}" alt="Luxury Skincare" loading="lazy" decoding="async">
+        <img src="{% static 'images/Rectangle 5.webp' %}" alt="Luxury Skincare" loading="eager" fetchpriority="high" decoding="async">
       </div>
       <div class="slide">
         <img src="{% static 'images/pexels-victorcandiani-9620359.webp' %}" alt="Natural Beauty" loading="lazy" decoding="async">
@@ -37,7 +37,7 @@
     <div class="dot" onclick="goToSlide(3)"></div>
   </div>
 
-  <!-- Categories -->
+
   <section class="categories" id="shop">
     <div class="container">
       <h2 class="section-title text-center mb-5">Categories</h2>
@@ -76,7 +76,7 @@
     </div>
   </section>
 
-  <!-- Trending Products -->
+
   <section class="product-section">
     <div class="container">
       <h2 class="section-title">Highly trending products</h2>
@@ -182,7 +182,7 @@
     </div>
   </section>
 
-  <!-- Promo Banner -->
+
   <section class="promo-banner">
     <div class="container text-center">
       <img src="{% static 'images/cerum.webp' %}" alt="Lip Gloss" class="promo-image float-start" loading="lazy" decoding="async">
@@ -193,7 +193,7 @@
     </div>
   </section>
 
-  <!-- Collections -->
+
   <section class="product-section">
     <div class="container">
       <h2 class="section-title">Explore the best collections</h2>
@@ -251,7 +251,7 @@
     </div>
   </section>
 
-  <!-- CTA -->
+
   <section class="cta-section">
     <div class="container">
       <div class="row align-items-center">
@@ -276,7 +276,7 @@
 
 {% block extra_js %}
 <script>
-  // Image slider
+
   let currentSlideIndex = 0;
   const sliderEl = document.getElementById('slider');
   const dotsEl = document.querySelectorAll('.dot');

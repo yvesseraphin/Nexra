@@ -1,9 +1,9 @@
-/* =========================================================
-   store-beauty.css — Beauty storefront page styles
-   Font: Outfit
- ========================================================= */
 
-/* ================= SLIDER ================= */
+
+
+
+
+
 .slider-container {
   position: relative;
   width: 100%;
@@ -83,7 +83,7 @@
   background: linear-gradient(90deg, #333 0%, #666 100%);
 }
 
-/* ================= RESPONSIVE ================= */
+
 @media (max-width: 991px) {
   .slider-container {
     height: 420px;

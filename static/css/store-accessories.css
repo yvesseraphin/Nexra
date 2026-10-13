@@ -1,7 +1,7 @@
-/* =========================================================
-   store-accessories.css — Accessories storefront page styles
-   Ported from frontend/accesories_styles.css · Font: Outfit
-========================================================= */
+
+
+
+
 
 :root {
   --primary-orange: #ff9500;
@@ -17,9 +17,9 @@ body {
   color: var(--text-dark);
 }
 
-/* ========================================
-   HERO SECTION
-======================================== */
+
+
+
 
 .hero-section {
   background-color: #E3D0B5;
@@ -93,9 +93,9 @@ body {
 }
 
 
-/* ========================================
-   PRODUCT HIGHLIGHT CARDS (duo)
-======================================== */
+
+
+
 
 .product-card {
   background-color: #ffffff;
@@ -155,9 +155,9 @@ body {
   .content-box, .image-box { max-width: 100%; }
 }
 
-/* ========================================
-   MONTHLY DEALS SECTION
-======================================== */
+
+
+
 
 .monthly-deals-section {
   padding: 80px 0;
@@ -250,9 +250,9 @@ body {
   .deal-image-wrapper { height: 220px; }
 }
 
-/* ========================================
-   RECENT PRODUCTS SECTION
-======================================== */
+
+
+
 
 .recent-title {
   font-size: 1.8rem;
@@ -332,9 +332,9 @@ body {
   .main-heading { font-size: 1.2rem; }
 }
 
-/* ========================================
-   PRODUCTS GRID SECTION
-======================================== */
+
+
+
 
 .products-grid-section {
   padding: 80px 0;
@@ -418,9 +418,9 @@ body {
   .product-grid-price { font-size: 0.9rem; }
 }
 
-/* ========================================
-   TESTIMONIALS SECTION
-======================================== */
+
+
+
 
 .testimonials-section {
   padding: 100px 0;
@@ -507,9 +507,9 @@ body {
   .testimonial-geometric-decoration { width: 120px; height: 120px; }
 }
 
-/* ========================================
-   INSTAGRAM GALLERY SECTION
-======================================== */
+
+
+
 
 .instagram-gallery-section {
   padding: 80px 0;

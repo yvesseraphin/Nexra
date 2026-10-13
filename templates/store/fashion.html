@@ -5,15 +5,16 @@
 {% block body_page %}fashion{% endblock %}
 
 {% block extra_css %}
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 <link rel="stylesheet" href="{% static 'css/store-fashion.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-  <!-- Slideshow -->
+
   <div class="slideshow-container">
     <div class="slide active">
-      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&h=500&fit=crop" alt="Cozy Fashion" loading="lazy" decoding="async">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&h=500&fit=crop" alt="Cozy Fashion" loading="eager" fetchpriority="high" decoding="async">
       <div class="slide-content">
         <h2>Your Cozy Era</h2>
         <p>Get peak comfy-chic<br>with new winter essentials.</p>
@@ -57,12 +58,12 @@
     <span class="dot" onclick="currentSlide(5)"></span>
   </div>
 
-  <!-- Collections -->
+
   <h2 class="section-title text-center mb-5">Explore Collections</h2>
 
   <div class="collections-grid" id="fashion-collections-grid">
 
-    <!-- Clothing -->
+
     <div class="collection-box">
       <div class="collection-header">
         <h2 class="collection-title">Clothing</h2>
@@ -80,7 +81,7 @@
       </div>
     </div>
 
-    <!-- Shoes -->
+
     <div class="collection-box">
       <div class="collection-header">
         <h2 class="collection-title">Shoes</h2>
@@ -98,7 +99,7 @@
       </div>
     </div>
 
-    <!-- Bags -->
+
     <div class="collection-box">
       <div class="collection-header">
         <h2 class="collection-title">Bags</h2>
@@ -116,7 +117,7 @@
       </div>
     </div>
 
-    <!-- Hoodies -->
+
     <div class="collection-box">
       <div class="collection-header">
         <h2 class="collection-title">Hoodies</h2>
@@ -136,7 +137,7 @@
 
   </div>
 
-  <!-- Most Popular -->
+
   <div class="most-popular-section">
     <h2 class="section-title">Most Popular</h2>
     <div class="row gy-4" id="fashion-most-popular-grid">
@@ -203,7 +204,7 @@
 
     </div>
   </div>
-  <!-- Just For You -->
+
   <div class="just-for-you-section">
     <div class="section-header">
       <h2 class="section-title">Just For You</h2>
@@ -300,7 +301,7 @@
 
 {% block extra_js %}
 <script>
-  // Slideshow
+
   let slideIndex = 0;
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');

@@ -5,12 +5,13 @@
 {% block body_page %}tech{% endblock %}
 
 {% block extra_css %}
+<link rel="preload" as="image" href="{% static 'images/s1.webp' %}" fetchpriority="high" />
 <link rel="stylesheet" href="{% static 'css/store-tech.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-  <!-- Hero Section -->
+
   <section class="hero" id="home">
     <div class="container">
       <div class="row align-items-center">
@@ -30,7 +31,7 @@
     </div>
   </section>
 
-  <!-- Brand Categories -->
+
   <section class="categories" id="shop">
     <div class="container">
       <div class="row justify-content-center">
@@ -78,7 +79,7 @@
     </div>
   </section>
 
-  <!-- Trending Products -->
+
   <section class="product-section">
     <div class="container">
       <h2 class="section-title">Trending products</h2>
@@ -102,7 +103,7 @@
           </div>
         </div>
         {% empty %}
-        <!-- Static fallback -->
+
         <div class="col-md-4">
           <div class="card product-card">
             <img src="{% static 'images/s7.webp' %}" class="product-image" alt="LG SMART TV" loading="lazy" decoding="async">
@@ -214,7 +215,7 @@
     </div>
   </section>
 
-  <!-- Best Sellers -->
+
   <section class="product-section">
     <div class="container">
       <h2 class="section-title">Best Seller in our collection</h2>
@@ -280,7 +281,7 @@
     </div>
   </section>
 
-  <!-- CTA -->
+
   <section class="cta-section">
     <div class="container">
       <div class="row align-items-center">

@@ -7,6 +7,13 @@
   const ORDER_PREFIX = "nexra_orders_";
   const PAYMENT_PREFIX = "nexra_payments_";
   const GUEST_KEY = "guest";
+  const savedToken = localStorage.getItem(TOKEN_KEY);
+
+  if (savedToken === "demo_local_token" || savedToken === "demo_session_token") {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+  }
+
   const ADD_TO_CART_SELECTOR = ".add-btn, .add-to-cart, .add-to-cart-btn, .add-to-cart-overlay";
   const PRODUCT_IMAGE_SELECTOR = [
     ".product-card img",
@@ -75,7 +82,7 @@
       return `http://localhost:8000${normalizedPath}`;
     }
 
-    // Same origin — let Django handle it
+
     return normalizedPath;
   }
 
@@ -126,9 +133,9 @@
     return `${CART_PREFIX}${getUserStorageKey(user)}`;
   }
 
-  // Use Django standard urls in Django templates
+
   function getCartRedirectUrl() {
-    // In reference it was 'cart.html'. Here, the cart url can be mapped to /cart/ or similar.
+
     return "/cart/";
   }
 
@@ -150,7 +157,7 @@
     return items;
   }
 
-  // Redirect to product detail page in Django
+
   function handleProductDetailClick(event) {
     const image = event.target.closest("img");
 
@@ -174,7 +181,7 @@
 
     event.preventDefault();
     saveProductPreview(product);
-    // In Django we route to /store/product/?slug=
+
     window.location.href = `/store/product/?slug=${encodeURIComponent(product.slug)}`;
   }
 
@@ -196,7 +203,7 @@
     return safeParse(localStorage.getItem(getPaymentStorageKey(user)), []);
   }
 
-  // Copying remainder from reference nexra-state.js
+
   function savePaymentMethods(methods, user = getCurrentUser()) {
     localStorage.setItem(getPaymentStorageKey(user), JSON.stringify(methods));
     emitPaymentUpdate(user);
@@ -924,7 +931,7 @@
     return false;
   }
 
-  // ── API sync helpers ─────────────────────────────────────
+
 
   function apiGet(url) {
     return fetch(buildApiUrl(url), { credentials: 'include' }).then(function(r) { return r.json(); });
@@ -961,7 +968,7 @@
     return cookie ? cookie.trim().split('=')[1] : '';
   }
 
-  // ── API: Cart ─────────────────────────────────────────────
+
 
   function syncCartFromApi(user) {
     if (!isAuthenticated()) return;
@@ -976,7 +983,7 @@
   function addToCartApi(product, quantity) {
     quantity = quantity || 1;
     var user = getCurrentUser();
-    // Optimistic local update first
+
     addToCart(product, quantity, user);
     if (!isAuthenticated()) return;
     apiPost('/cart/api/cart/', Object.assign({}, product, { quantity: quantity }))
@@ -1031,7 +1038,7 @@
     apiDelete('/cart/api/cart/').catch(function() {});
   }
 
-  // ── API: Orders ───────────────────────────────────────────
+
 
   function syncOrdersFromApi(user) {
     if (!isAuthenticated()) return;
@@ -1056,7 +1063,7 @@
     return apiPost('/cart/api/orders/', payload).then(function(data) {
       if (data.error) return null;
       var order = data.order;
-      // Clear local cart and save order locally
+
       clearCart(user);
       var orders = getOrders(user);
       orders.unshift(order);
@@ -1065,7 +1072,7 @@
       emitCartUpdate(user);
       return order;
     }).catch(function() {
-      // Fallback to local-only
+
       return createOrderFromCheckout(checkout, user);
     });
   }
@@ -1077,7 +1084,7 @@
     syncOrdersFromApi(user);
   }
 
-  // ── API: Payment methods ──────────────────────────────────
+
 
   function syncPaymentsFromApi(user) {
     if (!isAuthenticated()) return;
@@ -1091,7 +1098,7 @@
 
   function savePaymentMethodApi(details) {
     var user = getCurrentUser();
-    // Save locally first
+
     var local = savePaymentMethod(details, user);
     if (!isAuthenticated()) return local;
     apiPost('/cart/api/payments/', details).then(function(data) {
@@ -1126,7 +1133,7 @@
     }).catch(function() {});
   }
 
-  // ── API: Addresses ────────────────────────────────────────
+
 
   const ADDRESS_KEY_PREFIX = 'nexra_addresses_';
 
@@ -1180,7 +1187,7 @@
     }).catch(function() {});
   }
 
-  // Sync all server data on page load if authenticated
+
   document.addEventListener('DOMContentLoaded', function() {
     if (isAuthenticated()) {
       var user = getCurrentUser();
@@ -1203,7 +1210,7 @@
     getCurrentPath,
     setPostAuthRedirect,
     consumePostAuthRedirect,
-    // Cart (API-backed)
+
     getCart,
     getCartCount,
     addToCart:            addToCartApi,
@@ -1211,45 +1218,45 @@
     removeFromCart:       removeFromCartApi,
     clearCart:            clearCartApi,
     syncCartFromApi,
-    // Orders (API-backed)
+
     getOrders,
     getOrdersApi,
     createOrderFromCheckout,
     createOrderFromCheckoutApi,
     createOrderFromCart,
-    // Payments (API-backed)
+
     getPaymentMethods,
     getDefaultPaymentMethod,
     savePaymentMethod:       savePaymentMethodApi,
     removePaymentMethod:     removePaymentMethodApi,
     setDefaultPaymentMethod: setDefaultPaymentMethodApi,
     syncPaymentsFromApi,
-    // Addresses (API-backed)
+
     getAddresses,
     saveAddressApi,
     removeAddressApi,
     setDefaultAddressApi,
     syncAddressesFromApi,
-    // Auth
+
     migrateGuestStateToUser,
     setCurrentUser,
     clearSession,
     ensureAuthenticated,
-    // User helpers
+
     getUserDisplayName,
     getUserAvatarUrl,
     getUserInitials,
-    // Product helpers
+
     getProductPreview,
     buildFallbackProductDetails,
     saveProductPreview,
     slugify,
     formatCurrency,
     parsePriceValue,
-    // Events
+
     emitCartUpdate,
     emitPaymentUpdate,
-    // Card helpers
+
     detectCardBrand,
     buildMaskedPaymentMethod,
   };

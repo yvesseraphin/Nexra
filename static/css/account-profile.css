@@ -1,8 +1,8 @@
-/* ============================================================
-   Account / Profile Page
-   Layout & design from reference, inputs match login page,
-   gender select styled like the navbar dropdown.
-   ============================================================ */
+
+
+
+
+
 
 :root {
     --profile-bg: #ffffff;
@@ -18,7 +18,7 @@
     --profile-error: #b04848;
 }
 
-/* ── Page shell ─────────────────────────────────────────── */
+
 .profile-page {
     min-height: 100vh;
     padding: clamp(2rem, 4vw, 3.4rem) 0 3.5rem;
@@ -27,7 +27,7 @@
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* ── Two-column layout ──────────────────────────────────── */
+
 .account-layout {
     width: min(1320px, calc(100% - 2.5rem));
     margin: 0 auto;
@@ -37,7 +37,7 @@
     row-gap: 2rem;
 }
 
-/* ── Sidebar headings ───────────────────────────────────── */
+
 .account-sidebar h1,
 .section-head h2 {
     margin: 0;
@@ -61,7 +61,7 @@
     border-bottom: 1.5px solid #f0f0f0;
 }
 
-/* ── Sidebar nav ────────────────────────────────────────── */
+
 .account-nav {
     display: grid;
     gap: 0.32rem;
@@ -109,7 +109,7 @@
     font-weight: 700;
 }
 
-/* ── Shared button base ─────────────────────────────────── */
+
 .logout-btn,
 .outline-pill,
 .primary-pill,
@@ -128,7 +128,7 @@
                 color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Logout + outline share the same border style */
+
 .logout-btn,
 .outline-pill {
     border: 1.25px solid var(--profile-border-strong);
@@ -142,7 +142,7 @@
     font-weight: 600;
 }
 
-/* Primary — black pill, same feel as .btn-signup on login page */
+
 .primary-pill {
     border: 0;
     background: var(--profile-text);
@@ -166,7 +166,7 @@
     transform: none;
 }
 
-/* ── Content area ───────────────────────────────────────── */
+
 .account-content {
     width: 100%;
 }
@@ -178,7 +178,7 @@
     width: 100%;
 }
 
-/* Cart panel gets full width — no cap */
+
 .account-panel[data-account-panel="cart"],
 .account-panel[data-account-panel="orders"],
 .account-panel[data-account-panel="payments"],
@@ -187,7 +187,7 @@
     width: 100%;
 }
 
-/* ── Profile summary row ────────────────────────────────── */
+
 .profile-summary-row {
     display: flex;
     align-items: center;
@@ -262,7 +262,7 @@
     cursor: pointer;
 }
 
-/* ── Details form ───────────────────────────────────────── */
+
 .details-form {
     padding-top: 2.5rem;
 }
@@ -285,9 +285,9 @@
     font-weight: 600;
 }
 
-/* ── Inputs — same shape as login page ──────────────────── */
-/*  Login page: border 1px #E0E0E0, border-radius 8px,
-    padding 16px, font Outfit 500, color #253D4E            */
+
+
+
 .field-control input {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 0.95rem;
@@ -321,7 +321,7 @@
     -webkit-text-fill-color: #253D4E !important;
 }
 
-/* ── Gender select — custom dropdown like navbar ────────── */
+
 .custom-select {
     position: relative;
 }
@@ -367,7 +367,7 @@
     transform: rotate(180deg);
 }
 
-/* Dropdown menu — navbar dropdown style */
+
 .custom-select-menu {
     display: none;
     position: absolute;
@@ -388,7 +388,7 @@
     display: block;
 }
 
-/* Options — same as navbar dropdown items */
+
 .custom-select-item {
     display: flex;
     align-items: center;
@@ -421,13 +421,13 @@
     font-size: 1.05rem;
 }
 
-/* ── Save button ────────────────────────────────────────── */
+
 .primary-pill {
     margin-top: 1.7rem;
     min-width: 220px;
 }
 
-/* ── Form status ────────────────────────────────────────── */
+
 .form-status {
     min-height: 1.4rem;
     margin: 0.9rem 0 0;
@@ -444,7 +444,7 @@
     color: var(--profile-error);
 }
 
-/* ── Cart / orders item lists ───────────────────────────── */
+
 .profile-list,
 .orders-list {
     display: grid;
@@ -505,7 +505,7 @@
     white-space: nowrap;
 }
 
-/* ── Order cards ────────────────────────────────────────── */
+
 .order-card h3 {
     font-size: 1.12rem;
     font-weight: 700;
@@ -547,7 +547,7 @@
     font-size: 0.94rem;
 }
 
-/* ── Empty / placeholder panels ────────────────────────── */
+
 .empty-panel,
 .account-placeholder {
     padding: 1rem 0 0;
@@ -585,7 +585,7 @@
     line-height: 1.6;
 }
 
-/* ── Payment methods ────────────────────────────────────── */
+
 .payments-stack {
     display: grid;
     gap: 1.5rem;
@@ -694,7 +694,7 @@
     white-space: nowrap;
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
+
 @media (max-width: 960px) {
     .account-layout {
         grid-template-columns: 1fr;
@@ -822,9 +822,9 @@
     }
 }
 
-/* ── Panel empty states — cart-style circle + label ────── */
-/* Reuses .cart-empty / .cart-empty-icon / .cart-empty-label from cart-main.css */
-/* panel-empty just adds the extra hint line below the label */
+
+
+
 .panel-empty {
   padding: 4rem 2rem;
 }
@@ -837,7 +837,7 @@
   max-width: 320px;
 }
 
-/* Address cards */
+
 .address-list {
   display: grid;
   gap: 0.95rem;
@@ -972,10 +972,10 @@
     justify-content: center;
     margin-top: 1.25rem;
     text-decoration: none;
-    /* inherits primary-pill styles */
+
 }
 
-/* ── Orders panel extras ────────────────────────────────── */
+
 .order-total-row {
     display: flex;
     justify-content: space-between;
@@ -993,7 +993,7 @@
     color: var(--profile-text);
 }
 
-/* ── Profile cart panel — mirrors /cart/ layout ─────────── */
+
 .pc-heading {
     display: flex;
     align-items: baseline;
@@ -1042,14 +1042,14 @@
     }
 }
 
-/* ── Profile cart panel spacing — match standalone /cart/ ── */
 
-/* Give the cart panel the same generous vertical padding */
+
+
 .account-panel[data-account-panel="cart"] {
     padding-top: 0.5rem;
 }
 
-/* Items column: same item padding and gaps as cart page */
+
 .account-panel[data-account-panel="cart"] .cart-item {
     padding: 1.4rem 0;
     gap: 1.25rem;
@@ -1072,19 +1072,19 @@
     margin-top: 0.6rem;
 }
 
-/* Summary card: more internal padding */
+
 .account-panel[data-account-panel="cart"] .cart-summary-card {
     padding: 2.25rem 2rem;
     gap: 1.25rem;
 }
 
-/* Checkout button area */
+
 .account-panel[data-account-panel="cart"] .cart-actions {
     margin-top: 2.5rem;
     gap: 1.5rem;
 }
 
-/* Empty state */
+
 .account-panel[data-account-panel="cart"] .cart-empty {
     padding: 5rem 2rem;
 }

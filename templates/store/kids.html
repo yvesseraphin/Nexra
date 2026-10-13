@@ -5,12 +5,13 @@
 {% block body_page %}kids{% endblock %}
 
 {% block extra_css %}
+<link rel="preload" as="image" href="{% static 'images/K1.webp' %}" fetchpriority="high" />
 <link rel="stylesheet" href="{% static 'css/store-kids.css' %}" />
 {% endblock %}
 
 {% block content %}
 
-  <!-- Hero Section -->
+
   <section class="hero" id="home">
     <div class="container">
       <div class="row align-items-center">
@@ -26,7 +27,7 @@
     </div>
   </section>
 
-  <!-- Today's Best Deals -->
+
   <section class="product-section" id="shop">
     <div class="container">
       <h2 class="section-title">Today Best Deals For You</h2>
@@ -34,7 +35,7 @@
 
         <div class="col-md-4">
           <div class="card product-card">
-            <img src="{% static 'images/K2.webp' %}" class="product-image card-img-top" alt="PlayStation" loading="lazy" decoding="async">
+            <img src="{% static 'images/K2.webp' %}" class="product-image card-img-top" alt="PlayStation" loading="eager" fetchpriority="high" decoding="async">
             <div class="card-body">
               <h5>PlayStation</h5>
               <p class="product-description">Video Games</p>
@@ -132,7 +133,7 @@
     </div>
   </section>
 
-  <!-- Promo Banner -->
+
   <section class="promo-banner">
     <div class="container text-center">
       <img src="{% static 'images/K8.webp' %}" alt="Promo" class="promo-image float-start" loading="lazy" decoding="async">
@@ -143,7 +144,7 @@
     </div>
   </section>
 
-  <!-- Toy Highlights -->
+
   <section class="product-section">
     <div class="container">
       <h2 class="section-title">Toy Highlights</h2>
@@ -249,7 +250,7 @@
     </div>
   </section>
 
-  <!-- CTA -->
+
   <section class="cta-section">
     <div class="container">
       <div class="row align-items-center">

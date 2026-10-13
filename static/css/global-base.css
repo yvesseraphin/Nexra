@@ -4,13 +4,13 @@
   --bg-light: #f8f9fa;
 }
 
-/* Base */
+
 body {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--primary-color);
 }
 
-/* ================= NAVBAR ================= */
+
 .navbar {
   padding: 1.5rem 0;
   height: 150px;
@@ -33,10 +33,10 @@ body {
   border-radius: 30px;
 }
 
-/* ================= HERO ================= */
+
 .hero {
   padding: 80px 0;
-  overflow: hidden; /* Added to keep the overlapping image aligned and prevent page overflow */
+  overflow: hidden;
 }
 
 .hero-title {
@@ -70,7 +70,7 @@ body {
 
 .img-main {
   z-index: 1;
-  position: relative; /* Added relative position to allow left alignment */
+  position: relative;
   left: 80px;
 }
 
@@ -96,7 +96,7 @@ body {
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
 }
 
-/* ================= CATEGORIES ================= */
+
 .categories {
   padding: 4rem 0;
 }
@@ -126,7 +126,7 @@ body {
   object-fit: cover;
 }
 
-/* ================= PRODUCTS ================= */
+
 .product-section {
   padding: 4rem 0;
 }
@@ -223,7 +223,7 @@ body {
   animation: floatAnimation 3s infinite;
 }
 
-/* ================= CTA ================= */
+
 .cta-section {
   background: rgb(246,242,238);
   padding: 5rem 0;
@@ -281,10 +281,10 @@ body {
   background: #333;
 }
 
-/* ================= FOOTER ================= */
- /* =========================
-   FOOTER BASE
- ========================= */
+
+
+
+
 .footer {
     background-color: #ffffff;
     border-top: 1px solid #eaeaea;
@@ -294,9 +294,9 @@ body {
     box-sizing: border-box;
 }
 
-/* =========================
-   FOOTER GRID LAYOUT
- ========================= */
+
+
+
 .footer-content {
     display: flex;
     justify-content: space-between;
@@ -330,9 +330,9 @@ body {
     line-height: 1;
 }
 
-/* =========================
-   FOOTER TEXT
- ========================= */
+
+
+
 .footer-brand-name {
     font-size: 24px;
     font-weight: 700;
@@ -346,9 +346,9 @@ body {
     margin-bottom: 20px;
 }
 
-/* =========================
-   FOOTER LINKS
- ========================= */
+
+
+
 .footer-links {
     list-style: none;
     padding: 0;
@@ -369,9 +369,9 @@ body {
     color: #2563EB;
 }
 
-/* =========================
-   SOCIAL SECTION
- ========================= */
+
+
+
 .footer-social {
     display: flex;
     flex-direction: column;
@@ -395,9 +395,9 @@ body {
     transition: all 0.3s ease;
 }
 
-/* =========================
-   SOCIAL COLORS
- ========================= */
+
+
+
 .social-link.facebook {
     color: #1877F2;
 }
@@ -439,9 +439,9 @@ body {
     opacity: 0.85;
 }
 
-/* =========================
-   FOOTER BOTTOM
- ========================= */
+
+
+
 .footer-bottom {
     padding-top: 30px;
     display: flex;
@@ -472,7 +472,7 @@ body {
     font-weight: 400;
 }
 
-/* Button toggler reset - strictly 3 lines only, absolutely NO circle, NO borders, NO outline, NO shadow */
+
 button.navbar-toggler,
 .navbar-toggler {
   background: transparent !important;
@@ -520,7 +520,7 @@ button.navbar-toggler span,
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* Tablets */
+
 @media (max-width: 991px) {
   .hero-desktop-br {
     display: none;
@@ -635,7 +635,7 @@ button.navbar-toggler span,
   }
 }
 
-/* Mobile */
+
 @media (max-width: 576px) {
   .hero {
     padding: 40px 0;
@@ -692,13 +692,13 @@ button.navbar-toggler span,
     align-items: stretch;
     width: 100%;
   }
-  
+
   .subscribe-form .subscribe-btn {
     width: 100%;
   }
 }
 
-/* iPad Pro 1024 × 1366 */
+
 @media (width: 1024px) and (height: 1366px) {
   .img-overlay {
     right: -80px;
@@ -710,7 +710,7 @@ button.navbar-toggler span,
   }
 }
 
-/* ================= ANIMATIONS ================= */
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }

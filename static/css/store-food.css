@@ -1,7 +1,7 @@
-/* =========================================================
-   store-food.css — Food storefront page styles
-   Ported from frontend/food-style.css · Font: Outfit
-========================================================= */
+
+
+
+
 
 :root {
   --primary-orange: #ff9500;
@@ -17,9 +17,9 @@ body {
   color: var(--text-dark);
 }
 
-/* ========================================
-   HERO SECTION
-======================================== */
+
+
+
 
 .hero-section {
   background-color: var(--bg-light);
@@ -111,7 +111,7 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
-/* Decorative Elements */
+
 .decorative-leaf {
   position: absolute;
   opacity: 0.7;
@@ -155,9 +155,9 @@ body {
   animation-delay: 1.5s;
 }
 
-/* ========================================
-   FEATURED CARDS SECTION
-======================================== */
+
+
+
 
 .featured-section {
   padding: 60px 0;
@@ -233,9 +233,9 @@ body {
   transform: translateY(-2px);
 }
 
-/* ===============================
-   POPULAR PRODUCTS SECTION
-================================ */
+
+
+
 
 .popular-products-section {
   padding: 90px 0;
@@ -258,9 +258,9 @@ body {
 
 
 
-/* ========================================
-   DAILY BEST SELLS SECTION
-======================================== */
+
+
+
 
 .daily-best-section {
   padding: 60px 0;
@@ -386,9 +386,9 @@ body {
 
 .indicator.active { background-color: #FFFFFF; }
 
-/* ========================================
-   DEALS OF THE DAY
-======================================== */
+
+
+
 
 .deals-day {
   display: flex;
@@ -425,9 +425,9 @@ body {
 
 
 
-/* ========================================
-   ANIMATIONS
-======================================== */
+
+
+
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
@@ -469,9 +469,9 @@ body {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
+
+
+
 
 @media (max-width: 992px) {
   .hero-title { font-size: 3.5rem; }

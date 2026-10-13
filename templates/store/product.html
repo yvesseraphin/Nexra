@@ -12,21 +12,21 @@
 <section class="product-page">
   <div class="product-shell">
 
-    <!-- Feedback handled by NexraNotify global bar -->
 
-    <!-- Main hero grid -->
+
+
     <div class="product-hero" id="product-hero" hidden>
 
-      <!-- ── Left: image ── -->
+
       <div class="product-media">
         <div class="product-main-image-wrap">
-          <img id="product-image" src="" alt="" class="product-main-image" loading="lazy" decoding="async">
+          <img id="product-image" src="" alt="" class="product-main-image" loading="eager" fetchpriority="high" decoding="async">
         </div>
-        <!-- Thumbnail strip -->
+
         <div class="product-thumbs" id="product-thumbs"></div>
       </div>
 
-      <!-- ── Centre: info ── -->
+
       <div class="product-info">
         <p class="product-eyebrow" id="product-eyebrow" hidden></p>
         <h1 class="product-title" id="product-title"></h1>
@@ -34,7 +34,7 @@
         <p class="product-stock-note" id="product-stock-note"></p>
         <p class="product-summary" id="product-summary"></p>
 
-        <!-- Quantity selector -->
+
         <div class="product-qty-row">
           <div class="product-option-group" id="product-quantity-options"></div>
           <span class="product-qty-display">
@@ -42,13 +42,13 @@
           </span>
         </div>
 
-        <!-- Add to cart -->
+
         <button type="button" class="btn-add-to-cart" id="product-add-to-cart">
           <i class="bx bx-cart-add"></i>
           Add to cart
         </button>
 
-        <!-- Description — sits directly below the add to cart button -->
+
         <div class="product-description-section" id="product-description-section" hidden>
           <h2 class="product-description-heading">Description</h2>
           <p class="product-desc-short" id="product-desc-short"></p>
@@ -57,15 +57,15 @@
           <table class="product-specs-table" id="product-specs-table"></table>
         </div>
 
-        <!-- Delivery / specs grid -->
+
         <div class="product-delivery-grid" id="product-delivery-grid"></div>
       </div>
 
-      <!-- ── Right: related products sidebar ── -->
+
       <aside class="product-sidebar">
         <div class="product-sidebar-divider"></div>
         <div class="product-related-list" id="product-related-list">
-          <!-- Populated by JS -->
+
         </div>
       </aside>
 

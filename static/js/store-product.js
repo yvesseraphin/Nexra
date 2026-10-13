@@ -49,7 +49,7 @@
   document.addEventListener("DOMContentLoaded", safeInit);
   addButton.addEventListener("click", handleAddToCart);
 
-  // Script loads at end of body — DOMContentLoaded may have already fired
+
   if (document.readyState === "complete" || document.readyState === "interactive") {
     safeInit();
   }
@@ -156,7 +156,7 @@
 
         return `
           <button type="button" class="product-thumb ${index === 0 ? "is-active" : ""}" data-gallery-index="${index}" aria-label="View product image ${index + 1}">
-            <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}">
+            <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" decoding="async">
           </button>
         `;
       })
@@ -215,7 +215,7 @@
   }
 
   function renderDeliveryInfo(product) {
-    // Delivery info hidden — not shown on product detail page
+
     if (deliveryGrid) deliveryGrid.hidden = true;
   }
 
@@ -275,7 +275,7 @@
   async function renderRelated(product) {
     if (!relatedList) return;
 
-    // Fetch the page's full data to get other items
+
     const page = product.page || "index";
     let candidates = [];
 
@@ -292,7 +292,7 @@
       }
     } catch (_) {}
 
-    // Exclude current product, pick up to 3
+
     const related = candidates
       .filter((item) => {
         const t = (item.title || item.alt || "").trim();
@@ -313,7 +313,7 @@
 
       return `
         <div class="related-card">
-          <img class="related-card-img" src="${escapeHtml(imgSrc)}" alt="${escapeHtml(itemTitle)}" loading="lazy">
+          <img class="related-card-img" src="${escapeHtml(imgSrc)}" alt="${escapeHtml(itemTitle)}" loading="lazy" decoding="async">
           <div class="related-card-body">
             <p class="related-card-title">${escapeHtml(itemTitle)}</p>
             <p class="related-card-price">${escapeHtml(itemPrice)}</p>
@@ -342,7 +342,7 @@
     if (descShort) descShort.textContent = shortText;
     if (description) description.textContent = longText;
 
-    // Hide highlights and specs — auto-generated filler content
+
     if (highlightsEl) highlightsEl.hidden = true;
     if (specsTableEl) specsTableEl.hidden = true;
 

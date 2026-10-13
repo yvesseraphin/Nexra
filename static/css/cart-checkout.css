@@ -1,8 +1,8 @@
-/* ============================================================
-   Checkout Page — Nexra
-   Full page with navbar + footer. Input styling matches login.
-   Two-column layout: form steps (left) + order summary (right).
-   ============================================================ */
+
+
+
+
+
 
 :root {
   --ck-text:        #253D4E;
@@ -15,7 +15,7 @@
   --ck-radius:      8px;
 }
 
-/* ── Page shell ─────────────────────────────────────────── */
+
 .checkout-page {
   min-height: calc(100vh - 76px);
   background: #ffffff;
@@ -28,7 +28,7 @@
   margin: 0 auto;
 }
 
-/* ── Heading row ────────────────────────────────────────── */
+
 .checkout-heading {
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@
   font-size: 1.1rem;
 }
 
-/* ── Two-column layout ──────────────────────────────────── */
+
 .checkout-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 400px;
@@ -73,7 +73,7 @@
   align-items: start;
 }
 
-/* ── Step indicator ─────────────────────────────────────── */
+
 .ck-steps {
   display: flex;
   align-items: center;
@@ -139,7 +139,7 @@
   background: var(--ck-black);
 }
 
-/* ── Panel ──────────────────────────────────────────────── */
+
 .ck-panel {
   display: none;
 }
@@ -169,7 +169,7 @@
   letter-spacing: -0.02em;
 }
 
-/* ── Form ───────────────────────────────────────────────── */
+
 .ck-form {
   display: flex;
   flex-direction: column;
@@ -188,7 +188,7 @@
   gap: 1.4rem;
 }
 
-/* ── Field — mirrors login page ─────────────────────────── */
+
 .ck-field {
   display: flex;
   flex-direction: column;
@@ -225,7 +225,7 @@
   transform: none;
 }
 
-/* inputs — exactly like login page */
+
 .ck-input-wrap input,
 .ck-input-wrap textarea {
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -270,7 +270,7 @@
   -webkit-text-fill-color: var(--ck-text) !important;
 }
 
-/* ── Card brand badge ───────────────────────────────────── */
+
 .ck-card-brand {
   position: absolute;
   right: 14px;
@@ -292,7 +292,7 @@
   opacity: 1;
 }
 
-/* ── Error text ─────────────────────────────────────────── */
+
 .ck-error {
   font-size: 0.78rem;
   color: var(--ck-error);
@@ -301,7 +301,7 @@
   min-height: 1rem;
 }
 
-/* ── Section label (payment) ────────────────────────────── */
+
 .ck-section-label {
   font-size: 0.78rem;
   font-weight: 700;
@@ -311,7 +311,7 @@
   margin: 0 0 1rem;
 }
 
-/* ── Saved payment methods ──────────────────────────────── */
+
 .ck-saved-list {
   display: flex;
   flex-direction: column;
@@ -367,7 +367,7 @@
   background: #f0f0f0;
 }
 
-/* ── Checkbox row ───────────────────────────────────────── */
+
 .ck-checkbox-row {
   display: flex;
   align-items: center;
@@ -387,7 +387,7 @@
   flex-shrink: 0;
 }
 
-/* ── Buttons ────────────────────────────────────────────── */
+
 .ck-btn-primary,
 .ck-btn-secondary {
   font-family: 'Outfit', sans-serif;
@@ -442,7 +442,7 @@
   flex-wrap: wrap;
 }
 
-/* ── Confirmation ───────────────────────────────────────── */
+
 .ck-confirm {
   display: flex;
   flex-direction: column;
@@ -496,7 +496,7 @@
   justify-content: center;
 }
 
-/* ── Order summary card ─────────────────────────────────── */
+
 .checkout-summary-col {
   position: sticky;
   top: 24px;
@@ -605,7 +605,7 @@
   font-weight: 800;
 }
 
-/* ── Secure payments ────────────────────────────────────── */
+
 .ck-secure {
   padding-top: 0.5rem;
   border-top: 1px solid #f0f0f0;
@@ -641,7 +641,7 @@
   letter-spacing: 0.04em;
 }
 
-/* ── Responsive ─────────────────────────────────────────── */
+
 @media (max-width: 900px) {
   .checkout-layout {
     grid-template-columns: 1fr;

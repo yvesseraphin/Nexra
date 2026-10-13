@@ -975,14 +975,14 @@ def api_subscribe(request):
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
-          <!-- Header -->
+
           <tr>
             <td style="background:#111111;padding:32px 40px;text-align:center;">
               <h1 style="margin:0;color:#ffffff;font-size:28px;letter-spacing:2px;font-weight:800;">NEXRA</h1>
               <p style="margin:6px 0 0;color:#aaaaaa;font-size:13px;letter-spacing:1px;">DISCOVER YOUR STYLE</p>
             </td>
           </tr>
-          <!-- Body -->
+
           <tr>
             <td style="padding:40px 40px 32px;">
               <h2 style="margin:0 0 16px;color:#111111;font-size:22px;font-weight:700;">You're on the list!</h2>
@@ -999,7 +999,7 @@ def api_subscribe(request):
               </a>
             </td>
           </tr>
-          <!-- Footer -->
+
           <tr>
             <td style="background:#f9f9f9;padding:24px 40px;border-top:1px solid #eeeeee;text-align:center;">
               <p style="margin:0;color:#aaaaaa;font-size:12px;line-height:1.6;">

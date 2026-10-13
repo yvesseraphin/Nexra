@@ -1,7 +1,7 @@
-/* =========================================================
-   store-tech.css — Tech storefront page styles
-   Ported from frontend/tech.css · Font: Outfit
-========================================================= */
+
+
+
+
 
 :root {
   --primary-color: #2d2d2d;
@@ -14,7 +14,7 @@ body {
   color: var(--primary-color);
 }
 
-/* ================= HERO ================= */
+
 .hero {
   display: flex;
   align-items: center;
@@ -58,7 +58,7 @@ body {
   box-shadow: 0 12px 30px rgba(0,0,0,0.9);
 }
 
-/* ================= CATEGORIES ================= */
+
 .categories {
   padding: 4rem 0;
 }
@@ -95,7 +95,7 @@ body {
   color: var(--primary-color);
 }
 
-/* ================= PRODUCTS ================= */
+
 .product-section {
   padding: 3rem 0;
 }
@@ -156,7 +156,7 @@ body {
   }
 }
 
-/* ================= CTA ================= */
+
 .cta-section {
   background: rgb(246, 242, 238);
   padding: 5rem 0;
@@ -181,13 +181,13 @@ body {
   border-radius: 20px;
 }
 
-/* ================= RESPONSIVE ================= */
+
 @media (max-width: 991px) {
-  .hero { 
+  .hero {
     height: auto;
     min-height: 440px;
     padding: 60px 0;
-    text-align: left; 
+    text-align: left;
   }
   .hero-images { justify-content: center; margin-top: 40px; }
   .hero-images img { width: 85%; margin-right: 0; }
@@ -204,21 +204,21 @@ body {
   .hero-description { font-size: 1.05rem; }
   .btn-shop { padding: 0.85rem 2.2rem; }
   .hero-images { flex-direction: column; }
-  
+
   .category-circle {
     width: 100%;
     max-width: 130px;
     height: 60px;
     border-radius: 30px;
   }
-  
+
   .promo-banner {
     height: auto;
     min-height: 250px;
     padding: 2.5rem 1rem;
     margin: 2.5rem 0;
   }
-  
+
   .promo-banner-content {
     padding: 1.25rem 1.5rem;
     width: 100%;
@@ -231,7 +231,7 @@ body {
   .product-image { height: 230px; }
 }
 
-/* ================= ANIMATIONS ================= */
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }

@@ -1,367 +1,160 @@
 # Nexra
 
-A full-stack e-commerce web application built with Django. Nexra covers the complete shopping experience — browsing categories, viewing product details, managing a cart, placing orders, and managing an account — backed by a REST-style JSON API.
-
----
-
-## Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Routes](#routes)
-- [API Reference](#api-reference)
-- [Admin Panel](#admin-panel)
-- [Security Notes](#security-notes)
-- [Contributing](#contributing)
-- [License](#license)
-
----
+Nexra is a Django e-commerce application for browsing a multi-category storefront, managing customer accounts and carts, and placing orders. The interface is built with Django templates, CSS, and vanilla JavaScript; Django provides the page views and JSON endpoints.
 
 ## Features
 
-- **Storefront** — Homepage, six category pages (Food, Tech, Fashion, Beauty, Kids, Accessories), and a product detail page with dynamic catalog loading from a JSON API.
-- **Authentication** — Session-based login and signup using email or phone number. Profile is protected server-side with `@login_required`.
-- **User Profile** — Edit name, email, gender (persisted to a `UserProfile` model). Gender dropdown restores on next login.
-- **Cart** — Add, remove, and update quantities. Cart is persisted per user in the database. Guest cart migrates to the user account on login.
-- **Checkout** — Two-step checkout (shipping → payment) on a dedicated page. Luhn card validation, saved cards, saved addresses, and CVV verification.
-- **Orders** — Full order records stored in the database including line items, shipping address, payment summary, and status.
-- **Coupons** — Apply discount codes at checkout (percentage or fixed amount, min order value, usage limits, expiry dates).
-- **Payment Methods** — Save and manage masked card details per user.
-- **Address Book** — Save and manage multiple delivery addresses per user.
-- **Newsletter** — CTA subscribe form on the homepage. Emails stored in the database, welcome email sent automatically via SMTP.
-- **Admin Panel** — All models registered: Orders, CartItems, Coupons, PaymentMethods, Addresses, Subscribers, UserProfiles.
+- Storefront pages for food, technology, fashion, beauty, kids, and accessories
+- Product detail pages, catalog search, and product reviews
+- Session-based sign-up, login, profiles, and profile images
+- Persistent carts, checkout, orders, saved payment methods, and delivery addresses
+- Coupon support and newsletter subscriptions
+- Django admin for application data
 
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Backend | Python 3.10+, Django 4+ |
-| Database | SQLite (development) |
-| Frontend | HTML, CSS, Vanilla JavaScript |
-| CSS Framework | Bootstrap 5.3 |
-| Icons | Boxicons, Font Awesome 6 |
-| Fonts | Google Fonts — Outfit |
-| Email | Django `send_mail` via SMTP (Gmail-ready) |
-| Config | `python-decouple` — `.env` file |
-
----
-
-## Project Structure
-
-```text
-Nexra/
-├── accounts/               # Auth views, UserProfile model, login/signup/profile pages
-│   ├── migrations/
-│   ├── models.py           # UserProfile (gender)
-│   ├── views.py            # login, signup, profile API, logout
-│   └── urls.py
-├── cart/                   # Cart, orders, payment methods, addresses, coupons
-│   ├── migrations/
-│   ├── models.py           # CartItem, Order, OrderItem, PaymentMethod, Address, Coupon
-│   ├── views.py            # Full REST API for all cart/order resources
-│   ├── urls.py
-│   └── admin.py
-├── store/                  # Storefront pages, catalog API, newsletter
-│   ├── migrations/
-│   ├── models.py           # Subscriber
-│   ├── views.py            # Page views, catalog API, subscribe API
-│   ├── urls.py
-│   └── admin.py
-├── core/                   # Django project config
-│   ├── settings.py         # All settings, reads from .env
-│   ├── urls.py             # Root URL router
-│   ├── asgi.py
-│   └── wsgi.py
-├── templates/
-│   ├── base.html           # Shared layout, navbar, footer
-│   ├── index.html          # Homepage
-│   ├── accounts/           # login.html, signUp.html, profile.html
-│   ├── cart/               # cart.html, checkout.html
-│   └── store/              # food, tech, fashion, beauty, kids, accessories, product
-├── static/
-│   ├── css/                # Per-page and global stylesheets
-│   ├── js/                 # global-state.js, navbar, notify, cart, checkout, store, auth
-│   └── images/
-├── .env                    # Local secrets — never committed
-├── .gitignore
-├── manage.py
-└── README.md
-```
-
----
-
-## Getting Started
-
-### Prerequisites
+## Technology
 
 - Python 3.10 or newer
-- pip
-- Git
+- Django 5 or newer (less than 7)
+- SQLite by default
+- Django templates, CSS, and vanilla JavaScript
+- WhiteNoise for static files
+- `python-decouple` for environment configuration
+- Pillow for image handling
 
-### Installation
+## Project layout
 
-**1. Clone the repository**
+```text
+accounts/       Account views, models, and migrations
+cart/           Cart, checkout, order, and payment functionality
+core/           Django project settings and URL configuration
+static/         CSS, JavaScript, and storefront images
+store/          Store pages, catalog APIs, and catalog seed command
+templates/      Shared layout and page templates
+manage.py       Django management entry point
+requirements.txt
+vercel.json     Vercel deployment configuration
+```
+
+## Local setup
+
+1. Clone the repository and enter the project directory:
+
+   ```bash
+   git clone https://github.com/yvesseraphin/Nexra.git
+   cd Nexra
+   ```
+
+2. Create and activate a virtual environment:
+
+   ```bash
+   python -m venv .venv
+   ```
+
+   Windows PowerShell:
+
+   ```powershell
+   .\.venv\Scripts\Activate.ps1
+   ```
+
+   macOS or Linux:
+
+   ```bash
+   source .venv/bin/activate
+   ```
+
+3. Install the project dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Create a `.env` file in the project root. At minimum, set a private `SECRET_KEY` and configure `DEBUG` and `ALLOWED_HOSTS` for your environment. Email settings are optional unless you want newsletter welcome emails to be sent through SMTP. See [Environment configuration](#environment-configuration).
+
+5. Apply database migrations and start the development server:
+
+   ```bash
+   python manage.py migrate
+   python manage.py runserver
+   ```
+
+   Open <http://127.0.0.1:8000/>. To access Django admin, create an administrator with `python manage.py createsuperuser`, then visit `/admin/`.
+
+To populate or refresh catalog records from the catalog data in `store/views.py`, run:
 
 ```bash
-git clone https://github.com/yvesseraphin/Nexra.git
-cd Nexra
+python manage.py seed_catalog
 ```
 
-**2. Create and activate a virtual environment**
+## Environment configuration
 
-```bash
-python -m venv .venv
-```
+The application reads configuration from environment variables and an optional root `.env` file. Example values:
 
-Windows (PowerShell):
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-macOS / Linux:
-```bash
-source .venv/bin/activate
-```
-
-**3. Install dependencies**
-
-```bash
-pip install django python-decouple
-```
-
-**4. Create your `.env` file**
-
-```bash
-copy .env.example .env   # Windows
-cp .env.example .env     # macOS / Linux
-```
-
-Then fill in your values (see [Environment Variables](#environment-variables)).
-
-**5. Apply migrations**
-
-```bash
-python manage.py migrate
-```
-
-**6. Create a superuser** (optional — for admin access)
-
-```bash
-python manage.py createsuperuser
-```
-
-**7. Run the development server**
-
-```bash
-python manage.py runserver
-```
-
-Visit: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-
----
-
-## Environment Variables
-
-Create a `.env` file in the project root. All variables are read by `python-decouple`.
-
-```env
-# Django
-SECRET_KEY=your-long-random-secret-key
+```dotenv
+SECRET_KEY=replace-with-a-long-random-secret
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
 
-# Email (SMTP — used for newsletter welcome emails)
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER=your-email@gmail.com
-EMAIL_HOST_PASSWORD=your-app-password
-DEFAULT_FROM_EMAIL=Nexra <your-email@gmail.com>
+EMAIL_HOST_USER=your-email@example.com
+EMAIL_HOST_PASSWORD=your-mail-provider-app-password
+DEFAULT_FROM_EMAIL=Nexra <your-email@example.com>
 ```
 
-> **Gmail users:** generate an [App Password](https://myaccount.google.com/apppasswords) — do not use your regular Gmail password.
+For local email previews, use Django's console email backend:
 
-> To test locally without sending real emails, set `EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend` — emails will print to the terminal instead.
+```dotenv
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+```
 
----
+Keep `.env` and its credentials out of version control. The settings module has development defaults, so configure a strong secret key, `DEBUG=False`, and a restricted `ALLOWED_HOSTS` before deployment.
 
-## Routes
+## Pages and endpoints
 
-### Store Pages
+### Pages
 
-| Route | Description |
+| Path | Description |
 |---|---|
-| `/` | Homepage |
+| `/` | Home page |
 | `/store/food/` | Food category |
-| `/store/tech/` | Tech category |
+| `/store/tech/` | Technology category |
 | `/store/fashion/` | Fashion category |
 | `/store/beauty/` | Beauty category |
 | `/store/kids/` | Kids category |
 | `/store/accessories/` | Accessories category |
-| `/store/product/?slug=<slug>` | Product detail page |
-
-### Account Pages
-
-| Route | Description |
-|---|---|
-| `/accounts/login/` | Login |
-| `/accounts/signup/` | Sign up |
-| `/accounts/profile/` | Profile (requires login) |
-
-### Cart Pages
-
-| Route | Description |
-|---|---|
+| `/store/product/?slug=<slug>` | Product detail |
+| `/accounts/login/` | Sign in |
+| `/accounts/signup/` | Create an account |
+| `/accounts/profile/` | Customer profile |
 | `/cart/` | Shopping cart |
 | `/cart/checkout/` | Checkout |
+| `/admin/` | Django administration |
 
----
+### JSON APIs
 
-## API Reference
+| Path | Purpose |
+|---|---|
+| `/api/auth/login/`, `/api/auth/signup/`, `/api/auth/logout/` | Account sessions |
+| `/api/profile/` and `/api/profile/avatar/` | Profile details and avatar |
+| `/api/pages/<slug>` | Store page catalog data |
+| `/api/catalog/items/<slug>` | Product details |
+| `/api/catalog/search/` | Product search |
+| `/api/catalog/items/<slug>/reviews/` | Product reviews |
+| `/api/subscribe/` | Newsletter subscription |
+| `/cart/api/cart/` | Cart items |
+| `/cart/api/orders/` | Customer orders |
+| `/cart/api/payments/` | Saved payment methods |
+| `/cart/api/addresses/` | Saved delivery addresses |
+| `/cart/api/coupon/apply/` | Coupon validation |
 
-All API endpoints return JSON. Cart and order endpoints require an active session (login first).
+Most account-specific cart and order operations use the authenticated session. See `accounts/urls.py`, `cart/urls.py`, `core/urls.py`, and `store/urls.py` for supported methods and full route details.
 
-### Auth
+## Deployment notes
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/api/auth/login/` | Login with email or phone + password |
-| `POST` | `/api/auth/signup/` | Create account |
-| `POST` | `/api/auth/logout/` | Logout |
-| `GET` | `/api/profile/` | Get current user profile |
-| `PATCH` | `/api/profile/` | Update name, email, gender |
-
-**Login / Signup body:**
-```json
-{
-  "identifier": "user@example.com",
-  "password": "password123",
-  "fullName": "Jane Doe"
-}
-```
-
----
-
-### Store
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/pages/<slug>` | Full section data for a storefront page |
-| `GET` | `/api/catalog/items/<slug>` | Single product by slug |
-| `POST` | `/api/subscribe/` | Subscribe to newsletter |
-
-**Supported page slugs:** `index`, `tech`, `food`, `fashion`, `beauty`, `kids`, `accessories`
-
-**Subscribe body:**
-```json
-{ "email": "user@example.com" }
-```
-
----
-
-### Cart
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/cart/api/cart/` | Get all cart items |
-| `POST` | `/cart/api/cart/` | Add item to cart |
-| `DELETE` | `/cart/api/cart/` | Clear entire cart |
-| `PATCH` | `/cart/api/cart/<product_id>/` | Update item quantity |
-| `DELETE` | `/cart/api/cart/<product_id>/` | Remove item |
-
----
-
-### Orders
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/cart/api/orders/` | List user orders |
-| `POST` | `/cart/api/orders/` | Place an order |
-| `GET` | `/cart/api/orders/<id>/` | Get order detail |
-
----
-
-### Payment Methods
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/cart/api/payments/` | List saved cards |
-| `POST` | `/cart/api/payments/` | Add a new card |
-| `PATCH` | `/cart/api/payments/<id>/` | Set as default |
-| `DELETE` | `/cart/api/payments/<id>/` | Remove card |
-
----
-
-### Addresses
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/cart/api/addresses/` | List saved addresses |
-| `POST` | `/cart/api/addresses/` | Add address |
-| `PATCH` | `/cart/api/addresses/<id>/` | Update / set default |
-| `DELETE` | `/cart/api/addresses/<id>/` | Remove address |
-
----
-
-### Coupons
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/cart/api/coupon/apply/` | Validate and apply a coupon code |
-
-**Body:**
-```json
-{ "code": "SAVE20", "subtotal": 50000 }
-```
-
----
-
-## Admin Panel
-
-Access at `/admin/` after creating a superuser.
-
-Registered models:
-
-- `Order` + inline `OrderItem`
-- `CartItem`
-- `Coupon`
-- `PaymentMethod`
-- `Address`
-- `Subscriber`
-- `UserProfile` (via accounts app)
-
----
-
-## Security Notes
-
-Before deploying to production:
-
-- Set `DEBUG=False` in `.env`
-- Use a long, random `SECRET_KEY`
-- Set `ALLOWED_HOSTS` to your domain only
-- Enable `SECURE_SSL_REDIRECT`, `SESSION_COOKIE_SECURE`, `CSRF_COOKIE_SECURE`
-- Switch from SQLite to PostgreSQL or another production database
-- Store all credentials in `.env` — never commit them
-- Use a real App Password for Gmail, not your account password
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -m "Add your feature"`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a pull request
-
----
+The repository includes a Vercel configuration for the Django WSGI application and static assets. Review the deployment platform's current Python runtime, environment variable, and persistent storage requirements before deploying. The default SQLite database is suitable for local development; use a persistent production database for deployed customer and order data.
 
 ## License
 
-This project does not currently have a license. All rights reserved.
+No license has been specified. All rights are reserved unless the project owner states otherwise.

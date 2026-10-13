@@ -70,7 +70,7 @@
         .map((item) => {
           return `
             <div class="product-card">
-              <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image">
+              <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image" loading="lazy" decoding="async">
               <div class="product-info">
                 <h3 class="product-title">${escapeHtml(item.title)}</h3>
                 <p class="product-description">${escapeHtml(item.description)}</p>
@@ -90,7 +90,7 @@
         .map((item) => {
           return `
             <div class="collection-card">
-              <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="collection-image">
+              <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="collection-image" loading="lazy" decoding="async">
               <div class="collection-info">
                 <h3 class="collection-title">${escapeHtml(item.title)}</h3>
                 <p class="collection-subtitle">${escapeHtml(item.description)}</p>
@@ -116,7 +116,7 @@
           return `
             <div class="col-lg-4 col-md-6">
               <div class="product-card">
-                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image">
+                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image" loading="lazy" decoding="async">
                 <div class="product-info">
                   <span class="product-category">${escapeHtml(item.category)}</span>
                   <h6 class="product-title">${escapeHtml(item.title)}</h6>
@@ -139,7 +139,7 @@
         .map((item) => {
           return `
             <div class="images-deals">
-              <img src="${escapeAttribute(item.image)}" class="deals-day-image" alt="${escapeAttribute(item.alt || item.title)}">
+              <img src="${escapeAttribute(item.image)}" class="deals-day-image" alt="${escapeAttribute(item.alt || item.title)}" loading="lazy" decoding="async">
               <div class="deals-day-text-content">
                 <p>${escapeHtml(item.title)}</p>
                 <span class="product-price">${escapeHtml(item.price)}</span>
@@ -166,7 +166,7 @@
             .map((item) => {
               return `
                 <div class="collection-item">
-                  <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || group.title)}">
+                  <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || group.title)}" loading="lazy" decoding="async">
                 </div>
               `;
             })
@@ -193,7 +193,7 @@
           return `
             <div class="col-md-3 col-sm-6">
               <div class="card product-card">
-                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image">
+                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image" loading="lazy" decoding="async">
                 <div class="card-body">
                   <h5>${escapeHtml(item.title || item.alt)}</h5>
                   <p class="product-description">${escapeHtml(item.description || "Popular Pick")}</p>
@@ -214,7 +214,7 @@
           return `
             <div class="col-md-4 col-sm-6">
               <div class="card product-card">
-                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image">
+                <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="product-image" loading="lazy" decoding="async">
                 <div class="card-body">
                   <h5>${escapeHtml(item.title || item.alt)}</h5>
                   <p class="product-description">${escapeHtml(item.description)}</p>
@@ -240,7 +240,7 @@
             <div class="col-lg-3 col-md-6">
               <div class="deal-card">
                 <div class="deal-image-wrapper">
-                  <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="deal-image">
+                  <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" class="deal-image" loading="lazy" decoding="async">
                   <button class="add-to-cart-overlay">
                     <i class="bx bx-cart"></i> Add to cart
                   </button>
@@ -265,7 +265,7 @@
               return `
                 <div class="product-grid-item">
                   <div class="product-grid-image">
-                    <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}">
+                    <img src="${escapeAttribute(item.image)}" alt="${escapeAttribute(item.alt || item.title)}" loading="lazy" decoding="async">
                   </div>
                   <div class="product-grid-info">
                     <h4 class="product-grid-title">${escapeHtml(item.title)}</h4>
@@ -299,7 +299,7 @@
         return `
           <div class="col-md-4">
             <div class="card product-card">
-              <img src="${escapeAttribute(item.image)}" class="product-image" alt="${escapeAttribute(item.alt || item.title)}">
+              <img src="${escapeAttribute(item.image)}" class="product-image" alt="${escapeAttribute(item.alt || item.title)}" loading="lazy" decoding="async">
               <div class="card-body">
                 <h5>${escapeHtml(item.title)}</h5>
                 ${showDescription ? `<p class="product-description">${escapeHtml(item.description || "")}</p>` : ""}

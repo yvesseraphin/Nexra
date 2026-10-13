@@ -102,7 +102,7 @@
       cart.forEach(function (item) {
         var lineTotal = formatRWF((item.priceValue || 0) * (item.quantity || 1));
         html += '<div class="cart-item" data-item-id="' + esc(item.id) + '">' +
-          '<img class="cart-item-img" src="' + esc(item.image || '') + '" alt="' + esc(item.title || '') + '">' +
+          '<img class="cart-item-img" src="' + esc(item.image || '') + '" alt="' + esc(item.title || '') + '" loading="lazy" decoding="async">' +
           '<div class="cart-item-body">' +
             '<div class="cart-item-top">' +
               '<p class="cart-item-title">' + esc(item.title || 'Item') + '</p>' +
@@ -385,7 +385,8 @@
 
       fetch('/api/profile/', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrfToken() },
         body: JSON.stringify(payload),
       })
       .then(function (res) { return res.json(); })
@@ -409,7 +410,13 @@
     if (!btn) return;
     btn.addEventListener('click', function () {
       if (state) state.clearSession();
-      window.location.href = '/';
+      fetch('/api/auth/logout/', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'X-CSRFToken': getCsrfToken() },
+      }).catch(function () {}).finally(function () {
+        window.location.href = '/';
+      });
     });
   }
 
@@ -450,7 +457,8 @@
         formData.append('avatar', photoInput.files[0]);
         fetch('/api/profile/avatar/', {
           method: 'POST',
-          credentials: 'include',
+          credentials: 'same-origin',
+          headers: { 'X-CSRFToken': getCsrfToken() },
           body: formData,
         })
         .then(function (res) { return res.json(); })
@@ -474,7 +482,8 @@
       removeBtn.addEventListener('click', function () {
         fetch('/api/profile/avatar/remove/', {
           method: 'POST',
-          credentials: 'include',
+          credentials: 'same-origin',
+          headers: { 'X-CSRFToken': getCsrfToken() },
         })
         .then(function (res) { return res.json(); })
         .then(function (data) {
@@ -630,5 +639,10 @@
   function getVal(id) {
     var el = document.getElementById(id);
     return el ? el.value.trim() : '';
+  }
+
+  function getCsrfToken() {
+    var cookie = document.cookie.split(';').map(function (part) { return part.trim(); }).find(function (part) { return part.startsWith('csrftoken='); });
+    return cookie ? decodeURIComponent(cookie.slice('csrftoken='.length)) : '';
   }
 })();
